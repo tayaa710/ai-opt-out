@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: settings that load after a delay</title>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .skeleton {
+        height: 60px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #eceef1, #f6f7f9, #eceef1);
+      }
+      .reveal-later {
+        visibility: hidden;
+      }
+      .ready .reveal-later {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app">
+      <h1>Settings</h1>
+      <div class="skeleton" aria-busy="true"></div>
+      <!-- Present from the start but hidden with CSS only; a class on <main> reveals it. -->
+      <div class="card reveal-later">
+        <div class="row">
+          <span class="row-title">Allow model training</span>
+          <button type="button" role="switch" id="late-css" aria-checked="true" class="switch"></button>
+        </div>
+      </div>
+    </main>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const delay = Number(params.get('delay') || 1200);
+      const cssDelay = Number(params.get('cssDelay') || 1500);
+      function wire(sw) {
+        sw.addEventListener('click', () => sw.setAttribute('aria-checked', String(sw.getAttribute('aria-checked') !== 'true')));
+      }
+      wire(document.getElementById('late-css'));
+      setTimeout(() => {
+        document.querySelector('.skeleton').remove();
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<div class="row"><div><span class="row-title">Use conversations for training</span>
+          <p class="row-desc">Loaded after a network request.</p></div>
+          <button type="button" role="switch" id="late" aria-checked="true" class="switch"></button></div>`;
+        document.getElementById('app').appendChild(card);
+        wire(card.querySelector('#late'));
+      }, delay);
+      // A CSS-only change: MutationObserver sees the class, polling covers the rest.
+      setTimeout(() => document.getElementById('app').classList.add('ready'), cssDelay);
+    </script>
+  </body>
+</html>

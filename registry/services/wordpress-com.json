@@ -1,0 +1,128 @@
+{
+  "id": "wordpress-com",
+  "name": "WordPress.com",
+  "company": "Automattic Inc.",
+  "category": "creative",
+  "brandColor": "#3858e9",
+  "domains": ["wordpress.com"],
+  "summary": "Automattic may share public WordPress.com site content with licensed partners, including companies that train AI models, unless you tick “Prevent third-party sharing” for each of your sites.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_in",
+    "dataTypes": ["posts", "images", "comments"],
+    "details": "Automattic, which runs WordPress.com, shares content from public WordPress.com sites with “our licensed network of content and research partners, including those that train AI models”. Each site has a “Prevent third-party sharing” option in its visibility settings; public sites are shared unless the owner ticks it. Sites set to discourage search engines are treated as opted out automatically, and the option only appears for public sites. The setting is per site, so it has to be set on every public site you own. It only covers sharing by Automattic; it cannot stop other AI crawlers that ignore your site's preferences.",
+    "since": "2024-02",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "prevent-third-party-sharing",
+      "type": "toggle",
+      "title": "Tick “Prevent third-party sharing” for each site",
+      "description": "A per-site checkbox in the site's visibility (privacy) settings. When ticked, the site is opted out.",
+      "url": "https://wordpress.com/sites/settings/site",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to WordPress.com.",
+        "Pick your site if asked, then open its site settings and find Site visibility.",
+        "Tick “Prevent third-party sharing for this site” (older screens show your site's address instead of “this site”).",
+        "Click Save.",
+        "Repeat for every public site you own."
+      ],
+      "effect": "Automattic stops sharing that site's content with its licensed content and research partners, including AI companies, from now on. Content shared earlier is not recalled.",
+      "automation": {
+        "confidence": "experimental",
+        "hostPermissions": ["https://wordpress.com/*", "https://my.wordpress.com/*"],
+        "loginIndicators": [
+          { "selector": "input#usernameOrEmail" },
+          { "selector": ".login__form" }
+        ],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Prevent third-party sharing"] },
+            "timeoutMs": 60000,
+            "description": "Waiting for the site's visibility settings (pick a site if asked)"
+          },
+          {
+            "action": "setToggle",
+            "target": { "role": "checkbox", "text": ["Prevent third-party sharing"] },
+            "state": "on",
+            "timeoutMs": 5000,
+            "description": "Ticking “Prevent third-party sharing”"
+          },
+          {
+            "action": "click",
+            "target": { "role": "button", "text": ["Save"], "within": { "selector": ".settings-site__privacy" } },
+            "optional": true,
+            "description": "Saving"
+          },
+          {
+            "action": "click",
+            "target": {
+              "role": "button",
+              "text": ["Save"],
+              "within": { "selector": "form", "text": ["Prevent third-party sharing"] }
+            },
+            "optional": true,
+            "description": "Saving"
+          },
+          {
+            "action": "wait",
+            "ms": 2000,
+            "description": "Waiting for the change to save"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Prevent third-party sharing"] },
+            "timeoutMs": 60000
+          },
+          {
+            "action": "assertToggle",
+            "target": { "role": "checkbox", "text": ["Prevent third-party sharing"] },
+            "state": "on",
+            "timeoutMs": 5000
+          }
+        ]
+      }
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacypolicyupdates@automattic.com",
+    "postalAddress": "Aut O'Mattic A8C Ireland Ltd., Grand Canal Dock, 25 Herbert Place, Dublin, D02 AY86, Ireland"
+  },
+  "policyUrls": [
+    "https://automattic.com/privacy/",
+    "https://wordpress.com/support/privacy-settings/make-your-website-public/"
+  ],
+  "sources": [
+    {
+      "title": "Make your website public: Prevent third-party sharing | WordPress.com Support",
+      "url": "https://wordpress.com/support/privacy-settings/make-your-website-public/#prevent-third-party-sharing",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "WordPress.com site visibility settings source (Automattic/wp-calypso, privacy-form.tsx)",
+      "url": "https://github.com/Automattic/wp-calypso/blob/trunk/client/dashboard/sites/settings-site-visibility/privacy-form.tsx",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy | Automattic",
+      "url": "https://automattic.com/privacy/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

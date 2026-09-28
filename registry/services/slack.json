@@ -1,0 +1,79 @@
+{
+  "id": "slack",
+  "name": "Slack",
+  "company": "Slack Technologies (Salesforce)",
+  "category": "communication",
+  "brandColor": "#4a154b",
+  "domains": ["slack.com"],
+  "summary": "Slack doesn't train generative AI on your messages, but by default uses workspace data to train its other machine-learning models (search, emoji and channel suggestions). Only a workspace owner can opt out, by email.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_in",
+    "dataTypes": ["messages", "files", "activity"],
+    "details": "Slack says it does not develop generative AI models using customer data and will not use customer data to train generative AI models without the customer's affirmative opt-in. Its AI features use third-party large language models hosted inside Slack's own infrastructure, which do not retain or learn from your data. Separately, Slack analyses customer data (such as messages, content and files) together with usage information to train “global” non-generative machine-learning models for features like channel and emoji recommendations, search ranking and autocomplete. Slack says these models use de-identified, aggregate data and are built so they cannot learn, memorise or reproduce customer data. Workspaces are included unless they opt out. Because Slack processes messages on behalf of the organisation that owns the workspace, only that organisation's owners can opt out; individual members cannot.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "For workspaces set up outside the US and Canada, Slack Technologies Limited (Dublin) processes workspace content on behalf of the organisation that owns the workspace, so requests about that content usually go through your organisation's admins.",
+      "UK": "Slack Technologies Limited (Dublin) processes workspace content on behalf of the organisation that owns the workspace, so requests about that content usually go through your organisation's admins."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "workspace-owner-email",
+      "type": "email",
+      "title": "Ask your workspace owner to email Slack a global model opt-out",
+      "description": "Slack only accepts this request from an Org Owner, Workspace Owner or Primary Owner, sent to feedback@slack.com (not privacy@slack.com). Regular members need to ask their admin.",
+      "url": "https://slack.com/trust/data-management/privacy-principles",
+      "regions": ["ALL"],
+      "effort": "involved",
+      "steps": [
+        "If you are a regular member, ask your Workspace Owner, Primary Owner or Org Owner to send this request; members can't opt out themselves.",
+        "The owner emails feedback@slack.com.",
+        "Subject line: “Slack global model opt-out request”.",
+        "Include the workspace or org URL (for example yourteam.slack.com).",
+        "Slack replies once the opt-out has been completed."
+      ],
+      "effect": "Stops that workspace's data helping to train Slack's global (non-generative) machine-learning models; it is then only used to improve the experience in your own workspace. Features keep working. It does not affect data already used."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      { "url": "https://app.slack.com", "name": "d" }
+    ]
+  },
+  "contacts": {
+    "privacyEmail": "privacy@slack.com",
+    "dpoEmail": "dpo@slack.com"
+  },
+  "policyUrls": [
+    "https://slack.com/trust/data-management/privacy-principles",
+    "https://slack.com/trust/privacy/privacy-policy"
+  ],
+  "sources": [
+    {
+      "title": "Privacy Principles: Search, Learning and Artificial Intelligence | Slack",
+      "url": "https://slack.com/trust/data-management/privacy-principles",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Security for AI features in Slack | Slack Help Center",
+      "url": "https://slack.com/help/articles/28310650165907-Security-for-AI-features-in-Slack",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy | Slack",
+      "url": "https://slack.com/trust/privacy/privacy-policy",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

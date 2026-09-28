@@ -1,0 +1,113 @@
+{
+  "id": "adobe",
+  "name": "Adobe",
+  "company": "Adobe Inc.",
+  "category": "creative",
+  "brandColor": "#eb1000",
+  "domains": ["adobe.com"],
+  "summary": "Adobe says it doesn't train its Firefly generative AI on your files, but by default it may analyse content you store in Creative Cloud or Document Cloud to improve its products. You can turn this off.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_in",
+    "dataTypes": ["files", "images", "documents", "creative-works"],
+    "details": "For personal accounts, Adobe's “content analysis” setting lets Adobe analyse content that is processed or stored on its servers when you use Creative Cloud and Document Cloud apps (for example with machine-learning techniques) to improve its products and services. It is on by default for personal accounts; minors and business, team or school accounts are automatically opted out. Adobe says it does not analyse your content to train generative AI models unless you submit it to the Adobe Stock marketplace, and that Firefly models are trained on licensed content such as Adobe Stock and on public-domain material. Turning content analysis off does not cover programs where you actively submit content to Adobe, or content analysed while you are not signed in. Adobe says it aggregates content before analysis and uses safeguards for human review.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "content-analysis",
+      "type": "toggle",
+      "title": "Turn off content analysis for product improvement",
+      "description": "The Adobe account privacy setting that controls whether Adobe may analyse your stored content to improve its products.",
+      "url": "https://account.adobe.com/privacy",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to your Adobe account.",
+        "Open the account's Privacy page (the link goes straight there).",
+        "In the “Content analysis for product improvement” section, switch the toggle off."
+      ],
+      "effect": "Adobe stops analysing your stored content to improve its products. It does not cover content you actively submit to Adobe programs (such as Adobe Stock or feedback programs) and does not undo past analysis.",
+      "automation": {
+        "confidence": "experimental",
+        "hostPermissions": ["https://account.adobe.com/*"],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Content analysis"] },
+            "timeoutMs": 20000,
+            "description": "Waiting for Adobe privacy settings to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "[role=switch], input[type=checkbox]",
+              "text": [
+                "Content analysis for product improvement",
+                "Allow my content to be analyzed by Adobe",
+                "Content analysis"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off content analysis"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Content analysis"] },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "[role=switch], input[type=checkbox]",
+              "text": [
+                "Content analysis for product improvement",
+                "Allow my content to be analyzed by Adobe",
+                "Content analysis"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    }
+  ],
+  "contacts": {
+    "dpoEmail": "dpo@adobe.com"
+  },
+  "policyUrls": [
+    "https://www.adobe.com/privacy/policy.html",
+    "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html"
+  ],
+  "sources": [
+    {
+      "title": "Content analysis FAQ for Creative Cloud and Document Cloud | Adobe Account",
+      "url": "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Adobe Firefly FAQ | Adobe Help Center",
+      "url": "https://helpx.adobe.com/firefly/web/get-started/learn-the-basics/adobe-firefly-faq.html",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Adobe Privacy Policy",
+      "url": "https://www.adobe.com/privacy/policy.html",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

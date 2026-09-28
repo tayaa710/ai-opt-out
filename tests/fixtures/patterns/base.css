@@ -1,0 +1,152 @@
+/* Shared look for the pattern fixtures: a generic "settings page". */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font: 15px/1.5 -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #1f2328;
+  background: #f6f7f9;
+}
+.topbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 24px;
+  background: #fff;
+  border-bottom: 1px solid #e3e5e8;
+}
+.topbar .spacer {
+  flex: 1;
+}
+main,
+.settings {
+  max-width: 720px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+h1 {
+  font-size: 24px;
+  margin: 0 0 16px;
+}
+h2 {
+  font-size: 18px;
+  margin: 24px 0 8px;
+}
+.card {
+  background: #fff;
+  border: 1px solid #e3e5e8;
+  border-radius: 12px;
+  padding: 4px 20px;
+  margin-bottom: 16px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef0f2;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.row-title {
+  font-weight: 600;
+  display: block;
+}
+.row-desc {
+  margin: 2px 0 0;
+  color: #59636e;
+  font-size: 13px;
+}
+button,
+.btn {
+  font: inherit;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  background: #fff;
+  cursor: pointer;
+}
+.switch {
+  position: relative;
+  flex: none;
+  width: 42px;
+  height: 24px;
+  padding: 0;
+  border-radius: 999px;
+  border: 0;
+  background: #c4c9d0;
+  cursor: pointer;
+}
+.switch[aria-checked='true'],
+.switch[data-state='checked'],
+.switch[data-state='on'] {
+  background: #2f6feb;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.12s;
+}
+.switch[aria-checked='true']::after,
+.switch[data-state='checked']::after,
+.switch[data-state='on']::after {
+  transform: translateX(18px);
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.slider {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: #c4c9d0;
+}
+input:checked + .slider,
+.slider.on {
+  background: #2f6feb;
+}
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+[role='dialog'],
+[role='alertdialog'] {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(440px, 90vw);
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

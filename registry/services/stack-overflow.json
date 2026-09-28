@@ -1,0 +1,76 @@
+{
+  "id": "stack-overflow",
+  "name": "Stack Overflow",
+  "company": "Stack Overflow (Stack Exchange, Inc.)",
+  "category": "developer",
+  "brandColor": "#f48024",
+  "domains": ["stackoverflow.com", "stackexchange.com"],
+  "summary": "Questions, answers and comments you post publicly on Stack Overflow are licensed to AI companies such as OpenAI and Google for model training. There is no opt-out, and deleting posts is restricted.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "no_choice",
+    "dataTypes": ["posts", "comments", "code"],
+    "details": "Content you contribute publicly to Stack Overflow and other Stack Exchange sites is published under a Creative Commons licence (CC BY-SA). Since 2024 Stack Overflow has also licensed this content to AI developers through its OverflowAPI product, with partners including Google (announced February 2024) and OpenAI (May 2024), who use it to train and improve their models. There is no setting to exclude your posts. Site rules limit deleting or defacing posts that others have answered or voted on, and moderators can restore them. Deleting your account removes your profile, but your public posts generally stay on the site without your name.",
+    "since": "2024-02",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "You can send an objection or erasure request to privacy@stackoverflow.com under GDPR, but public posts are published under CC BY-SA and the outcome for AI licensing is uncertain.",
+      "UK": "You can send an objection or erasure request to privacy@stackoverflow.com under UK GDPR, but public posts are published under CC BY-SA and the outcome for AI licensing is uncertain."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "no-opt-out",
+      "type": "none",
+      "title": "No opt-out: public posts are licensed for AI training",
+      "description": "Stack Overflow offers no setting to keep your public contributions out of AI data licensing.",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "There is no setting to stop your public posts being licensed for AI training.",
+        "Avoid posting content you don't want reused; posts are licensed CC BY-SA.",
+        "In the EU or UK you can still send an objection letter to privacy@stackoverflow.com, though it may not change how public posts are licensed."
+      ],
+      "effect": "Nothing stops licensing of content you have already posted publicly. An objection letter creates a record but may not change the outcome."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@stackoverflow.com"
+  },
+  "policyUrls": [
+    "https://stackoverflow.com/legal/privacy-policy",
+    "https://stackoverflow.com/legal/terms-of-service/public"
+  ],
+  "sources": [
+    {
+      "title": "Our partnership with OpenAI | Meta Stack Exchange",
+      "url": "https://meta.stackexchange.com/questions/399619/our-partnership-with-openai",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "OverflowAPI: API solutions | Stack Overflow",
+      "url": "https://stackoverflow.co/api-solutions/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Public Network Terms of Service | Stack Overflow",
+      "url": "https://stackoverflow.com/legal/terms-of-service/public",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy | Stack Overflow",
+      "url": "https://stackoverflow.com/legal/privacy-policy",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

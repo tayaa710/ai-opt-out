@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: data-state only toggles</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>AI settings</h1>
+      <div class="card">
+        <!-- No role, no aria: the state lives only in data-state. -->
+        <div class="row">
+          <div>
+            <span class="row-title">Personalised AI</span>
+            <p class="row-desc">Train models on your saved items.</p>
+          </div>
+          <div class="toggle switch" id="personal" data-state="on" tabindex="0"></div>
+        </div>
+        <div class="row">
+          <div><span class="row-title">Smart replies</span></div>
+          <div class="toggle switch" id="replies" data-state="off" tabindex="0"></div>
+        </div>
+        <div class="row">
+          <div><span class="row-title">Voice improvement program</span></div>
+          <div class="toggle switch" id="voice" data-state="active" tabindex="0"></div>
+        </div>
+        <div class="row">
+          <div><span class="row-title">Mystery setting</span></div>
+          <div class="toggle switch" id="mystery" data-state="pending" tabindex="0"></div>
+        </div>
+      </div>
+    </main>
+    <script>
+      const flip = { on: 'off', off: 'on', active: 'inactive', inactive: 'active' };
+      document.querySelectorAll('.toggle').forEach((t) =>
+        t.addEventListener('click', () => {
+          if (flip[t.dataset.state]) t.dataset.state = flip[t.dataset.state];
+        }),
+      );
+    </script>
+  </body>
+</html>

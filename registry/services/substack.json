@@ -1,0 +1,60 @@
+{
+  "id": "substack",
+  "name": "Substack",
+  "company": "Substack Inc.",
+  "category": "creative",
+  "brandColor": "#ff6719",
+  "domains": ["substack.com"],
+  "summary": "Public Substack posts are open to AI crawlers unless the writer turns on “Block AI training” for the publication. Only publication owners can change it; readers and commenters can't.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_in",
+    "dataTypes": ["posts"],
+    "details": "Each Substack publication has a “Block AI training” setting that is off by default. When it is on, Substack adds rules to the publication's robots.txt asking AI crawlers (for example OpenAI's GPTBot, Anthropic's ClaudeBot, PerplexityBot and Google-Extended) not to collect the publication's content. It is only a request: crawlers that ignore robots.txt are not stopped, and it does not remove content already collected. The setting applies per publication and can only be changed by the publication's owner or admins, so readers, commenters and guest contributors cannot opt out on their own. We did not find a Substack statement about training its own AI models on publications, so this entry focuses on third-party AI training.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "block-ai-training",
+      "type": "toggle",
+      "title": "Turn on “Block AI training” for your publication",
+      "description": "A publication-level setting for writers. Its settings page lives on your own publication address (yourname.substack.com/publish/settings).",
+      "url": "https://substack.com/home",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Substack.",
+        "Open your publication's dashboard and go to Settings (address: yourname.substack.com/publish/settings).",
+        "Turn on “Block AI training”.",
+        "Repeat for each publication you run."
+      ],
+      "effect": "Adds robots.txt rules asking AI crawlers not to use your publication for training. Crawlers that ignore robots.txt are not blocked, content already collected is not removed, and your posts may show up less in AI tools."
+    }
+  ],
+  "policyUrls": [
+    "https://substack.com/privacy",
+    "https://substack.com/tos"
+  ],
+  "sources": [
+    {
+      "title": "Substack Privacy Policy",
+      "url": "https://substack.com/privacy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Substack Terms of Use",
+      "url": "https://substack.com/tos",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

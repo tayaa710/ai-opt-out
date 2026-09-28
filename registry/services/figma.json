@@ -1,0 +1,70 @@
+{
+  "id": "figma",
+  "name": "Figma",
+  "company": "Figma, Inc.",
+  "category": "creative",
+  "brandColor": "#a259ff",
+  "domains": ["figma.com"],
+  "summary": "Figma may train its AI on file content from teams on Starter and Professional plans, which are opted in by default. Organization and Enterprise plans are opted out by default. Only admins can change it.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_in",
+    "dataTypes": ["files", "images", "comments", "creative-works"],
+    "details": "Figma added a team-level “content training” setting that took effect on 15 August 2024. When it is on, Figma may use customer content (file content created in or uploaded to Figma, such as layer names and properties, text and images, comments and annotations) to train its AI models. Starter and Professional plans are opted in by default; Organization and Enterprise plans are opted out by default. Only team or organization admins can change the setting, so members need to ask their admin. Turning it off stops new content and edits being used, but does not undo earlier training. The setting is separate from whether AI features are available. Figma's documentation ties the setting to teams and organizations; how it applies to drafts that are not in a team is not clearly documented.",
+    "since": "2024-08-15",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "content-training-setting",
+      "type": "toggle",
+      "title": "Turn off AI content training for your team (admins)",
+      "description": "A team or organization setting. If you are not an admin, ask whoever manages your Figma team.",
+      "url": "https://www.figma.com/files/",
+      "regions": ["ALL"],
+      "effort": "moderate",
+      "steps": [
+        "Starter or Professional: in the file browser, open your team, click the menu next to the team name and choose to view its settings.",
+        "Open the Settings tab, scroll to the AI section and select Manage AI settings.",
+        "Turn content training off.",
+        "Organization or Enterprise: click Admin in the sidebar, open the Settings tab and check content training in the AI section (it is off unless someone turned it on).",
+        "Repeat for every team you administer."
+      ],
+      "effect": "Stops new content and edits in that team or organization being used to train Figma's AI models. Content already used is not removed. AI features keep working."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@figma.com"
+  },
+  "policyUrls": [
+    "https://www.figma.com/privacy/",
+    "https://help.figma.com/hc/en-us/articles/17725942479127-Manage-AI-settings-and-content-training-for-your-team-or-organization"
+  ],
+  "sources": [
+    {
+      "title": "Manage AI settings and content training for your team or organization | Figma Learn",
+      "url": "https://help.figma.com/hc/en-us/articles/17725942479127-Manage-AI-settings-and-content-training-for-your-team-or-organization",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Building Figma AI | Figma",
+      "url": "https://www.figma.com/ai/our-approach/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Meet Figma AI: Empowering Designers with Intelligent Tools | Figma Blog",
+      "url": "https://www.figma.com/blog/introducing-figma-ai/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

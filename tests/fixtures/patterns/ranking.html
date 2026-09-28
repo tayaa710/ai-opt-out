@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: names, roles and ranking</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Ranking</h1>
+      <section class="card" id="exact">
+        <div class="row"><button type="button" id="done-editing">Done editing profile</button><button type="button" id="done">Done</button></div>
+        <div class="row"><button type="button" id="save-long">Save all of my changes now</button><button type="button" id="save-short">Save changes</button></div>
+      </section>
+
+      <section class="card" id="names">
+        <div class="row"><span id="lbl-by">Labelled by span</span><button type="button" id="by" aria-labelledby="lbl-by">X</button></div>
+        <div class="row"><button type="button" id="aria" aria-label="Close settings">×</button></div>
+        <div class="row"><input type="checkbox" id="for-box" /><label for="for-box">Label for checkbox</label></div>
+        <div class="row"><label>Wrapped label text <input type="checkbox" id="wrapped-box" /></label></div>
+        <div class="row"><button type="button" id="content">Plain text button</button></div>
+        <div class="row"><button type="button" id="titled" title="Title only"><svg width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="6"></circle></svg></button></div>
+        <div class="row"><button type="button" id="img-alt"><img alt="Image alt name" width="16" height="16" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" /></button></div>
+        <div class="row"><input type="submit" id="submit-input" value="Submit value" form="nowhere" /></div>
+        <div class="row"><button type="button" id="quotes">Turn off “Smart quotes”</button></div>
+      </section>
+
+      <section class="card" id="rows">
+        <div class="row">
+          <div><span class="row-title">Short row label</span></div>
+          <button type="button" role="switch" id="row-short" aria-checked="true" class="switch"></button>
+        </div>
+        <div class="row">
+          <div>
+            <span class="row-title">Long row label</span>
+            <p class="row-desc">
+              This description is intentionally very long so the row text exceeds the three hundred character limit that
+              the engine uses to decide what counts as a row. Anything longer than that is treated as a section of the
+              page rather than a single setting, so the label above must not be attributed to the switch next to it
+              through row text alone, only through a proper accessible name.
+            </p>
+          </div>
+          <button type="button" role="switch" id="row-long" aria-checked="true" class="switch"></button>
+        </div>
+        <div class="row">
+          <span class="row-title">Deep row label</span>
+          <div><div><div><div><div><button type="button" role="switch" id="row-deep" aria-checked="true" class="switch"></button></div></div></div></div></div>
+        </div>
+        <div class="row">
+          <span class="row-title">Four levels row label</span>
+          <div><div><div><button type="button" role="switch" id="row-four" aria-checked="true" class="switch"></button></div></div></div>
+        </div>
+      </section>
+
+      <section class="card" id="shared">
+        <h2>Section heading about sharing</h2>
+        <div class="row"><span class="row-title">First shared option</span><button type="button" role="switch" id="shared-a" aria-checked="true" class="switch"></button></div>
+        <div class="row"><span class="row-title">Second shared option</span><button type="button" role="switch" id="shared-b" aria-checked="true" class="switch"></button></div>
+      </section>
+
+      <section class="card" id="roles">
+        <div class="row"><button type="button" role="switch" id="role-switch" aria-checked="true">Notifications</button></div>
+        <div class="row"><button type="button" id="role-button">Notifications settings</button></div>
+        <div class="row"><a href="#privacy" id="role-link">Privacy center</a></div>
+        <div class="row" role="tablist"><button type="button" role="tab" id="role-tab" aria-selected="false">Data controls</button></div>
+        <div class="row" role="menu"><div role="menuitem" id="role-menuitem" tabindex="-1">Download your data</div></div>
+        <div class="row"><input type="checkbox" switch id="role-native-switch" checked aria-label="Native switch" /></div>
+        <div class="row"><input type="radio" name="r" id="role-radio" aria-label="Do not use my data" /></div>
+        <div class="row"><span>Pressed toggle</span><button type="button" id="role-pressed" aria-pressed="true">Pressed thing</button></div>
+      </section>
+
+      <section class="card" id="texts">
+        <p id="para">Some text before. <b>Opt out</b> of <i>AI training</i> here. And after.</p>
+        <div id="wrap"><span id="exact-span">Opt out of AI training</span></div>
+      </section>
+    </main>
+
+    <div id="dialog-a" role="dialog" aria-labelledby="dialog-a-title" style="top: 5%">
+      <h2 id="dialog-a-title">Settings</h2>
+      <div class="dialog-actions"><button type="button" id="done-a">Done</button></div>
+    </div>
+    <div id="dialog-b" role="dialog" aria-label="Model improvement" style="top: 45%">
+      <p>Improve the model for everyone</p>
+      <div class="dialog-actions"><button type="button" id="done-b">Done</button></div>
+    </div>
+  </body>
+</html>

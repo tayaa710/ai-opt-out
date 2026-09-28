@@ -20,7 +20,28 @@
   },
   "permissions": ["storage", "alarms", "notifications", "scripting", "activeTab"],
   "optional_permissions": ["cookies"],
-  "optional_host_permissions": ["https://chatgpt.com/*"],
+  "optional_host_permissions": [
+    "https://*.pinterest.com/*",
+    "https://*.quora.com/*",
+    "https://account.adobe.com/*",
+    "https://account.grammarly.com/*",
+    "https://app.slack.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://github.com/*",
+    "https://grok.com/*",
+    "https://myactivity.google.com/*",
+    "https://www.facebook.com/*",
+    "https://www.instagram.com/*",
+    "https://www.linkedin.com/*",
+    "https://www.notion.so/*",
+    "https://www.perplexity.ai/*",
+    "https://www.reddit.com/*",
+    "https://www.tiktok.com/*",
+    "https://www.tumblr.com/*",
+    "https://www.youtube.com/*",
+    "https://x.com/*"
+  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   }

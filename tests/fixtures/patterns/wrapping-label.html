@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: wrapping labels and custom-styled checkboxes</title>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .toggle-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 0;
+        border-bottom: 1px solid #eef0f2;
+        cursor: pointer;
+      }
+      .mui-switch {
+        position: relative;
+        display: inline-block;
+        width: 42px;
+        height: 24px;
+      }
+      .mui-switch input {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 1;
+      }
+      .css-only {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Your data</h1>
+      <div class="card">
+        <!-- Screen-reader-only input inside a wrapping label, styled slider next to it. -->
+        <label class="toggle-row">
+          <span>Allow AI training on my posts</span>
+          <input type="checkbox" id="posts" class="visually-hidden" checked />
+          <span class="slider" aria-hidden="true"></span>
+        </label>
+        <!-- MUI-like: transparent input stretched over the visual switch. -->
+        <label class="toggle-row">
+          <span>Personalised recommendations</span>
+          <span class="mui-switch">
+            <input type="checkbox" id="recs" checked />
+            <span class="slider" aria-hidden="true"></span>
+          </span>
+        </label>
+        <!-- Old-school CSS toggle: the input is display:none, the label is the control. -->
+        <div class="toggle-row">
+          <span>Share my photos with partners for AI research</span>
+          <input type="checkbox" id="photos" class="css-only" checked />
+          <label for="photos" class="slider on" aria-label="Share my photos with partners for AI research"></label>
+        </div>
+      </div>
+    </main>
+    <script>
+      const photos = document.getElementById('photos');
+      photos.addEventListener('change', () => {
+        document.querySelector('label[for="photos"]').classList.toggle('on', photos.checked);
+      });
+    </script>
+  </body>
+</html>

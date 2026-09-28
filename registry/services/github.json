@@ -1,0 +1,158 @@
+{
+  "id": "github",
+  "name": "GitHub Copilot",
+  "company": "GitHub (Microsoft)",
+  "category": "developer",
+  "brandColor": "#24292f",
+  "domains": ["github.com"],
+  "summary": "Since 24 April 2026, GitHub may use your Copilot prompts, suggestions and code snippets to train AI models on Copilot Free, Pro, Pro+ and Max. It is on by default; Business and Enterprise plans are excluded.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["code", "chats", "feedback", "activity"],
+    "details": "From 24 April 2026, GitHub may use interaction data from Copilot Free, Pro, Pro+ and Max accounts to train and improve AI models: inputs, outputs, code snippets and associated context (for example code around your cursor, file names and repository structure, Copilot Chat conversations and thumbs-up/down feedback). The “Allow GitHub to use my data for AI model training” setting is enabled by default, but if you had turned off the older product-improvement data collection setting, GitHub kept that choice. Code from private repositories is only collected while you actively use Copilot, not “at rest”. GitHub says this data may be shared with affiliates such as Microsoft, but not with third-party model providers. Copilot Business and Enterprise data is not used, and students and teachers with free Copilot access are excluded. Repositories indexed for Copilot search are not used for training.",
+    "since": "2026-04-24",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "GitHub relies on legitimate interests to develop AI features and lists a right to object. You can object in writing through GitHub's privacy contact form.",
+      "UK": "GitHub relies on legitimate interests to develop AI features and lists a right to object under UK GDPR. You can object through GitHub's privacy contact form."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "copilot-model-training",
+      "type": "toggle",
+      "title": "Disable “Allow GitHub to use my data for AI model training”",
+      "description": "The Copilot setting that controls whether your Copilot interactions are used to train AI models. It is a dropdown (Enabled/Disabled), not a switch.",
+      "url": "https://github.com/settings/copilot/features",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to GitHub.",
+        "Click your profile picture (top right), then Copilot settings.",
+        "Find “Allow GitHub to use my data for AI model training” in the Privacy section.",
+        "Open its dropdown and choose Disabled.",
+        "Don't see the setting? Your Copilot seat comes from a Business or Enterprise plan, whose data is already excluded."
+      ],
+      "effect": "Stops GitHub using your future Copilot interactions to train AI models. Data already used is not removed. Copilot keeps working as before.",
+      "automation": {
+        "confidence": "experimental",
+        "hostPermissions": ["https://github.com/*"],
+        "loginIndicators": [
+          { "selector": "input#login_field" },
+          { "text": ["Sign in to GitHub"] }
+        ],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Allow GitHub to use my data for AI model training"] },
+            "timeoutMs": 15000,
+            "description": "Waiting for Copilot settings to load"
+          },
+          {
+            "action": "click",
+            "target": { "role": "button", "text": ["Allow GitHub to use my data for AI model training"] },
+            "description": "Opening the AI model training dropdown"
+          },
+          {
+            "action": "click",
+            "target": {
+              "selector": "[role=menuitemradio], [role=menuitem], [role=option]",
+              "text": ["Disabled"]
+            },
+            "timeoutMs": 5000,
+            "description": "Choosing Disabled"
+          },
+          {
+            "action": "wait",
+            "ms": 1500,
+            "description": "Saving"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Allow GitHub to use my data for AI model training"] },
+            "timeoutMs": 15000
+          },
+          {
+            "action": "click",
+            "target": { "role": "button", "text": ["Allow GitHub to use my data for AI model training"] }
+          },
+          {
+            "action": "assertToggle",
+            "target": { "selector": "[role=menuitemradio]", "text": ["Disabled"] },
+            "state": "on",
+            "timeoutMs": 5000
+          }
+        ]
+      }
+    },
+    {
+      "id": "privacy-objection-form",
+      "type": "form",
+      "title": "Object to AI training through GitHub's privacy contact form",
+      "description": "A written objection under data-protection law. Useful as a record; the Copilot setting above is the direct way to stop training.",
+      "url": "https://support.github.com/contact/privacy",
+      "regions": ["EU", "UK", "CH"],
+      "effort": "moderate",
+      "steps": [
+        "Open GitHub's privacy contact form while signed in.",
+        "Say that you object to your personal data, including Copilot interaction data, being used to train AI models (GDPR Article 21).",
+        "Include your GitHub username and submit."
+      ],
+      "effect": "Records a formal objection that GitHub must assess. It does not remove data already used for training."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      { "url": "https://github.com", "name": "user_session" },
+      { "url": "https://github.com", "name": "__Host-user_session_same_site" }
+    ]
+  },
+  "contacts": {
+    "privacyRequestUrl": "https://support.github.com/contact/privacy",
+    "postalAddress": "GitHub, Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, United States"
+  },
+  "policyUrls": [
+    "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
+  ],
+  "sources": [
+    {
+      "title": "Managing GitHub Copilot policies as an individual subscriber | GitHub Docs",
+      "url": "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Updates to GitHub Copilot interaction data usage policy | The GitHub Blog",
+      "url": "https://github.blog/news-insights/company-news/updates-to-github-copilot-interaction-data-usage-policy/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "FAQ: Privacy Statement update on Copilot data use for model training (Free/Pro/Pro+) | GitHub Community",
+      "url": "https://github.com/orgs/community/discussions/188488",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Hosting of models for GitHub Copilot | GitHub Docs",
+      "url": "https://docs.github.com/en/copilot/reference/ai-models/model-hosting",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "GitHub General Privacy Statement (effective 27 April 2026) | GitHub Docs",
+      "url": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

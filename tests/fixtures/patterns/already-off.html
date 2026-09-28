@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: toggle already off</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Data controls</h1>
+      <div class="card">
+        <div class="row">
+          <label for="improve" class="row-title">Improve the model for everyone</label>
+          <button type="button" role="switch" id="improve" aria-checked="false" data-state="unchecked" class="switch"></button>
+        </div>
+      </div>
+    </main>
+    <script>
+      window.clicks = 0;
+      document.getElementById('improve').addEventListener('click', (e) => {
+        window.clicks += 1;
+        const sw = e.currentTarget;
+        const on = sw.getAttribute('aria-checked') !== 'true';
+        sw.setAttribute('aria-checked', String(on));
+        sw.dataset.state = on ? 'checked' : 'unchecked';
+      });
+    </script>
+  </body>
+</html>

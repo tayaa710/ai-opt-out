@@ -1,7 +1,139 @@
 {
   "formatVersion": 1,
-  "generatedAt": "2026-09-28T17:37:26.369Z",
+  "generatedAt": "2026-09-28T17:49:06.144Z",
   "services": [
+    {
+      "id": "adobe",
+      "name": "Adobe",
+      "company": "Adobe Inc.",
+      "category": "creative",
+      "brandColor": "#eb1000",
+      "domains": [
+        "adobe.com"
+      ],
+      "summary": "Adobe says it doesn't train its Firefly generative AI on your files, but by default it may analyse content you store in Creative Cloud or Document Cloud to improve its products. You can turn this off.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "files",
+          "images",
+          "documents",
+          "creative-works"
+        ],
+        "details": "For personal accounts, Adobe's “content analysis” setting lets Adobe analyse content that is processed or stored on its servers when you use Creative Cloud and Document Cloud apps (for example with machine-learning techniques) to improve its products and services. It is on by default for personal accounts; minors and business, team or school accounts are automatically opted out. Adobe says it does not analyse your content to train generative AI models unless you submit it to the Adobe Stock marketplace, and that Firefly models are trained on licensed content such as Adobe Stock and on public-domain material. Turning content analysis off does not cover programs where you actively submit content to Adobe, or content analysed while you are not signed in. Adobe says it aggregates content before analysis and uses safeguards for human review.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "content-analysis",
+          "type": "toggle",
+          "title": "Turn off content analysis for product improvement",
+          "description": "The Adobe account privacy setting that controls whether Adobe may analyse your stored content to improve its products.",
+          "url": "https://account.adobe.com/privacy",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to your Adobe account.",
+            "Open the account's Privacy page (the link goes straight there).",
+            "In the “Content analysis for product improvement” section, switch the toggle off."
+          ],
+          "effect": "Adobe stops analysing your stored content to improve its products. It does not cover content you actively submit to Adobe programs (such as Adobe Stock or feedback programs) and does not undo past analysis.",
+          "automation": {
+            "confidence": "experimental",
+            "hostPermissions": [
+              "https://account.adobe.com/*"
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Content analysis"
+                  ]
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for Adobe privacy settings to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "[role=switch], input[type=checkbox]",
+                  "text": [
+                    "Content analysis for product improvement",
+                    "Allow my content to be analyzed by Adobe",
+                    "Content analysis"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off content analysis"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Content analysis"
+                  ]
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "[role=switch], input[type=checkbox]",
+                  "text": [
+                    "Content analysis for product improvement",
+                    "Allow my content to be analyzed by Adobe",
+                    "Content analysis"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        }
+      ],
+      "contacts": {
+        "dpoEmail": "dpo@adobe.com"
+      },
+      "policyUrls": [
+        "https://www.adobe.com/privacy/policy.html",
+        "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html"
+      ],
+      "sources": [
+        {
+          "title": "Content analysis FAQ for Creative Cloud and Document Cloud | Adobe Account",
+          "url": "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Adobe Firefly FAQ | Adobe Help Center",
+          "url": "https://helpx.adobe.com/firefly/web/get-started/learn-the-basics/adobe-firefly-faq.html",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Adobe Privacy Policy",
+          "url": "https://www.adobe.com/privacy/policy.html",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
     {
       "id": "chatgpt",
       "name": "ChatGPT",
@@ -13,23 +145,23 @@
         "chat.openai.com",
         "openai.com"
       ],
-      "summary": "Your ChatGPT conversations are used to train OpenAI's models unless you turn this off. Business, Enterprise and API data is excluded by default.",
+      "summary": "Your ChatGPT conversations are used to train OpenAI's models unless you turn this off. Business, Enterprise, Edu and API data is excluded by default.",
       "training": {
         "trainsOnUserData": "yes",
         "defaultState": "opted_in",
         "dataTypes": [
           "chats",
           "files",
-          "voice",
           "images",
+          "voice",
           "feedback"
         ],
-        "details": "For Free, Plus and Pro accounts, OpenAI may use your conversations (text, uploaded files, images and voice) to improve its models. The \"Improve the model for everyone\" setting controls this and is on by default. Temporary Chats are never used for training. ChatGPT Business, Enterprise, Edu and API data is not used for training by default.",
+        "details": "For Free, Go, Plus and Pro accounts, OpenAI may use your conversations (text, uploaded files and images, and transcripts of voice chats) to train its models. The “Improve the model for everyone” setting controls this. It is on by default and, when you are signed in, applies to your whole account on every device. Audio and video clips from voice chats are only used if you also turn on “Include your audio recordings” or “Include your video recordings”. Temporary Chats are not used for training (OpenAI may keep a copy for up to 30 days for safety). If you rate a reply with thumbs up or down, that whole conversation may be used for training even if you opted out. ChatGPT Business (formerly Team), Enterprise, Edu and API data is not used for training by default. Sora has its own setting, but a “Do not train on my content” request in the privacy portal covers ChatGPT and Sora.",
         "since": "2022-11",
         "retroactiveRemoval": false,
         "regionNotes": {
-          "EU": "You can also object to processing under GDPR Article 21 using OpenAI's privacy portal.",
-          "UK": "You can also object to processing under UK GDPR Article 21 using OpenAI's privacy portal."
+          "EU": "OpenAI Ireland Limited is the data controller in the EEA and Switzerland. You can also object to training under GDPR Article 21 through OpenAI's privacy portal or dsar@openai.com.",
+          "UK": "You can also object to training under UK GDPR Article 21 through OpenAI's privacy portal or dsar@openai.com."
         }
       },
       "optOuts": [
@@ -47,9 +179,10 @@
             "Open ChatGPT and sign in.",
             "Click your profile picture, then Settings.",
             "Open Data controls.",
-            "Turn off “Improve the model for everyone”."
+            "Select “Improve the model for everyone”, turn it off, then select Done.",
+            "In the mobile app the same switch is under Settings → Data controls. It syncs to your account when you are signed in."
           ],
-          "effect": "Stops new conversations from being used to train OpenAI models. Chats already used for training are not removed. Your chat history is kept.",
+          "effect": "Stops new conversations from being used to train OpenAI models. Chats already used for training are not removed, and your chat history is kept. Conversations you rate with thumbs up or down can still be used.",
           "automation": {
             "confidence": "medium",
             "hostPermissions": [
@@ -151,19 +284,19 @@
           "id": "privacy-portal-do-not-train",
           "type": "form",
           "title": "Ask OpenAI not to train on your content (privacy portal)",
-          "description": "A request through OpenAI's privacy portal. Useful if you want a written record of your objection.",
-          "url": "https://privacy.openai.com/",
+          "description": "A request through OpenAI's privacy portal. It also covers Sora, and gives you a written record of your choice.",
+          "url": "https://privacy.openai.com/policies?modal=take-control",
           "regions": [
             "ALL"
           ],
           "effort": "moderate",
           "steps": [
             "Open OpenAI's privacy portal.",
-            "Choose “Make a privacy request”.",
-            "Select “Do not train on my content”.",
-            "Confirm using the email address on your ChatGPT account."
+            "Choose “Do not train on my content”.",
+            "Enter the email address of your ChatGPT account and confirm it using the link OpenAI emails you.",
+            "Submit the request."
           ],
-          "effect": "Records a request that OpenAI not train on your content going forward. It does not delete chats already used."
+          "effect": "Once processed, new conversations (and Sora content) are not used to train OpenAI models. It does not remove data already used for training."
         }
       ],
       "detection": {
@@ -176,21 +309,3323 @@
       },
       "contacts": {
         "privacyEmail": "dsar@openai.com",
+        "dpoEmail": "dpo@openai.com",
         "privacyRequestUrl": "https://privacy.openai.com/"
       },
       "policyUrls": [
         "https://openai.com/policies/privacy-policy/",
-        "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt"
+        "https://openai.com/policies/eu-privacy-policy/",
+        "https://openai.com/policies/how-your-data-is-used-to-improve-model-performance/",
+        "https://help.openai.com/en/articles/7730893-data-controls-faq"
       ],
       "sources": [
         {
+          "title": "Europe privacy policy | OpenAI (updated 24 August 2026)",
+          "url": "https://openai.com/policies/eu-privacy-policy/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How your data is used to improve model performance | OpenAI",
+          "url": "https://openai.com/policies/how-your-data-is-used-to-improve-model-performance/",
+          "accessed": "2026-09-28"
+        },
+        {
           "title": "Data controls in ChatGPT | OpenAI Help Center",
-          "url": "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt",
+          "url": "https://help.openai.com/en/articles/7730893-data-controls-faq",
           "accessed": "2026-09-28"
         },
         {
           "title": "How your data is used to improve model performance | OpenAI Help Center",
           "url": "https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "ChatGPT Voice | OpenAI Help Center",
+          "url": "https://help.openai.com/en/articles/8400625-voice-mode-faq",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Temporary chat in ChatGPT | OpenAI Help Center",
+          "url": "https://help.openai.com/en/articles/8914046-temporary-chat-faq",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "company": "Anthropic",
+      "category": "ai-assistant",
+      "brandColor": "#d97757",
+      "domains": [
+        "claude.ai",
+        "claude.com"
+      ],
+      "summary": "Anthropic can use your Claude chats and coding sessions to train its models while “Help improve Claude” is on. You can switch it off in Privacy settings. Work, education and API accounts are not included.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files",
+          "images",
+          "code",
+          "feedback"
+        ],
+        "details": "Under the consumer terms change announced on 28 August 2025 (a choice was required by 8 October 2025), Anthropic may use chats and coding sessions from Claude Free, Pro and Max accounts, including Claude Code used with those accounts, to train its models while the model-training setting (“Help improve Claude”) is on. The switch was pre-set to on when users were asked to choose. If it is on, your data may be kept for up to 5 years; if it is off, the usual 30-day retention applies. Even with it off, Anthropic still uses conversations flagged for safety review and anything you send as feedback (for example thumbs up or down). Incognito chats are not used for training. Claude for Work (Team and Enterprise), Claude for Education, Claude for Government and API use are not covered.",
+        "since": "2025-08",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "Anthropic Ireland, Limited is the data controller in the European Region. Anthropic relies on legitimate interests and scientific research for training, so you can also object under GDPR Article 21 by emailing privacy@anthropic.com (DPO: dpo@anthropic.com).",
+          "UK": "You can also object to training under UK GDPR Article 21 by emailing privacy@anthropic.com."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "help-improve-claude-toggle",
+          "type": "toggle",
+          "title": "Turn off “Help improve Claude”",
+          "description": "The account-level model-training switch in Claude's Privacy settings. It also covers Claude Code used with the same account.",
+          "url": "https://claude.ai/settings/data-privacy-controls",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open Claude and sign in.",
+            "Click your name at the bottom left, then Settings, then Privacy.",
+            "Turn off “Help improve Claude”.",
+            "In the mobile app the same switch is under Settings → Privacy."
+          ],
+          "effect": "New chats and coding sessions are not used for training, and your stored chats are left out of future training runs. Models already trained are not changed. Chats flagged for safety review and feedback you send can still be used.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://claude.ai/*"
+            ],
+            "loginIndicators": [
+              {
+                "role": "button",
+                "text": [
+                  "Continue with Google",
+                  "Continue with email"
+                ]
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Help improve Claude",
+                    "Help improve our AI models"
+                  ]
+                },
+                "timeoutMs": 15000,
+                "description": "Waiting for Privacy settings to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "[role='switch'], input[type='checkbox']",
+                  "text": [
+                    "Help improve Claude",
+                    "Help improve our AI models"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “Help improve Claude”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Help improve Claude",
+                    "Help improve our AI models"
+                  ]
+                },
+                "timeoutMs": 15000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "[role='switch'], input[type='checkbox']",
+                  "text": [
+                    "Help improve Claude",
+                    "Help improve our AI models"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        },
+        {
+          "id": "gdpr-objection-email",
+          "type": "email",
+          "title": "Object to training by email (GDPR / UK GDPR)",
+          "description": "A written objection for people in the EU, UK or Switzerland. Useful if you want a record, but the account switch is quicker.",
+          "regions": [
+            "EU",
+            "UK",
+            "CH"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Email privacy@anthropic.com from the address you use for Claude.",
+            "Say that you object under Article 21 GDPR (or UK GDPR) to your personal data, including your chats, being used to train Anthropic's models.",
+            "Anthropic may ask you to verify your identity before it responds, usually within one month."
+          ],
+          "effect": "Anthropic must stop the processing unless it shows overriding legitimate grounds. It does not change models that are already trained."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://claude.ai",
+            "name": "sessionKey"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "privacy@anthropic.com",
+        "dpoEmail": "dpo@anthropic.com"
+      },
+      "policyUrls": [
+        "https://www.anthropic.com/legal/privacy",
+        "https://www.anthropic.com/legal/consumer-terms",
+        "https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training"
+      ],
+      "sources": [
+        {
+          "title": "Privacy Policy | Anthropic (effective 10 September 2026)",
+          "url": "https://www.anthropic.com/legal/privacy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Consumer Terms of Service | Anthropic",
+          "url": "https://www.anthropic.com/legal/consumer-terms",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Updates to Consumer Terms and Privacy Policy | Anthropic",
+          "url": "https://www.anthropic.com/news/updates-to-our-consumer-terms",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How do I change my model improvement privacy settings? | Anthropic Privacy Center",
+          "url": "https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How long do you store my data? | Anthropic Privacy Center",
+          "url": "https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Data usage | Claude Code Docs",
+          "url": "https://code.claude.com/docs/en/data-usage",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "company": "Hangzhou DeepSeek Artificial Intelligence Co., Ltd.",
+      "category": "ai-assistant",
+      "brandColor": "#4d6bfe",
+      "domains": [
+        "deepseek.com",
+        "chat.deepseek.com"
+      ],
+      "summary": "DeepSeek uses your chats, uploads and voice input to train and improve its models unless you turn off “Improve the model for everyone”. Your data is stored in China.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files",
+          "images",
+          "voice",
+          "feedback"
+        ],
+        "details": "DeepSeek's privacy policy (last updated 10 February 2026) says it uses your inputs (text and voice input, prompts, uploaded files, photos, feedback and chat history) to train and improve its models. Its Terms of Use say it uses de-identified inputs and outputs to improve its services, and that you can refuse by turning off “Improve the model for everyone”. The setting is on unless you change it. The privacy policy also lists a right to opt out of training, which you can use by emailing privacy@deepseek.com. DeepSeek collects, processes and stores your data in the People's Republic of China. It does not say whether opting out removes data already used.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "In the EEA and Switzerland, DeepSeek relies on legitimate interests (or consent) for training, so you can object under GDPR Article 21. Its EU representative is Prighter (rep_deepseek@prighter.com, subject “Data Subject Request”).",
+          "UK": "DeepSeek's UK representative is Prighter (rep_deepseek@prighter.com, subject “Data Subject Request”). You can object to training under UK GDPR Article 21."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "improve-model-toggle",
+          "type": "toggle",
+          "title": "Turn off “Improve the model for everyone”",
+          "description": "DeepSeek's Terms name this switch. Its exact place in the menus may differ between the website and the app.",
+          "url": "https://chat.deepseek.com/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open DeepSeek (chat.deepseek.com) or the app and sign in.",
+            "Open Settings from your profile menu (bottom left on the website).",
+            "Find “Improve the model for everyone” in the data settings and turn it off."
+          ],
+          "effect": "DeepSeek says it stops using your inputs and outputs to improve its models from then on. It does not say whether data already used is removed."
+        },
+        {
+          "id": "email-opt-out",
+          "type": "email",
+          "title": "Ask DeepSeek by email not to train on your data",
+          "description": "Uses the training opt-out right listed in DeepSeek's privacy policy. The in-app switch is the quicker route.",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Email privacy@deepseek.com.",
+            "Say that you opt out of your personal data being used to train or optimise DeepSeek's models.",
+            "Include the email address or phone number of your account. DeepSeek may ask you to verify your identity."
+          ],
+          "effect": "Creates a written request that DeepSeek must consider under applicable law. It does not remove data already used for training."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@deepseek.com"
+      },
+      "policyUrls": [
+        "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
+        "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html"
+      ],
+      "sources": [
+        {
+          "title": "DeepSeek Privacy Policy (last updated 10 February 2026)",
+          "url": "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "DeepSeek Terms of Use",
+          "url": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Model Mechanism and Training Methods of DeepSeek",
+          "url": "https://cdn.deepseek.com/policies/en-US/model-algorithm-disclosure.html",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "DeepSeek privacy policy and terms archive (Open Terms Archive)",
+          "url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/DeepSeek",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "company": "Meta Platforms",
+      "category": "social",
+      "brandColor": "#0866FF",
+      "domains": [
+        "facebook.com",
+        "fb.com"
+      ],
+      "summary": "Meta trains its AI on public Facebook posts, comments and photos from adults, and on your chats with Meta AI. The EU, UK, Switzerland and Brazil have an objection form; the US and most other countries have no opt-out.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "varies_by_region",
+        "dataTypes": [
+          "posts",
+          "comments",
+          "images",
+          "chats"
+        ],
+        "details": "Meta trains its generative AI models (Llama and the models behind Meta AI) on content adults share publicly on Facebook, such as public posts, comments, and photos with their captions, and on your interactions with Meta AI. Meta says it only uses public content and does not train on private messages with friends and family unless you or someone in the chat shares them with Meta AI. Photos or posts of you that other people share publicly can still be used even if you object. Since 16 December 2025, outside the EU, UK and South Korea, Meta also uses your Meta AI chats to personalise the content and ads you see, with no opt-out.",
+        "since": "2023-09",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "AU": "No opt-out. Meta confirmed to an Australian Senate inquiry in 2024 that it trains on public posts from Australian adults. Meta says it only trains on public content, so you can set future posts to Friends (Settings › Audience and visibility › Posts), use “Limit who can see past posts”, or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+          "BR": "After Brazil’s data regulator (ANPD) paused Meta’s plans in 2024, Meta resumed with notices and an objection form for Brazilian users.",
+          "CH": "Swiss users were included from 27 May 2025 and can object with the same form (choose Switzerland as your country).",
+          "EU": "Since 27 May 2025 Meta has trained on public Facebook content from adults in the EU/EEA, relying on “legitimate interests”. You can object at any time with Meta’s form; an objection only covers future training. Public content from under-18s in the EU is not used.",
+          "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil, Meta offers no opt-out in most countries, including Canada, India and Japan. Meta says it only trains on public content, so you can set future posts to Friends (Settings › Audience and visibility › Posts), use “Limit who can see past posts”, or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+          "UK": "Meta began training on UK adults’ public posts in late 2024 after changes agreed with the ICO. UK users can object with the same form, which only covers future training.",
+          "US": "No opt-out. Meta has used public posts from US adults to train its AI since at least 2023. Meta says it only trains on public content, so you can set future posts to Friends (Settings › Audience and visibility › Posts), use “Limit who can see past posts”, or delete public posts. Avoid Meta AI if you don’t want your chats used."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "objection-form",
+          "type": "form",
+          "title": "Object to Meta using your Facebook data for AI",
+          "description": "Meta’s “right to object” form for AI at Meta. One objection should cover accounts linked in the same Accounts Center; if in doubt, also submit the Instagram form.",
+          "url": "https://www.facebook.com/help/contact/712876720715583",
+          "regions": [
+            "EU",
+            "UK",
+            "CH",
+            "BR"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Facebook in your browser.",
+            "Open the objection form. You can also reach it from Settings & privacy › Privacy Center, on the page about how Meta uses information for generative AI models.",
+            "Choose your country and enter the email address on your account. Add a short reason if the form asks for one.",
+            "Submit, then keep the confirmation email Meta sends you."
+          ],
+          "effect": "Once accepted, Meta stops using your public Facebook posts, comments and photos, and your Meta AI chats, for future AI training. Data already used is not removed, and public posts about you by others are not covered."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.facebook.com",
+            "name": "c_user"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://www.facebook.com/privacy/center/",
+        "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+      },
+      "policyUrls": [
+        "https://www.facebook.com/privacy/policy/",
+        "https://www.facebook.com/privacy/genai/"
+      ],
+      "sources": [
+        {
+          "title": "How Meta uses information for generative AI models | Meta Privacy Center",
+          "url": "https://www.facebook.com/privacy/genai/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Building AI Technology for the UK in a Responsible and Transparent Way | Meta Newsroom",
+          "url": "https://about.fb.com/news/2024/09/building-ai-technology-for-the-uk-in-a-responsible-and-transparent-way/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Improving Your Recommendations on Our Apps With AI at Meta | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Meta starts training its AI using Europeans’ personal data (Icelandic Data Protection Authority, links both objection forms)",
+          "url": "https://island.is/en/news/meta-starts-training-its-artificial-intelligence-using-europeans-personal",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Daten für Meta-KI: Wer nicht will, muss jetzt handeln | SRF Kassensturz (Switzerland)",
+          "url": "https://www.srf.ch/sendungen/kassensturz-espresso/espresso/kuenstliche-intelligenz-daten-fuer-meta-ki-wer-nicht-will-muss-jetzt-handeln",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Processing of Personal Data for AI Training in Brazil: ANPD’s decisions in the Meta case | Future of Privacy Forum",
+          "url": "https://fpf.org/blog/processing-of-personal-data-for-ai-training-in-brazil-takeaways-from-anpds-preliminary-decisions-in-the-meta-case/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Matters: Meta’s Generative AI Features | Meta Newsroom",
+          "url": "https://about.fb.com/news/2023/09/privacy-matters-metas-generative-ai-features/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Seus dados agora podem treinar a IA da Meta — veja como impedir | TechTudo (Brazil)",
+          "url": "https://www.techtudo.com.br/noticias/2025/12/seus-dados-agora-podem-treinar-a-ia-da-meta-veja-como-impedir-edapps.ghtml",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "company": "Google",
+      "category": "ai-assistant",
+      "brandColor": "#4285f4",
+      "domains": [
+        "gemini.google.com"
+      ],
+      "summary": "While “Keep Activity” is on, Google uses your Gemini chats and uploads to improve its services, including its AI, and some chats are read by human reviewers. It is on by default for adults.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files",
+          "images",
+          "video",
+          "voice",
+          "feedback"
+        ],
+        "details": "With Keep Activity on (called Gemini Apps Activity until 2025, and on by default if you are 18 or over), Google saves your Gemini chats to your account (auto-deleted after 18 months unless you change it) and uses them, plus a sample of your uploads since 2 September 2025, to improve Google services, including its AI models. Human reviewers read a subset of chats. Reviewed chats are kept for up to 3 years, disconnected from your account, and are not deleted when you delete your activity. With Keep Activity off, or in a Temporary Chat, chats are still kept for up to 72 hours to reply to you and keep the service safe, but Google says they are not used to improve its AI models unless you send feedback. Audio, Gemini Live video and screen shares are only used if you tick a separate box, which is off by default. Work and school (Google Workspace) accounts are not used to train models outside your organisation, and only an administrator can change their Keep Activity setting.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "Google Ireland Limited is responsible for your data in the EEA and Switzerland. You can exercise GDPR rights, including the right to object, through Google's privacy contact form."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "keep-activity-off",
+          "type": "toggle",
+          "title": "Turn off “Keep Activity” for Gemini",
+          "description": "The main Gemini setting. It belongs to your Google Account, so it applies on every device.",
+          "url": "https://myactivity.google.com/product/gemini",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open gemini.google.com and sign in, then choose Settings & help → Activity (or open the link above).",
+            "Near the top, click “Turn off”. Choose “Turn off and delete activity” if you also want past chats deleted.",
+            "Confirm if Google asks you to."
+          ],
+          "effect": "New chats are not saved to your activity or used to improve Google's AI (they are still kept for up to 72 hours). You lose saved history for new chats. Chats already reviewed by humans are kept for up to 3 years."
+        },
+        {
+          "id": "audio-live-recordings",
+          "type": "toggle",
+          "title": "Untick sharing of audio and Gemini Live recordings",
+          "description": "Only matters if you turned it on: this box is off by default and only works while Keep Activity is on.",
+          "url": "https://myactivity.google.com/product/gemini",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open your Gemini Apps Activity page and sign in.",
+            "Find “Improve Google services with your audio and Gemini Live videos and screenshares”.",
+            "Make sure the box is unticked."
+          ],
+          "effect": "Stops future audio, Gemini Live video and screen share recordings being used to improve Google services. Transcripts of your chats are still covered by Keep Activity.",
+          "automation": {
+            "confidence": "experimental",
+            "hostPermissions": [
+              "https://myactivity.google.com/*"
+            ],
+            "loginIndicators": [
+              {
+                "role": "link",
+                "text": [
+                  "Sign in"
+                ]
+              },
+              {
+                "role": "button",
+                "text": [
+                  "Sign in"
+                ]
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Improve Google services with your audio",
+                    "audio and Gemini Live"
+                  ]
+                },
+                "timeoutMs": 15000,
+                "description": "Looking for the audio and Gemini Live setting"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "role": "checkbox",
+                  "text": [
+                    "Improve Google services with your audio",
+                    "audio and Gemini Live"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Unticking audio and Gemini Live recordings"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Improve Google services with your audio",
+                    "audio and Gemini Live"
+                  ]
+                },
+                "timeoutMs": 15000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "role": "checkbox",
+                  "text": [
+                    "Improve Google services with your audio",
+                    "audio and Gemini Live"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        }
+      ],
+      "contacts": {
+        "privacyRequestUrl": "https://support.google.com/policies/contact/general_privacy_form"
+      },
+      "policyUrls": [
+        "https://support.google.com/gemini/answer/13594961",
+        "https://support.google.com/gemini/answer/13278892",
+        "https://policies.google.com/privacy"
+      ],
+      "sources": [
+        {
+          "title": "Gemini Apps Privacy Hub | Gemini Apps Help",
+          "url": "https://support.google.com/gemini/answer/13594961?hl=en",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Manage & delete your activity in Gemini Apps | Gemini Apps Help",
+          "url": "https://support.google.com/gemini/answer/13278892?hl=en&co=GENIE.Platform%3DDesktop",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Gemini adds Temporary Chats and new personalization features | Google Blog",
+          "url": "https://blog.google/products/gemini/temporary-chats-privacy-controls/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Use Gemini Apps with a work or school Google Account | Gemini Apps Help",
+          "url": "https://support.google.com/gemini/answer/14620100",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Google",
+          "url": "https://policies.google.com/privacy",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "github",
+      "name": "GitHub Copilot",
+      "company": "GitHub (Microsoft)",
+      "category": "developer",
+      "brandColor": "#24292f",
+      "domains": [
+        "github.com"
+      ],
+      "summary": "Since 24 April 2026, GitHub may use your Copilot prompts, suggestions and code snippets to train AI models on Copilot Free, Pro, Pro+ and Max. It is on by default; Business and Enterprise plans are excluded.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "code",
+          "chats",
+          "feedback",
+          "activity"
+        ],
+        "details": "From 24 April 2026, GitHub may use interaction data from Copilot Free, Pro, Pro+ and Max accounts to train and improve AI models: inputs, outputs, code snippets and associated context (for example code around your cursor, file names and repository structure, Copilot Chat conversations and thumbs-up/down feedback). The “Allow GitHub to use my data for AI model training” setting is enabled by default, but if you had turned off the older product-improvement data collection setting, GitHub kept that choice. Code from private repositories is only collected while you actively use Copilot, not “at rest”. GitHub says this data may be shared with affiliates such as Microsoft, but not with third-party model providers. Copilot Business and Enterprise data is not used, and students and teachers with free Copilot access are excluded. Repositories indexed for Copilot search are not used for training.",
+        "since": "2026-04-24",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "GitHub relies on legitimate interests to develop AI features and lists a right to object. You can object in writing through GitHub's privacy contact form.",
+          "UK": "GitHub relies on legitimate interests to develop AI features and lists a right to object under UK GDPR. You can object through GitHub's privacy contact form."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "copilot-model-training",
+          "type": "toggle",
+          "title": "Disable “Allow GitHub to use my data for AI model training”",
+          "description": "The Copilot setting that controls whether your Copilot interactions are used to train AI models. It is a dropdown (Enabled/Disabled), not a switch.",
+          "url": "https://github.com/settings/copilot/features",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to GitHub.",
+            "Click your profile picture (top right), then Copilot settings.",
+            "Find “Allow GitHub to use my data for AI model training” in the Privacy section.",
+            "Open its dropdown and choose Disabled.",
+            "Don't see the setting? Your Copilot seat comes from a Business or Enterprise plan, whose data is already excluded."
+          ],
+          "effect": "Stops GitHub using your future Copilot interactions to train AI models. Data already used is not removed. Copilot keeps working as before.",
+          "automation": {
+            "confidence": "experimental",
+            "hostPermissions": [
+              "https://github.com/*"
+            ],
+            "loginIndicators": [
+              {
+                "selector": "input#login_field"
+              },
+              {
+                "text": [
+                  "Sign in to GitHub"
+                ]
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Allow GitHub to use my data for AI model training"
+                  ]
+                },
+                "timeoutMs": 15000,
+                "description": "Waiting for Copilot settings to load"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Allow GitHub to use my data for AI model training"
+                  ]
+                },
+                "description": "Opening the AI model training dropdown"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "selector": "[role=menuitemradio], [role=menuitem], [role=option]",
+                  "text": [
+                    "Disabled"
+                  ]
+                },
+                "timeoutMs": 5000,
+                "description": "Choosing Disabled"
+              },
+              {
+                "action": "wait",
+                "ms": 1500,
+                "description": "Saving"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Allow GitHub to use my data for AI model training"
+                  ]
+                },
+                "timeoutMs": 15000
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Allow GitHub to use my data for AI model training"
+                  ]
+                }
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "[role=menuitemradio]",
+                  "text": [
+                    "Disabled"
+                  ]
+                },
+                "state": "on",
+                "timeoutMs": 5000
+              }
+            ]
+          }
+        },
+        {
+          "id": "privacy-objection-form",
+          "type": "form",
+          "title": "Object to AI training through GitHub's privacy contact form",
+          "description": "A written objection under data-protection law. Useful as a record; the Copilot setting above is the direct way to stop training.",
+          "url": "https://support.github.com/contact/privacy",
+          "regions": [
+            "EU",
+            "UK",
+            "CH"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Open GitHub's privacy contact form while signed in.",
+            "Say that you object to your personal data, including Copilot interaction data, being used to train AI models (GDPR Article 21).",
+            "Include your GitHub username and submit."
+          ],
+          "effect": "Records a formal objection that GitHub must assess. It does not remove data already used for training."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://github.com",
+            "name": "user_session"
+          },
+          {
+            "url": "https://github.com",
+            "name": "__Host-user_session_same_site"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://support.github.com/contact/privacy",
+        "postalAddress": "GitHub, Inc., 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, United States"
+      },
+      "policyUrls": [
+        "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+        "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
+      ],
+      "sources": [
+        {
+          "title": "Managing GitHub Copilot policies as an individual subscriber | GitHub Docs",
+          "url": "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Updates to GitHub Copilot interaction data usage policy | The GitHub Blog",
+          "url": "https://github.blog/news-insights/company-news/updates-to-github-copilot-interaction-data-usage-policy/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "FAQ: Privacy Statement update on Copilot data use for model training (Free/Pro/Pro+) | GitHub Community",
+          "url": "https://github.com/orgs/community/discussions/188488",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Hosting of models for GitHub Copilot | GitHub Docs",
+          "url": "https://docs.github.com/en/copilot/reference/ai-models/model-hosting",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "GitHub General Privacy Statement (effective 27 April 2026) | GitHub Docs",
+          "url": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "grammarly",
+      "name": "Grammarly",
+      "company": "Superhuman Platform Inc. (formerly Grammarly)",
+      "category": "productivity",
+      "brandColor": "#15c39a",
+      "domains": [
+        "grammarly.com"
+      ],
+      "summary": "Grammarly can use what you write to train its AI models unless you turn off “Product Improvement and Training”. It is on by default for Free, Premium and single-user Pro accounts.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "documents",
+          "messages",
+          "chats",
+          "activity"
+        ],
+        "details": "Grammarly (now part of Superhuman) may use the content you write wherever Grammarly is active, including text processed by its generative AI features, to train and validate its AI and machine-learning models and to decide which features to build. The “Product Improvement and Training” control is on by default for Grammarly Free, Premium and single-user Pro accounts. It is off by default for Enterprise, Education and sales-purchased Business or Pro accounts; for multi-user Pro accounts bought on the website it starts on and only an admin can change it. Even with the control off, Grammarly may still use non-content data such as writing statistics (words written, suggestions accepted, mistakes made) for product improvement and training. Superhuman says it does not let its AI service providers train their models on customer content.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "Superhuman Platform Inc. is the data controller; you can also object to processing by emailing privacy@superhuman.com.",
+          "UK": "Superhuman Platform Inc. is the data controller; you can also object to processing by emailing privacy@superhuman.com."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "product-improvement-training",
+          "type": "toggle",
+          "title": "Turn off “Product Improvement and Training”",
+          "description": "The account-level switch for Grammarly Free and Premium accounts.",
+          "url": "https://account.grammarly.com/security/privacy",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to your Grammarly account.",
+            "Open your account's privacy settings (the link goes straight there).",
+            "Switch off “Product Improvement and Training”."
+          ],
+          "effect": "Grammarly stops using the content you write to train its models and improve the product for others. Non-content data such as writing statistics may still be used. Content already used is not removed.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://account.grammarly.com/*"
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Product Improvement and Training"
+                  ]
+                },
+                "timeoutMs": 15000,
+                "description": "Waiting for privacy settings to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "role": "switch",
+                  "text": [
+                    "Product Improvement and Training",
+                    "Data Training Settings"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “Product Improvement and Training”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Product Improvement and Training"
+                  ]
+                },
+                "timeoutMs": 15000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "role": "switch",
+                  "text": [
+                    "Product Improvement and Training",
+                    "Data Training Settings"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        },
+        {
+          "id": "admin-data-settings",
+          "type": "toggle",
+          "title": "Pro accounts and team admins: turn it off in Data settings",
+          "description": "For single-user Grammarly Pro accounts and admins of multi-user Pro accounts bought on the website. Team members must ask their admin.",
+          "url": "https://account.grammarly.com/admin/data_settings",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in as the account owner or an admin.",
+            "Open the account's data settings (the link goes straight there).",
+            "Switch off “Product Improvement and Training”."
+          ],
+          "effect": "Stops content from everyone on the account being used to train Grammarly's models or improve the product for other customers. Aggregated, de-identified statistics may still be used."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@superhuman.com",
+        "postalAddress": "Superhuman Platform Inc., 2261 Market Street, STE 85232, San Francisco, CA 94114, United States"
+      },
+      "policyUrls": [
+        "https://superhuman.com/legal/privacy-policy",
+        "https://support.grammarly.com/hc/en-us/articles/25555503115277-Product-Improvement-and-Training-Control"
+      ],
+      "sources": [
+        {
+          "title": "Product Improvement and Training Control | Grammarly Support",
+          "url": "https://support.grammarly.com/hc/en-us/articles/25555503115277-Product-Improvement-and-Training-Control",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy (effective 6 July 2026) | Superhuman",
+          "url": "https://superhuman.com/legal/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Superhuman Go: Data & Privacy FAQ | Superhuman Help Center",
+          "url": "https://help.superhuman.com/hc/en-us/articles/47716615380109-Superhuman-Go-Data-Privacy-FAQ",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "grok",
+      "name": "Grok",
+      "company": "xAI",
+      "category": "ai-assistant",
+      "brandColor": "#111111",
+      "domains": [
+        "grok.com",
+        "x.ai"
+      ],
+      "summary": "xAI can use your Grok chats on grok.com and in the Grok apps to train its models unless you turn off “Improve the Model”. Grok inside X is controlled by X's own settings.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files",
+          "images",
+          "voice",
+          "video",
+          "feedback"
+        ],
+        "details": "xAI's privacy policy (effective 4 April 2026) says it may use your prompts, uploads (files, images, audio, voice and video) and Grok's replies to develop its services and train its models. xAI's Consumer FAQ says you control this with the “Improve the Model” setting, which is on unless you turn it off. Private Chat conversations are not used for training and are deleted within 30 days. Feedback you give can still be used after you opt out, and a limited number of xAI staff may review conversations. If you use Grok without logging in, outside the EU and UK you cannot opt out. Business, enterprise and API customer content is not used to improve models. Grok used inside X is covered by X's privacy policy and X's own data-sharing setting, not by this one (see the X entry).",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "CH": "xAI's Swiss representative is Lionheart Squared Switzerland SarL (xai@lionheartsquared.ch).",
+          "EU": "xAI relies on legitimate interests to train on your data in Europe, and says you can object in your settings. Its EU representative is Lionheart Squared (Europe) Ltd (xai@lionheartsquared.eu).",
+          "UK": "xAI's UK representative is Lionheart Squared Limited (xai@lionheartsquared.co.uk). You can object to training in your settings."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "improve-the-model-toggle",
+          "type": "toggle",
+          "title": "Turn off “Improve the Model”",
+          "description": "The account setting on grok.com and in the Grok apps. It does not affect Grok inside X.",
+          "url": "https://grok.com/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open grok.com and sign in.",
+            "Open Settings, then Data.",
+            "Turn off “Improve the Model”.",
+            "In the Grok mobile app: Settings → Data Controls → turn off “Improve the model”."
+          ],
+          "effect": "New conversations are not used to train xAI's models. Conversations already used are not removed, and feedback you give can still be used."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://grok.com",
+            "name": "sso"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "privacy@x.ai",
+        "dpoEmail": "privacy@x.ai",
+        "privacyRequestUrl": "https://x.ai/privacy-portal/"
+      },
+      "policyUrls": [
+        "https://x.ai/legal/privacy-policy",
+        "https://x.ai/legal/faq"
+      ],
+      "sources": [
+        {
+          "title": "xAI Privacy Policy (effective 4 April 2026)",
+          "url": "https://x.ai/legal/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "xAI Consumer FAQs",
+          "url": "https://x.ai/legal/faq",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Grok privacy policy archive (Open Terms Archive)",
+          "url": "https://github.com/OpenTermsArchive/genai-eu-versions/blob/main/Grok/Privacy%20Policy.md",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "company": "Meta Platforms",
+      "category": "social",
+      "brandColor": "#E1306C",
+      "domains": [
+        "instagram.com"
+      ],
+      "summary": "Meta trains its AI on public Instagram posts, captions and comments from adults, and on your chats with Meta AI. The EU, UK, Switzerland and Brazil have an objection form; the US and most other countries have no opt-out.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "varies_by_region",
+        "dataTypes": [
+          "posts",
+          "comments",
+          "images",
+          "chats"
+        ],
+        "details": "Meta trains its generative AI models on content adults share publicly on Instagram, such as public posts, photos and their captions, and comments, and on your interactions with Meta AI (including AI chats in Instagram Direct). Meta says it only uses public content, so posts from private accounts are not used, and it does not train on private messages with friends unless someone shares them with Meta AI. Teen Accounts are private by default. Public posts of you by other people can still be used even if you object. Since 16 December 2025, outside the EU, UK and South Korea, your Meta AI chats also shape the content and ads you see, with no opt-out.",
+        "since": "2023-09",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "AU": "No opt-out. Meta confirmed to an Australian Senate inquiry in 2024 that it trains on public posts from Australian adults. Meta says it doesn’t train on private accounts, so you can turn on Private account (Settings and activity › Account privacy) or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+          "BR": "After Brazil’s data regulator (ANPD) paused Meta’s plans in 2024, Meta resumed with notices and an objection form for Brazilian users.",
+          "CH": "Swiss users were included from 27 May 2025 and can object with the same form (choose Switzerland as your country).",
+          "EU": "Since 27 May 2025 Meta has trained on public Instagram content from adults in the EU/EEA, relying on “legitimate interests”. You can object at any time with Meta’s form; an objection only covers future training. Public content from under-18s in the EU is not used.",
+          "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil, Meta offers no opt-out in most countries, including Canada, India and Japan. Meta says it doesn’t train on private accounts, so you can turn on Private account (Settings and activity › Account privacy) or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+          "UK": "Meta began training on UK adults’ public posts in late 2024 after changes agreed with the ICO. UK users can object with the same form, which only covers future training.",
+          "US": "No opt-out. Meta has used public posts from US adults to train its AI since at least 2023. Meta says it doesn’t train on private accounts, so you can turn on Private account (Settings and activity › Account privacy) or delete public posts. Avoid Meta AI if you don’t want your chats used."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "objection-form",
+          "type": "form",
+          "title": "Object to Meta using your Instagram data for AI",
+          "description": "Meta’s “right to object” form for AI at Meta. One objection should cover accounts linked in the same Accounts Center; if in doubt, also submit the Facebook form.",
+          "url": "https://help.instagram.com/contact/767264225370182",
+          "regions": [
+            "EU",
+            "UK",
+            "CH",
+            "BR"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Instagram in your browser.",
+            "Open the objection form. You can also reach it from Settings and activity › Privacy Center, on the page about how Meta uses information for generative AI models.",
+            "Choose your country and enter the email address on your account. Add a short reason if the form asks for one.",
+            "Submit, then keep the confirmation email Meta sends you."
+          ],
+          "effect": "Once accepted, Meta stops using your public Instagram posts, captions and comments, and your Meta AI chats, for future AI training. Data already used is not removed, and posts about you by others are not covered."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.instagram.com",
+            "name": "sessionid"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://privacycenter.instagram.com/",
+        "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+      },
+      "policyUrls": [
+        "https://privacycenter.instagram.com/policy/",
+        "https://privacycenter.instagram.com/privacy/genai/"
+      ],
+      "sources": [
+        {
+          "title": "How Meta uses information for generative AI models | Instagram Privacy Center",
+          "url": "https://privacycenter.instagram.com/privacy/genai/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Building AI Technology for the UK in a Responsible and Transparent Way | Meta Newsroom",
+          "url": "https://about.fb.com/news/2024/09/building-ai-technology-for-the-uk-in-a-responsible-and-transparent-way/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Improving Your Recommendations on Our Apps With AI at Meta | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Meta starts training its AI using Europeans’ personal data (Icelandic Data Protection Authority, links both objection forms)",
+          "url": "https://island.is/en/news/meta-starts-training-its-artificial-intelligence-using-europeans-personal",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Daten für Meta-KI: Wer nicht will, muss jetzt handeln | SRF Kassensturz (Switzerland)",
+          "url": "https://www.srf.ch/sendungen/kassensturz-espresso/espresso/kuenstliche-intelligenz-daten-fuer-meta-ki-wer-nicht-will-muss-jetzt-handeln",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Processing of Personal Data for AI Training in Brazil: ANPD’s decisions in the Meta case | Future of Privacy Forum",
+          "url": "https://fpf.org/blog/processing-of-personal-data-for-ai-training-in-brazil-takeaways-from-anpds-preliminary-decisions-in-the-meta-case/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Use Meta AI on Instagram | Instagram Help Center",
+          "url": "https://help.instagram.com/2050445508681504",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "company": "LinkedIn (Microsoft)",
+      "category": "professional",
+      "brandColor": "#0A66C2",
+      "domains": [
+        "linkedin.com"
+      ],
+      "summary": "LinkedIn uses your profile, public posts and use of its AI features to train content-generating AI, including Microsoft’s. It’s on by default in every region, and one setting turns it off.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "profile",
+          "posts",
+          "comments",
+          "feedback"
+        ],
+        "details": "LinkedIn and its affiliates may use details from your profile, the public content you post, and how you use LinkedIn’s generative AI features (including feedback you give) to train models that generate content, such as writing suggestions. Private messages are not used. The “Data for Generative AI Improvement” setting is on by default and also controls whether LinkedIn shares your data with its affiliate Microsoft for Microsoft’s own model training. Turning it off doesn’t undo training already done and doesn’t cover AI that doesn’t generate content (for example personalisation, security or moderation models); for those, LinkedIn offers a Data Processing Objection form.",
+        "since": "2024-09",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "CA": "Training on Canadian members’ data started on 3 November 2025, with the setting on by default.",
+          "CH": "Training on Swiss members’ data started on 3 November 2025, with the setting on by default.",
+          "EU": "Training on EU/EEA members’ data started on 3 November 2025, with the setting on by default. You can also object under GDPR Article 21 using LinkedIn’s objection form.",
+          "UK": "Training on UK members’ data started on 3 November 2025, with the setting on by default.",
+          "US": "US members’ data has been used since at least September 2024; LinkedIn updated its terms after training had begun."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "data-for-ai-toggle",
+          "type": "toggle",
+          "title": "Turn off “Data for Generative AI Improvement”",
+          "description": "The account setting that stops LinkedIn (and Microsoft) training content-generating AI on your data.",
+          "url": "https://www.linkedin.com/mypreferences/d/settings/data-for-ai-improvement",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to LinkedIn.",
+            "Click Me › Settings & Privacy.",
+            "Select Data privacy, then “Data for Generative AI Improvement”.",
+            "Turn off “Use my data for training content creation AI models”."
+          ],
+          "effect": "Stops LinkedIn and its affiliates, including Microsoft, using your data and content to train content-generating AI from now on. Training already done is not undone.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://www.linkedin.com/*"
+            ],
+            "loginIndicators": [
+              {
+                "selector": "input[name='session_key']"
+              },
+              {
+                "selector": "input[name='session_password']"
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Use my data for training content creation AI models",
+                    "training content creation AI models"
+                  ]
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for “Data for Generative AI Improvement” to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Use my data for training content creation AI models",
+                    "training content creation AI models",
+                    "Data for Generative AI Improvement"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “Use my data for training content creation AI models”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Use my data for training content creation AI models",
+                    "training content creation AI models"
+                  ]
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Use my data for training content creation AI models",
+                    "training content creation AI models",
+                    "Data for Generative AI Improvement"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        },
+        {
+          "id": "objection-form",
+          "type": "form",
+          "title": "Object to other AI uses of your data (objection form)",
+          "description": "LinkedIn’s Data Processing Objection form covers AI the setting doesn’t, such as models used for personalisation, security and moderation.",
+          "url": "https://www.linkedin.com/help/linkedin/ask/TS-DPRO",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Sign in to LinkedIn and open the Data Processing Objection form.",
+            "Choose the processing you object to (for example, training AI models) and explain your request.",
+            "Submit, and keep LinkedIn’s reply."
+          ],
+          "effect": "LinkedIn reviews the objection and applies it to future processing only. Outside the EU, UK and Switzerland it may not be legally required to agree."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.linkedin.com",
+            "name": "li_at"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://www.linkedin.com/help/linkedin/ask/TSO-DPO",
+        "postalAddress": "LinkedIn Ireland Unlimited Company, Wilton Plaza, Wilton Place, Dublin 2, Ireland"
+      },
+      "policyUrls": [
+        "https://www.linkedin.com/legal/privacy-policy",
+        "https://www.linkedin.com/help/linkedin/answer/a5538339"
+      ],
+      "sources": [
+        {
+          "title": "LinkedIn and Generative AI (GAI) FAQs | LinkedIn Help",
+          "url": "https://www.linkedin.com/help/linkedin/answer/a5538339",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Control whether LinkedIn uses your data to improve generative AI | LinkedIn Help",
+          "url": "https://www.linkedin.com/help/linkedin/answer/a6278444",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Update to our Terms and data use | LinkedIn Help",
+          "url": "https://www.linkedin.com/help/linkedin/answer/a8059228",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "LinkedIn Privacy Policy",
+          "url": "https://www.linkedin.com/legal/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "LinkedIn scraped user data for training before updating its terms of service | TechCrunch",
+          "url": "https://techcrunch.com/2024/09/18/linkedin-scraped-user-data-for-training-before-updating-its-terms-of-service",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "LinkedIn will use your data to train its AI unless you opt out now | Malwarebytes",
+          "url": "https://www.malwarebytes.com/blog/news/2025/09/linkedin-will-use-your-data-to-train-its-ai-unless-you-opt-out-now",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "meta-ai",
+      "name": "Meta AI",
+      "company": "Meta Platforms",
+      "category": "ai-assistant",
+      "brandColor": "#0064E0",
+      "domains": [
+        "meta.ai"
+      ],
+      "summary": "Meta uses what you say to Meta AI, including text, voice and images, to improve its AI and, outside the EU, UK and South Korea, to target ads. Only the EU, UK, Switzerland and Brazil get an objection form.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "varies_by_region",
+        "dataTypes": [
+          "chats",
+          "voice",
+          "images",
+          "feedback"
+        ],
+        "details": "Meta’s help pages say it uses your interactions with its AIs to improve AI at Meta. This covers the Meta AI app and website and Meta AI inside Facebook, Instagram, Messenger and WhatsApp. Meta says voice transcripts and recordings may be stored to improve its products, including speech technology. Your profile, activity and location can be used to personalise answers, and if Meta AI can’t answer, your message may be shared with search partners. Since 16 December 2025 (outside the EU, UK and South Korea) your Meta AI chats also shape the content and ads you see; Meta says topics such as health, religion or politics are not used for ads. You can delete chats, but no setting stops training. Meta also has a separate form for personal information from third-party sources used to train its AI.",
+        "since": "2023-09",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "BR": "You can object with Meta’s form.",
+          "CH": "You can object with Meta’s form (choose Switzerland as your country).",
+          "EU": "Meta AI launched in the EU in 2025. Since 27 May 2025 your interactions with Meta AI can be used for training unless you object with Meta’s form. Chats are not used for ads in the EU.",
+          "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil there is no opt-out, and (except in South Korea) your chats also shape ads and content. You can delete chats (Meta AI app › Settings › Data & privacy › Manage your information), delete saved memories, reset WhatsApp AI chats with /reset-ai, or avoid Meta AI. Deleting doesn’t undo past training.",
+          "UK": "You can object with Meta’s form. Chats are not used for ads in the UK.",
+          "US": "No opt-out from training, and since 16 December 2025 your chats are also used to personalise ads and content. You can delete chats (Meta AI app › Settings › Data & privacy › Manage your information), delete saved memories, reset WhatsApp AI chats with /reset-ai, or avoid Meta AI. Deleting doesn’t undo past training."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "objection-form",
+          "type": "form",
+          "title": "Object to Meta using your Meta AI chats for training",
+          "description": "Meta’s objection form covers your interactions with AI at Meta as well as public posts. Use the form for the account you use Meta AI with.",
+          "url": "https://www.facebook.com/help/contact/712876720715583",
+          "regions": [
+            "EU",
+            "UK",
+            "CH",
+            "BR"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Facebook and open the objection form. If you use Meta AI with an Instagram account, use Instagram’s form instead (help.instagram.com/contact/767264225370182). WhatsApp has its own form in the app.",
+            "Choose your country and enter the email address on your account.",
+            "Add a short reason if the form asks for one, then submit.",
+            "Keep the confirmation email Meta sends you."
+          ],
+          "effect": "Once accepted, Meta stops using your future Meta AI interactions (and public posts) for AI training. Chats already used are not removed."
+        }
+      ],
+      "contacts": {
+        "privacyRequestUrl": "https://www.facebook.com/privacy/center/",
+        "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+      },
+      "policyUrls": [
+        "https://www.facebook.com/privacy/policy/",
+        "https://www.meta.com/help/artificial-intelligence/1771195753735844/"
+      ],
+      "sources": [
+        {
+          "title": "Start a chat with Meta AI | Meta Help Center",
+          "url": "https://www.meta.com/help/artificial-intelligence/943942350800511/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Manage your information on Meta AI and Vibes | Meta Help Center",
+          "url": "https://www.meta.com/help/artificial-intelligence/1771195753735844/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Remove posts, chats and media from Meta AI and Vibes | Meta Help Center",
+          "url": "https://www.meta.com/help/artificial-intelligence/2457110494637611/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Introducing the Meta AI App | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/04/introducing-meta-ai-app-new-way-access-ai-assistant/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Improving Your Recommendations on Our Apps With AI at Meta | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How Meta uses information for generative AI models | Meta Privacy Center",
+          "url": "https://www.facebook.com/privacy/genai/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Data Subject Rights for Third Party Information Used for AI at Meta | Facebook",
+          "url": "https://www.facebook.com/help/contact/510058597920541",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How to delete your chats with Meta AI | WhatsApp Help Center",
+          "url": "https://faq.whatsapp.com/688464770796037/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "microsoft-copilot",
+      "name": "Microsoft Copilot",
+      "company": "Microsoft",
+      "category": "ai-assistant",
+      "brandColor": "#0078d4",
+      "domains": [
+        "copilot.microsoft.com",
+        "copilot.com"
+      ],
+      "summary": "Microsoft says chats in the updated Copilot app (from August 2026) are not used to train its foundation models. The older app could train on your text and voice chats unless you switched that off.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "varies_by_region",
+        "dataTypes": [
+          "chats",
+          "voice"
+        ],
+        "details": "Microsoft is moving personal accounts to an updated Microsoft Copilot app, available since 18 August 2026. For that app, Microsoft states that your prompts, responses and file contents are not used to train foundation models, and its privacy settings no longer include a training switch. Optional feedback may still be used to improve Copilot. In the previous consumer app, Microsoft could use your de-identified text and voice conversations to train its generative AI models by default, with switches to opt out. That did not apply to users under 18, signed-out users, or users in the EEA and several other countries. Work or school (Entra ID) accounts and Copilot inside Microsoft 365 Personal and Family apps are not used for training. Microsoft's general privacy statement still says it may use data to develop and train AI models, so if you still use the older app, check its Privacy settings.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "BR": "Copilot conversations from Brazil are excluded from model training (as are China excluding Hong Kong, Israel, Nigeria, South Korea and Vietnam).",
+          "EU": "Microsoft says it does not train its models on consumer Copilot data from the European Economic Area, so the training switches are not shown there.",
+          "UK": "Microsoft's list of excluded places does not name the UK. If the older app shows you the training switches, turn them off."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "training-toggles-legacy-app",
+          "type": "toggle",
+          "title": "Turn off training on your conversations (older Copilot app)",
+          "description": "Only in the previous version of the Copilot app. The updated app (from August 2026) has no training switch, because Microsoft says it doesn't train foundation models on those chats.",
+          "url": "https://copilot.microsoft.com/",
+          "regions": [
+            "US",
+            "US-CA",
+            "UK",
+            "CH",
+            "CA",
+            "AU",
+            "IN",
+            "JP",
+            "OTHER"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open Copilot and sign in with your Microsoft account.",
+            "Select your profile icon, then your profile name, then Privacy. In the Windows or Mac app: profile icon → Settings → Privacy. In the mobile app: menu → profile icon → Account → Privacy.",
+            "Turn off “Training on conversation activity” and “Training on voice conversations” (some versions call them “Model training on text” and “Model training on voice”).",
+            "If you don't see these switches, you are on the updated app or in a place where training is already off."
+          ],
+          "effect": "Excludes your future conversations from training Microsoft's AI models. It does not stop use for safety, general product improvement or advertising, and does not remove past data."
+        }
+      ],
+      "contacts": {
+        "privacyRequestUrl": "https://aka.ms/privacyresponse",
+        "postalAddress": "Microsoft Ireland Operations Limited, Attn: Data Protection Officer, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Ireland"
+      },
+      "policyUrls": [
+        "https://privacy.microsoft.com/en-us/privacystatement",
+        "https://support.microsoft.com/en-us/privacy/microsoft-copilot/activity-history",
+        "https://support.microsoft.com/en-us/privacy/microsoft-copilot/privacy-controls",
+        "https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot"
+      ],
+      "sources": [
+        {
+          "title": "Microsoft Copilot for individuals: your activity history | Microsoft Support",
+          "url": "https://support.microsoft.com/en-us/privacy/microsoft-copilot/activity-history",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Microsoft Copilot for individuals: your privacy controls and choices | Microsoft Support",
+          "url": "https://support.microsoft.com/en-us/privacy/microsoft-copilot/privacy-controls",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Microsoft Copilot privacy controls (previous app) | Microsoft Support",
+          "url": "https://support.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-privacy-controls",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy FAQ for Microsoft Copilot | Microsoft Support",
+          "url": "https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Copilot App Updates for Personal, Work, and School Accounts | Microsoft Support",
+          "url": "https://support.microsoft.com/en-us/microsoft-365-copilot/learning/changes-microsoft-copilot-app",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Microsoft Privacy Statement (last updated September 2026)",
+          "url": "https://privacy.microsoft.com/en-us/privacystatement",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "mistral-le-chat",
+      "name": "Mistral Vibe (formerly Le Chat)",
+      "company": "Mistral AI",
+      "category": "ai-assistant",
+      "brandColor": "#fa520f",
+      "domains": [
+        "chat.mistral.ai",
+        "mistral.ai"
+      ],
+      "summary": "Mistral trains its models on your Vibe (formerly Le Chat) chats and uploads unless you opt out. This covers Free, Pro and Student plans, and Team workspaces unless an admin opts out. Enterprise is excluded.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files",
+          "feedback"
+        ],
+        "details": "Mistral renamed Le Chat to Vibe at the end of May 2026. Its privacy policy (effective 3 September 2026) says it trains its models on your inputs and outputs “subject to your opt-out”, and on the feedback (thumbs up or down) you give. Documents you upload count as input. Mistral's help center (updated September 2026) says Vibe users are not opted out by default, while Enterprise customers are. Earlier policies said Le Chat Team was never used for training. The current policy no longer says this, and the help center describes Team admins switching training off for the whole organisation, so treat Team workspaces as included unless your admin has opted out. The Vibe switch and the Mistral Studio / API switch (“Anonymous improvement data”) are separate. Feedback is listed separately from the opt-out, so it may still be used.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "Mistral AI is a French company, so the GDPR applies directly. You can also object through its “Privacy Requests” contact form, which goes to its Data Protection Officer."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "vibe-training-toggle",
+          "type": "toggle",
+          "title": "Turn off “Allow your interactions to be used to train our models”",
+          "description": "The Vibe training switch in Mistral's Admin panel. On mobile it is called “Enable data sharing”.",
+          "url": "https://admin.mistral.ai/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to the Mistral Admin panel with your Vibe account.",
+            "Under Manage, select Vibe.",
+            "In the Privacy section, turn off “Allow your interactions to be used to train our models”.",
+            "In the Vibe mobile app: Settings → Data & Account Controls → untick “Enable data sharing”.",
+            "On a Team plan, an admin can switch this off for the whole organisation."
+          ],
+          "effect": "Mistral stops using your future inputs and outputs, including uploaded documents, for training. It does not cover the separate Studio / API setting or feedback you give, and does not remove data already used."
+        },
+        {
+          "id": "privacy-request-form",
+          "type": "form",
+          "title": "Object through Mistral's “Privacy Requests” form",
+          "description": "A written objection handled by Mistral's Data Protection Officer. The account switch is quicker.",
+          "url": "https://mistral.ai/en/contact",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Open Mistral's contact page and choose “Privacy Requests”.",
+            "Use the email address of your Vibe account.",
+            "Say that you object to your inputs, outputs and feedback being used to train Mistral's models, and submit."
+          ],
+          "effect": "Records a formal objection. Mistral notes that requests about training data have technical limits, so data already used may not be removed."
+        }
+      ],
+      "contacts": {
+        "privacyRequestUrl": "https://mistral.ai/en/contact",
+        "postalAddress": "Mistral AI, Attn: DPO, 15 rue des Halles, 75001 Paris, France"
+      },
+      "policyUrls": [
+        "https://legal.mistral.ai/terms/privacy-policy",
+        "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training"
+      ],
+      "sources": [
+        {
+          "title": "Privacy Policy | Mistral AI (effective 3 September 2026)",
+          "url": "https://legal.mistral.ai/terms/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Can I opt out of my input or output data being used for training? | Mistral Help Center",
+          "url": "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Le Chat is now Vibe | Mistral Help Center",
+          "url": "https://help.mistral.ai/en/articles/682992-le-chat-is-now-vibe",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Mistral Vibe privacy policy archive (Open Terms Archive)",
+          "url": "https://github.com/OpenTermsArchive/genai-eu-versions/blob/main/Vibe/Privacy%20Policy.md",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "company": "Notion Labs, Inc.",
+      "category": "productivity",
+      "brandColor": "#191919",
+      "domains": [
+        "notion.so",
+        "notion.com"
+      ],
+      "summary": "Notion says it doesn't use your workspace content to train AI models by default, and its AI providers are contractually barred from doing so. Training only happens if a workspace opts in to Notion's AI LEAP program.",
+      "training": {
+        "trainsOnUserData": "no",
+        "defaultState": "opted_out",
+        "dataTypes": [],
+        "details": "Notion states that, by default, neither Notion nor its AI subprocessors (the model providers behind Notion AI) use customer data to train any models, and that its contracts with those subprocessors prohibit training on customer data. Notion runs an opt-in program, AI LEAP, in which a workspace can choose to share workspace data to improve the underlying models in exchange for early access to new AI features; data is only used for training if the workspace opts in. On Enterprise plans the model providers apply zero data retention; on other plans providers may keep data for a limited period, but not for training. Notion AI respects existing page permissions.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "no-training",
+          "type": "none",
+          "title": "Nothing to do unless your workspace joined AI LEAP",
+          "description": "Notion does not train on workspace content by default. Only a workspace that opted in to the AI LEAP program shares data for training.",
+          "url": "https://www.notion.com/help/notion-ai-security-practices",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "No action is needed by default.",
+            "If you are not sure whether your workspace joined Notion's opt-in AI LEAP program, ask your workspace owner.",
+            "Workspace owners who joined AI LEAP and want to leave should contact Notion."
+          ],
+          "effect": "By default your content is not used for training. Leaving AI LEAP stops future sharing but may not undo data already shared."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.notion.so",
+            "name": "token_v2"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "team@makenotion.com"
+      },
+      "policyUrls": [
+        "https://www.notion.com/help/notion-ai-security-practices",
+        "https://privacycenter.notion.so/policies"
+      ],
+      "sources": [
+        {
+          "title": "Notion AI security & privacy practices | Notion Help Center",
+          "url": "https://www.notion.com/help/notion-ai-security-practices",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Notion's commitment to AI safety | Notion Help Center",
+          "url": "https://www.notion.com/help/ai-safety",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy practices at Notion | Notion Help Center",
+          "url": "https://www.notion.com/help/privacy",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "company": "Perplexity AI",
+      "category": "ai-assistant",
+      "brandColor": "#20808d",
+      "domains": [
+        "perplexity.ai"
+      ],
+      "summary": "Perplexity uses your searches, chats and uploads to improve its AI models unless you turn off “AI data retention”. Enterprise accounts are excluded, and you can't opt out while logged out.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files"
+        ],
+        "details": "Perplexity's Privacy Notice (last updated 8 July 2026) says it uses the prompts, queries and uploads you submit to improve or create its services, including its AI models. For Free, Pro and Max accounts the “AI data retention” setting is on by default; turning it off excludes your future signed-in activity from model training. The July 2026 notice no longer describes this opt-out itself, but the setting is still in the product. If you use Perplexity without logging in, you cannot opt out. Enterprise data is never used for training, and the Enterprise and API offerings are outside the notice. Incognito mode stops your search history being saved; Perplexity does not say whether it changes training. The Comet browser and the Email Assistant have their own rules (Perplexity says email content is not used to train AI models).",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "VeraSafe is Perplexity's representative in the EU. You can object to processing through Perplexity's data request form.",
+          "UK": "VeraSafe is Perplexity's representative in the UK. You can object to processing through Perplexity's data request form."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "ai-data-retention-toggle",
+          "type": "toggle",
+          "title": "Turn off “AI data retention”",
+          "description": "The account setting that decides whether your activity is used to train Perplexity's models.",
+          "url": "https://www.perplexity.ai/account/preferences",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Perplexity.",
+            "Click your account name, choose All settings, then Preferences.",
+            "Turn off “AI data retention”."
+          ],
+          "effect": "Your future signed-in searches and chats are excluded from model training. Data already used is not removed.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://www.perplexity.ai/*"
+            ],
+            "loginIndicators": [
+              {
+                "role": "button",
+                "text": [
+                  "Continue with Google",
+                  "Continue with Apple",
+                  "Continue with email"
+                ]
+              },
+              {
+                "text": [
+                  "Sign in to manage your account"
+                ]
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "AI data retention",
+                    "AI data usage"
+                  ]
+                },
+                "timeoutMs": 15000,
+                "description": "Waiting for Preferences to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "[role='switch'], input[type='checkbox']",
+                  "text": [
+                    "AI data retention",
+                    "AI data usage"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “AI data retention”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "AI data retention",
+                    "AI data usage"
+                  ]
+                },
+                "timeoutMs": 15000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "[role='switch'], input[type='checkbox']",
+                  "text": [
+                    "AI data retention",
+                    "AI data usage"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        },
+        {
+          "id": "data-request-form-objection",
+          "type": "form",
+          "title": "Object to training through Perplexity's data request form",
+          "description": "A written objection for people in the EU, UK or Switzerland. The account switch is quicker.",
+          "url": "https://perplexity.typeform.com/datarequest",
+          "regions": [
+            "EU",
+            "UK",
+            "CH"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Open Perplexity's data request form.",
+            "Use the email address of your Perplexity account.",
+            "Say that you object to your prompts, searches and uploads being used to train AI models, and submit.",
+            "Perplexity may ask you to verify your identity."
+          ],
+          "effect": "Creates a written objection that Perplexity must answer under GDPR or UK GDPR. It does not remove data already used."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.perplexity.ai",
+            "name": "__Secure-next-auth.session-token"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "support@perplexity.ai",
+        "privacyRequestUrl": "https://perplexity.typeform.com/datarequest"
+      },
+      "policyUrls": [
+        "https://www.perplexity.ai/hub/legal/privacy-notice",
+        "https://www.perplexity.ai/help-center/en/articles/11564572-data-collection-at-perplexity"
+      ],
+      "sources": [
+        {
+          "title": "Perplexity Privacy Notice (last updated 8 July 2026)",
+          "url": "https://www.perplexity.ai/hub/legal/privacy-notice",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Data Collection at Perplexity | Perplexity Help Center",
+          "url": "https://www.perplexity.ai/help-center/en/articles/11564572-data-collection-at-perplexity",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Account & Settings | Perplexity Help Center",
+          "url": "https://www.perplexity.ai/help-center/en/articles/10352990-account-settings",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Data retention and privacy for Enterprise organizations | Perplexity Help Center",
+          "url": "https://www.perplexity.ai/help-center/en/articles/11187708-data-retention-and-privacy-for-enterprise-organizations-and-users",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "pinterest",
+      "name": "Pinterest",
+      "company": "Pinterest, Inc.",
+      "category": "social",
+      "brandColor": "#E60023",
+      "domains": [
+        "pinterest.com"
+      ],
+      "summary": "Pinterest trains its AI, including its image generator Pinterest Canvas, on Pins, images and descriptions. Adults are opted in by default and one setting turns it off; under-18s are excluded.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "images",
+          "posts",
+          "creative-works"
+        ],
+        "details": "Pinterest uses Pins, images, descriptions and metadata that people save or upload to train Pinterest Canvas, its image-generation model (used in part to create ad imagery). Its privacy policy says it uses your information to train machine learning models, including generative AI, regardless of when Pins were posted. The “Use your data to train Pinterest Canvas” setting under Privacy and data is on by default for adults; users under 18 are opted out and can’t opt in. The setting covers generative AI training, not other machine learning such as recommendations. Pinterest has announced a privacy policy update, effective 12 November 2026, that adds more detail on how it trains its models.",
+        "since": "2024",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "You can also object under GDPR using Pinterest’s Data Protection Officer contact form.",
+          "UK": "You can also object under UK GDPR using Pinterest’s Data Protection Officer contact form."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "canvas-training-toggle",
+          "type": "toggle",
+          "title": "Turn off “Use your data to train Pinterest Canvas”",
+          "description": "The Privacy and data setting that keeps your Pins out of Pinterest’s generative AI training.",
+          "url": "https://www.pinterest.com/settings/privacy",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Pinterest.",
+            "Open Settings › Privacy and data.",
+            "Turn off “Use your data to train Pinterest Canvas”.",
+            "Click Save if a Save button appears."
+          ],
+          "effect": "Stops your content being used to train Pinterest Canvas from now on. It doesn’t undo past training or stop other machine learning, such as recommendations.",
+          "automation": {
+            "confidence": "experimental",
+            "hostPermissions": [
+              "https://*.pinterest.com/*"
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Use your data to train Pinterest Canvas",
+                    "train Pinterest Canvas"
+                  ]
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for Privacy and data settings to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Use your data to train Pinterest Canvas",
+                    "train Pinterest Canvas"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “Use your data to train Pinterest Canvas”"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Save"
+                  ]
+                },
+                "optional": true,
+                "description": "Saving your settings"
+              },
+              {
+                "action": "wait",
+                "ms": 1500
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Use your data to train Pinterest Canvas",
+                    "train Pinterest Canvas"
+                  ]
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Use your data to train Pinterest Canvas",
+                    "train Pinterest Canvas"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy-support@pinterest.com",
+        "privacyRequestUrl": "https://help.pinterest.com/en/data-protection-officer-contact-form"
+      },
+      "policyUrls": [
+        "https://policy.pinterest.com/en/privacy-policy",
+        "https://help.pinterest.com/en/article/manage-genai-settings"
+      ],
+      "sources": [
+        {
+          "title": "Manage GenAI settings | Pinterest Help",
+          "url": "https://help.pinterest.com/en/article/manage-genai-settings",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Manage your privacy and data settings | Pinterest Help",
+          "url": "https://help.pinterest.com/en/article/your-privacy-and-data-settings",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "AI at Pinterest | Pinterest Help",
+          "url": "https://help.pinterest.com/en/article/ai-at-pinterest",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Pinterest Policy",
+          "url": "https://policy.pinterest.com/en/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Pinterest changed its User Terms to train AI on your photos and data. Here’s how to opt out | Transparency Coalition",
+          "url": "https://www.transparencycoalition.ai/news/pinterest-changed-its-user-terms-to-train-ai-on-your-photos-and-data-heres-how-to-stop-it",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Pinterest bans binary options ads under new scam and deception rules (November 2026 policy update) | PPC Land",
+          "url": "https://ppc.land/pinterest-bans-binary-options-ads-under-new-scam-and-deception-rules/",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "quora",
+      "name": "Quora",
+      "company": "Quora, Inc.",
+      "category": "social",
+      "brandColor": "#B92B27",
+      "domains": [
+        "quora.com"
+      ],
+      "summary": "Quora says it doesn’t currently train its own AI on your answers, but a setting allowing AI training on your content is on by default. You can switch it off in privacy settings.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "posts",
+          "comments"
+        ],
+        "details": "Quora’s help center says it does not currently use answers, posts or comments from users to train the large language models that generate content on Quora, but that this may change. The setting “Allow large language models to be trained on your content” is on by default and controls future training. Comments you leave on AI-generated answers may still be used for training because they respond directly to the AI. Models already trained on your content won’t unlearn it, and Quora can’t fully stop third parties scraping public content. Quora’s Poe chatbot app is separate: bot developers on Poe may use your chats to train their models.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "llm-training-toggle",
+          "type": "toggle",
+          "title": "Turn off “Allow large language models to be trained on your content”",
+          "description": "The privacy setting that keeps your Quora content out of future LLM training.",
+          "url": "https://www.quora.com/settings/privacy",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Quora.",
+            "Click your profile picture › Settings › Privacy.",
+            "Turn off “Allow large language models to be trained on your content”."
+          ],
+          "effect": "Your content won’t be used in future LLM training from the moment you switch it off. Comments on AI-generated answers may still be used, and past training isn’t undone.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://*.quora.com/*"
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Allow large language models to be trained on your content",
+                    "large language models to be trained"
+                  ]
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for Quora’s privacy settings to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Allow large language models to be trained on your content",
+                    "large language models to be trained"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “Allow large language models to be trained on your content”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Allow large language models to be trained on your content",
+                    "large language models to be trained"
+                  ]
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Allow large language models to be trained on your content",
+                    "large language models to be trained"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@quora.com"
+      },
+      "policyUrls": [
+        "https://www.quora.com/about/privacy",
+        "https://help.quora.com/hc/en-us/articles/15205064557844-Can-I-opt-out-of-having-my-Quora-content-used-to-train-LLMs"
+      ],
+      "sources": [
+        {
+          "title": "Can I opt-out of having my Quora content used to train LLMs? | Quora Help Center",
+          "url": "https://help.quora.com/hc/en-us/articles/15205064557844-Can-I-opt-out-of-having-my-Quora-content-used-to-train-LLMs",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "What are LLMs and how does Quora use them? | Quora Help Center",
+          "url": "https://help.quora.com/hc/en-us/articles/15204996933780-What-are-LLMs-and-how-does-Quora-use-them",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Quora Privacy Policy",
+          "url": "https://www.quora.com/about/privacy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Poe Privacy Policy",
+          "url": "https://poe.com/pages/privacy",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "reddit",
+      "name": "Reddit",
+      "company": "Reddit, Inc.",
+      "category": "social",
+      "brandColor": "#FF4500",
+      "domains": [
+        "reddit.com",
+        "redd.it"
+      ],
+      "summary": "Reddit licenses public posts and comments to AI companies such as Google and OpenAI for training. There is no opt-out, but licensees must stop using content you delete.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "no_choice",
+        "dataTypes": [
+          "posts",
+          "comments",
+          "images",
+          "video"
+        ],
+        "details": "Reddit licenses public content (posts, comments and media in public communities) to AI companies, including Google (from 2024) and OpenAI, which can use it to train and power their models; Reddit also uses content for its own AI features. Private messages, chats and content in private communities are not licensed. Reddit requires licensees to stop using or displaying content once you delete it, but it cannot control copies others have scraped, and it is unclear whether deleted content is removed from models already trained. Reddit’s privacy policy effective 1 July 2026 also lists “LLM providers” that help summarise public content for search results on Reddit.",
+        "since": "2024-02",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "No dedicated opt-out. Under GDPR you can ask Reddit to erase your data or object to processing by emailing its privacy team; deleting your content is still the most effective step.",
+          "UK": "No dedicated opt-out. You can send an erasure or objection request under UK GDPR."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "no-opt-out",
+          "type": "none",
+          "title": "No opt-out from Reddit’s AI data licensing",
+          "description": "Reddit has no setting that keeps your public posts out of its AI licensing deals.",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "involved",
+          "steps": [
+            "Delete posts and comments you don’t want licensed (open your profile, then use the ••• menu on each item › Delete).",
+            "Post in private communities, or use chat and messages, for things you want kept out.",
+            "If you delete your account, delete your posts and comments first: deleting the account alone leaves them up without your username.",
+            "EU/UK users can also email an objection or erasure request to redditdatarequests@reddit.com."
+          ],
+          "effect": "Deletion is the only lever: licensees must stop using deleted content from then on, but data already used for training is not removed."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.reddit.com",
+            "name": "reddit_session"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "redditdatarequests@reddit.com"
+      },
+      "policyUrls": [
+        "https://www.reddit.com/policies/privacy-policy",
+        "https://support.reddithelp.com/hc/en-us/articles/26410290525844-Public-Content-Policy"
+      ],
+      "sources": [
+        {
+          "title": "Public Content Policy | Reddit Help",
+          "url": "https://support.reddithelp.com/hc/en-us/articles/26410290525844-Public-Content-Policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Do Reddit’s data licensees have to stop using data deleted from Reddit? | Reddit Help",
+          "url": "https://support.reddithelp.com/hc/en-us/articles/26417433892756-Do-Reddit-s-data-licensees-have-to-stop-using-data-deleted-from-Reddit",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "What happens when I delete my data? | Reddit Help",
+          "url": "https://support.reddithelp.com/hc/en-us/articles/24656943463828-What-happens-when-I-delete-my-data",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Reddit Privacy Policy",
+          "url": "https://www.reddit.com/policies/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Reddit locks down its public data in new content policy, says use now requires a contract | TechCrunch",
+          "url": "https://techcrunch.com/2024/05/09/reddit-locks-down-its-public-data-in-new-content-policy-says-use-now-requires-a-contract",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Reddit Quietly Expands AI Data Sharing in New Privacy Policy | State of Surveillance",
+          "url": "https://stateofsurveillance.org/news/reddit-privacy-policy-update-ai-data-sharing-llm-july-1-2026/",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "company": "Slack Technologies (Salesforce)",
+      "category": "communication",
+      "brandColor": "#4a154b",
+      "domains": [
+        "slack.com"
+      ],
+      "summary": "Slack doesn't train generative AI on your messages, but by default uses workspace data to train its other machine-learning models (search, emoji and channel suggestions). Only a workspace owner can opt out, by email.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "messages",
+          "files",
+          "activity"
+        ],
+        "details": "Slack says it does not develop generative AI models using customer data and will not use customer data to train generative AI models without the customer's affirmative opt-in. Its AI features use third-party large language models hosted inside Slack's own infrastructure, which do not retain or learn from your data. Separately, Slack analyses customer data (such as messages, content and files) together with usage information to train “global” non-generative machine-learning models for features like channel and emoji recommendations, search ranking and autocomplete. Slack says these models use de-identified, aggregate data and are built so they cannot learn, memorise or reproduce customer data. Workspaces are included unless they opt out. Because Slack processes messages on behalf of the organisation that owns the workspace, only that organisation's owners can opt out; individual members cannot.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "For workspaces set up outside the US and Canada, Slack Technologies Limited (Dublin) processes workspace content on behalf of the organisation that owns the workspace, so requests about that content usually go through your organisation's admins.",
+          "UK": "Slack Technologies Limited (Dublin) processes workspace content on behalf of the organisation that owns the workspace, so requests about that content usually go through your organisation's admins."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "workspace-owner-email",
+          "type": "email",
+          "title": "Ask your workspace owner to email Slack a global model opt-out",
+          "description": "Slack only accepts this request from an Org Owner, Workspace Owner or Primary Owner, sent to feedback@slack.com (not privacy@slack.com). Regular members need to ask their admin.",
+          "url": "https://slack.com/trust/data-management/privacy-principles",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "involved",
+          "steps": [
+            "If you are a regular member, ask your Workspace Owner, Primary Owner or Org Owner to send this request; members can't opt out themselves.",
+            "The owner emails feedback@slack.com.",
+            "Subject line: “Slack global model opt-out request”.",
+            "Include the workspace or org URL (for example yourteam.slack.com).",
+            "Slack replies once the opt-out has been completed."
+          ],
+          "effect": "Stops that workspace's data helping to train Slack's global (non-generative) machine-learning models; it is then only used to improve the experience in your own workspace. Features keep working. It does not affect data already used."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://app.slack.com",
+            "name": "d"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "privacy@slack.com",
+        "dpoEmail": "dpo@slack.com"
+      },
+      "policyUrls": [
+        "https://slack.com/trust/data-management/privacy-principles",
+        "https://slack.com/trust/privacy/privacy-policy"
+      ],
+      "sources": [
+        {
+          "title": "Privacy Principles: Search, Learning and Artificial Intelligence | Slack",
+          "url": "https://slack.com/trust/data-management/privacy-principles",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Security for AI features in Slack | Slack Help Center",
+          "url": "https://slack.com/help/articles/28310650165907-Security-for-AI-features-in-Slack",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Slack",
+          "url": "https://slack.com/trust/privacy/privacy-policy",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "snapchat",
+      "name": "Snapchat",
+      "company": "Snap Inc.",
+      "category": "social",
+      "brandColor": "#FFFC00",
+      "domains": [
+        "snapchat.com"
+      ],
+      "summary": "Snap can train its generative AI on your public Snaps (Spotlight, public Stories, Snap Map) and uses My AI chats to improve its products. Public-content use is on by default and can be switched off.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "images",
+          "video",
+          "voice",
+          "posts",
+          "chats"
+        ],
+        "details": "Snap may use images, video, audio and text you post publicly on Snapchat, such as Spotlight, public Stories and Snap Map, to develop, train and improve its generative AI models. An in-app Generative AI setting (“Allow use of public content”) is on by default and stops this going forward. Separately, content you share with My AI is kept until you delete it and is used to improve Snap’s products, including the models behind My AI, and to personalise ads; there is no setting to stop that, but you can clear your My AI data (deletion can take up to 30 days). Private Snaps and chats with friends are not part of the public-content training, but you may still appear in other people’s public posts.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "You can also use your GDPR right to object by contacting Snap’s Data Protection Officer.",
+          "UK": "You can also use your UK GDPR right to object by contacting Snap’s Data Protection Officer."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "public-content-toggle",
+          "type": "toggle",
+          "title": "Turn off “Allow use of public content” for generative AI",
+          "description": "An in-app setting with no web version, so NoTrain can only guide you. The link opens Snap’s help page. It does not cover My AI chats.",
+          "url": "https://help.snapchat.com/hc/en-us/articles/25494876770580-Generative-AI-on-Snapchat",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open Snapchat, tap your profile icon, then the gear icon to open Settings.",
+            "Scroll to Privacy Controls and open the Generative AI settings.",
+            "Turn off “Allow use of public content”.",
+            "Optional: to delete past My AI chats, use “Clear My AI Data” in Settings."
+          ],
+          "effect": "Snap stops using your public content to train its generative AI from now on. Past training isn’t undone, My AI chats are still used, and you may still appear in others’ public posts."
+        }
+      ],
+      "contacts": {
+        "dpoEmail": "dpo@snap.com"
+      },
+      "policyUrls": [
+        "https://values.snap.com/privacy/privacy-policy",
+        "https://help.snapchat.com/hc/en-us/articles/25494876770580-Generative-AI-on-Snapchat"
+      ],
+      "sources": [
+        {
+          "title": "Generative AI on Snapchat | Snapchat Support",
+          "url": "https://help.snapchat.com/hc/en-us/articles/25494876770580-Generative-AI-on-Snapchat",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "My AI | Snapchat Privacy by Product",
+          "url": "https://values.snap.com/privacy/privacy-by-product/my-ai",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Does Snap save content shared with My AI? | Snapchat Support",
+          "url": "https://help.snapchat.com/hc/en-us/articles/15682296562836-Does-Snap-save-content-shared-with-My-AI",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Snapchat Privacy",
+          "url": "https://values.snap.com/privacy/privacy-policy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Snapchat AI Setting Parents Need to Know About | Wayne Denner",
+          "url": "https://www.waynedenner.com/snapchat-ai-setting-parents-need-to-know/",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "threads",
+      "name": "Threads",
+      "company": "Meta Platforms",
+      "category": "social",
+      "brandColor": "#101010",
+      "domains": [
+        "threads.com",
+        "threads.net"
+      ],
+      "summary": "Meta can train its AI on public Threads posts from adults and on your chats with Meta AI. Threads has no opt-out of its own; in the EU, UK, Switzerland and Brazil you object through Meta’s Instagram form.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "varies_by_region",
+        "dataTypes": [
+          "posts",
+          "comments",
+          "images",
+          "chats"
+        ],
+        "details": "A Threads profile is part of your Instagram account and is covered by Meta’s Privacy Policy and the Threads Supplemental Privacy Policy. Public Threads posts and replies from adults are public content on Meta’s products, which Meta uses to train its generative AI, and by using Threads you agree that your interactions with AIs are used to improve AI at Meta. Meta has not published a Threads-specific objection form or said explicitly whether its Instagram objection covers Threads; objections are applied to accounts in the same Accounts Center, so submitting the Instagram form is the best available route. Posts from a private Threads profile are not public.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "BR": "Brazilian users can object through Meta’s Instagram or Facebook form.",
+          "CH": "Swiss users can object through the Instagram form (choose Switzerland as your country).",
+          "EU": "Meta has trained on public content from EU/EEA adults since 27 May 2025. Object through the Instagram form linked to your Threads profile; the objection only covers future training.",
+          "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil, Meta offers no opt-out in most countries. You can make your Threads profile private (Settings › Privacy › Private profile) or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+          "UK": "UK users can object through the Instagram form linked to their Threads profile.",
+          "US": "No opt-out. You can make your Threads profile private (Settings › Privacy › Private profile) or delete public posts. Avoid Meta AI if you don’t want your chats used."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "objection-form",
+          "type": "form",
+          "title": "Object via Meta’s Instagram form (covers linked accounts)",
+          "description": "There is no Threads-only form. Submit Meta’s Instagram objection while signed in to the Instagram account behind your Threads profile.",
+          "url": "https://help.instagram.com/contact/767264225370182",
+          "regions": [
+            "EU",
+            "UK",
+            "CH",
+            "BR"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Instagram with the account your Threads profile uses.",
+            "Open the objection form, choose your country and enter the email address on your account.",
+            "Add a short reason if the form asks for one, then submit.",
+            "Keep the confirmation email Meta sends you."
+          ],
+          "effect": "Once accepted, Meta should stop using your public content and Meta AI chats for future training across linked accounts. Meta hasn’t confirmed Threads is covered, and past training is not undone."
+        }
+      ],
+      "contacts": {
+        "privacyRequestUrl": "https://privacycenter.instagram.com/",
+        "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+      },
+      "policyUrls": [
+        "https://help.instagram.com/515230437301944",
+        "https://privacycenter.instagram.com/privacy/genai/"
+      ],
+      "sources": [
+        {
+          "title": "Threads Supplemental Privacy Policy | Instagram Help Center",
+          "url": "https://help.instagram.com/515230437301944",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "About Threads | Instagram Help Center",
+          "url": "https://help.instagram.com/788669719351544/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How Meta uses information for generative AI models | Instagram Privacy Center",
+          "url": "https://privacycenter.instagram.com/privacy/genai/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+          "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Building AI Technology for the UK in a Responsible and Transparent Way | Meta Newsroom",
+          "url": "https://about.fb.com/news/2024/09/building-ai-technology-for-the-uk-in-a-responsible-and-transparent-way/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Seus dados agora podem treinar a IA da Meta — veja como impedir | TechTudo (Brazil)",
+          "url": "https://www.techtudo.com.br/noticias/2025/12/seus-dados-agora-podem-treinar-a-ia-da-meta-veja-como-impedir-edapps.ghtml",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok",
+      "company": "TikTok",
+      "category": "social",
+      "brandColor": "#FE2C55",
+      "domains": [
+        "tiktok.com"
+      ],
+      "summary": "TikTok’s privacy policy lets it use your videos, comments and activity to train its machine-learning and AI systems. There’s no setting to opt out; in the EU, UK and Switzerland you can object in writing.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "no_choice",
+        "dataTypes": [
+          "video",
+          "images",
+          "comments",
+          "activity"
+        ],
+        "details": "TikTok’s privacy policies say it uses the information it collects, including content you post and how you use the app, to develop and improve its platform, including by training its machine learning models and algorithms. That powers recommendations, moderation and TikTok’s generative AI features. TikTok offers no setting to stop this. It publishes little detail on how much public content trains its generative models specifically, so treat this entry as a summary of its privacy policy.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "You can object under GDPR Article 21 to processing based on legitimate interests using TikTok’s privacy request form; TikTok must stop unless it shows compelling grounds.",
+          "OTHER": "No opt-out outside the EU/EEA, UK and Switzerland. A private account (Settings and privacy › Privacy › Private account) limits who sees your videos, and you can delete content, but neither stops TikTok using what you post for its own models.",
+          "UK": "You can object under UK GDPR Article 21 using TikTok’s privacy request form.",
+          "US": "Covered by TikTok’s US privacy policy. No opt-out. A private account (Settings and privacy › Privacy › Private account) limits who sees your videos, and you can delete content, but neither stops TikTok using what you post for its own models."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "privacy-objection",
+          "type": "form",
+          "title": "Object to AI training via TikTok’s privacy request form",
+          "description": "A formal objection for people covered by GDPR, UK GDPR or the Swiss FADP.",
+          "url": "https://www.tiktok.com/legal/report/privacy",
+          "regions": [
+            "EU",
+            "UK",
+            "CH"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Open TikTok’s privacy request form and sign in if asked.",
+            "Choose the option for exercising a data protection right.",
+            "State that you object under Article 21 GDPR to TikTok using your content and activity to train machine learning and AI models.",
+            "Submit and keep the confirmation."
+          ],
+          "effect": "TikTok must assess your objection and stop unless it has compelling grounds. It only affects future processing."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.tiktok.com",
+            "name": "sessionid"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://www.tiktok.com/legal/report/privacy"
+      },
+      "policyUrls": [
+        "https://www.tiktok.com/legal/page/us/privacy-policy/en",
+        "https://www.tiktok.com/legal/page/eea/privacy-policy/en"
+      ],
+      "sources": [
+        {
+          "title": "TikTok Privacy Policy (US)",
+          "url": "https://www.tiktok.com/legal/page/us/privacy-policy/en",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "TikTok Privacy Policy (EEA, UK and Switzerland)",
+          "url": "https://www.tiktok.com/legal/page/eea/privacy-policy/en",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "tumblr",
+      "name": "Tumblr",
+      "company": "Automattic",
+      "category": "social",
+      "brandColor": "#001935",
+      "domains": [
+        "tumblr.com"
+      ],
+      "summary": "Tumblr shares public blog content with partners, including AI companies, unless you turn on “Prevent third-party sharing” for each blog. It’s off by default unless you already discourage search engines.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "posts",
+          "images",
+          "creative-works"
+        ],
+        "details": "In February 2024 Tumblr’s owner Automattic confirmed it shares public content with a network of licensed content and research partners, including companies that train AI models (reported to include OpenAI and Midjourney). The “Prevent third-party sharing” switch in each blog’s Visibility settings keeps that blog out; it is off by default, but is switched on automatically if you already chose to discourage external search engines. Automattic said it would tell partners about opt-outs and ask them to delete opted-out content from past and future training, which can’t be guaranteed. Reporting in 2024 raised questions about content compiled before the switch existed.",
+        "since": "2024-02",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "prevent-third-party-sharing",
+          "type": "toggle",
+          "title": "Turn on “Prevent third-party sharing” for each blog",
+          "description": "A per-blog switch. Turning it ON is what opts you out. NoTrain’s automation handles your first listed blog; repeat for side blogs.",
+          "url": "https://www.tumblr.com/settings/account",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Tumblr on the web and open Settings.",
+            "Pick a blog from the Blogs list.",
+            "Under Visibility, turn on “Prevent third-party sharing for [blog name]”.",
+            "Repeat for every blog you run, including side blogs. In the app: Account › gear icon › choose the blog › Visibility."
+          ],
+          "effect": "Stops that blog’s content being shared with Tumblr’s licensed partners, including AI companies, from now on. Automattic says it asks partners to delete opted-out content, but past sharing can’t be fully undone.",
+          "automation": {
+            "confidence": "experimental",
+            "hostPermissions": [
+              "https://www.tumblr.com/*"
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "selector": "a[href*='/settings/blog/']"
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for your blogs to appear in Settings"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "selector": "a[href*='/settings/blog/']"
+                },
+                "description": "Opening your first blog’s settings"
+              },
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for the blog’s Visibility settings"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "state": "on",
+                "timeoutMs": 10000,
+                "description": "Turning on “Prevent third-party sharing”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "selector": "a[href*='/settings/blog/']"
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "click",
+                "target": {
+                  "selector": "a[href*='/settings/blog/']"
+                }
+              },
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "state": "on",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@tumblr.com"
+      },
+      "policyUrls": [
+        "https://www.tumblr.com/privacy/en",
+        "https://help.tumblr.com/knowledge-base/privacy-options/"
+      ],
+      "sources": [
+        {
+          "title": "Privacy options | Tumblr Help Center",
+          "url": "https://help.tumblr.com/knowledge-base/privacy-options/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Hi, Tumblr. It’s Tumblr. We’re working on some things that we want to share with you | @staff",
+          "url": "https://www.tumblr.com/staff/743510217982083072/hi-tumblr-its-tumblr-were-working-on-some",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Tumblr Privacy Policy",
+          "url": "https://www.tumblr.com/privacy/en",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Tumblr and WordPress to Sell Users’ Data to Train AI Tools | 404 Media",
+          "url": "https://www.404media.co/tumblr-and-wordpress-to-sell-users-data-to-train-ai-tools/",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "x",
+      "name": "X (Twitter)",
+      "company": "X Corp. (xAI)",
+      "category": "social",
+      "brandColor": "#000000",
+      "domains": [
+        "x.com",
+        "twitter.com"
+      ],
+      "summary": "X shares your public posts and Grok chats with xAI to train Grok, and may let other companies train AI on them. It’s on by default; a checkbox in X’s privacy settings turns it off.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "posts",
+          "profile",
+          "activity",
+          "chats"
+        ],
+        "details": "X shares data such as your public profile, public posts, engagement and your interactions with Grok with its affiliate xAI, which uses it to train and fine-tune Grok. X’s privacy policy also lets “third-party collaborators” use your data to train their own AI models unless you opt out. Both are controlled by one checkbox under Settings and privacy › Privacy and safety › Grok & Third-party Collaborators, which is ticked by default. X’s terms (updated 15 January 2026) grant X a broad licence to use your content, including Grok prompts and outputs, for training AI. Posts from protected accounts are reported not to be used. The standalone Grok app at grok.com has its own training setting (see the separate Grok entry).",
+        "since": "2024-05",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "After action by Ireland’s Data Protection Commission, X agreed in 2024 not to use EU/EEA users’ public posts collected between 7 May and 1 August 2024 to train Grok. In April 2025 the DPC opened a formal inquiry into Grok training on EU posts. The checkbox works in the EU, and you can also object under GDPR Article 21 through X’s privacy form.",
+          "UK": "You can also object under UK GDPR Article 21 through X’s privacy form."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "grok-training-checkbox",
+          "type": "toggle",
+          "title": "Untick Grok & third-party training in X’s privacy settings",
+          "description": "One checkbox controls sharing your public data and Grok interactions for training Grok and third-party AI models.",
+          "url": "https://x.com/settings/grok_settings",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to X in a browser.",
+            "Go to More › Settings and privacy › Privacy and safety › Grok & Third-party Collaborators.",
+            "Untick “Allow your public data as well as your interactions, inputs, and results with Grok and xAI to be used for training and fine-tuning.”",
+            "Optional: the personalisation and conversation-memory boxes on the same page don’t control training, but you can untick them too."
+          ],
+          "effect": "Stops X sharing your public data and Grok interactions for training Grok or third-party models from now on. Data already used stays, and X’s terms still grant it a broad licence to your content.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://x.com/*"
+            ],
+            "loginIndicators": [
+              {
+                "text": [
+                  "Sign in to X"
+                ]
+              },
+              {
+                "selector": "a[href='/login']"
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Allow your public data as well as your interactions",
+                    "to be used for training and fine-tuning"
+                  ]
+                },
+                "timeoutMs": 20000,
+                "description": "Waiting for Grok & Third-party Collaborators settings to load"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Allow your public data as well as your interactions",
+                    "to be used for training and fine-tuning"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Unticking “Allow your public data … to be used for training and fine-tuning”"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Allow your public data as well as your interactions",
+                    "to be used for training and fine-tuning"
+                  ]
+                },
+                "timeoutMs": 20000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+                  "text": [
+                    "Allow your public data as well as your interactions",
+                    "to be used for training and fine-tuning"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        },
+        {
+          "id": "gdpr-objection",
+          "type": "form",
+          "title": "Object to AI training under data protection law (X privacy form)",
+          "description": "A formal objection for people covered by GDPR, UK GDPR or the Swiss FADP.",
+          "url": "https://help.x.com/forms/privacy",
+          "regions": [
+            "EU",
+            "UK",
+            "CH"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Open X’s privacy form and choose the option for a data protection request.",
+            "Say that you object under Article 21 GDPR to X using your personal data to train AI, including sharing it with xAI and third-party collaborators.",
+            "Submit and keep the confirmation."
+          ],
+          "effect": "X must stop unless it can show compelling legitimate grounds. It applies to future processing only."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://x.com",
+            "name": "auth_token"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://help.x.com/forms/privacy",
+        "postalAddress": "X Internet Unlimited Company, One Cumberland Place, Fenian Street, Dublin 2, D02 AX07, Ireland"
+      },
+      "policyUrls": [
+        "https://x.com/en/privacy",
+        "https://help.x.com/en/using-x/about-grok"
+      ],
+      "sources": [
+        {
+          "title": "About Grok | X Help",
+          "url": "https://help.x.com/en/using-x/about-grok",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "X Privacy Policy",
+          "url": "https://x.com/en/privacy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "More information on X’s data processing | X Help",
+          "url": "https://help.x.com/en/rules-and-policies/data-processing-legal-bases",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Data Protection Commission welcomes conclusion of proceedings relating to X’s AI tool ‘Grok’ | DPC Ireland",
+          "url": "https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Ireland’s data regulator investigates X’s use of European user data to train Grok | TechCrunch",
+          "url": "https://techcrunch.com/2025/04/11/irelands-data-regulator-investigates-xs-use-of-european-user-data-to-train-grok",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Elon Musk’s X is changing its privacy policy to allow third parties to train AI on your posts | TechCrunch",
+          "url": "https://techcrunch.com/2024/10/17/elon-musks-x-is-changing-its-privacy-policy-to-allow-third-parties-to-train-ai-on-your-posts",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "X’s New Terms Make AI Prompts, Outputs Explicitly the User’s Responsibility | Pure AI",
+          "url": "https://pureai.com/articles/2025/12/22/x-new-terms-ai-prompts.aspx",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "company": "Google",
+      "category": "social",
+      "brandColor": "#FF0000",
+      "domains": [
+        "youtube.com",
+        "youtu.be"
+      ],
+      "summary": "Google trains its own AI models on YouTube videos, and creators can’t opt out of that. Whether other AI companies may train on your videos is a creator setting that stays off unless you turn it on.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "no_choice",
+        "dataTypes": [
+          "video",
+          "creative-works"
+        ],
+        "details": "YouTube’s terms let Google use content uploaded to YouTube to improve its products, including through machine learning and AI. Google has confirmed it trains models such as Gemini and Veo on a subset of YouTube videos, under its agreements with creators; there is no opt-out from Google’s own use. Since December 2024, creators can choose in YouTube Studio whether specific third-party AI companies may train on their videos. This “Third-party training” setting is off by default, and YouTube says unauthorised scraping still breaks its terms. Viewers’ watch and search history is used for recommendations and can be paused or deleted in your Google Account.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "No dedicated opt-out from Google’s training. You can contact Google’s privacy team or DPO to object under GDPR Article 21."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "no-opt-out",
+          "type": "none",
+          "title": "No opt-out from Google training on YouTube videos",
+          "description": "Nothing stops Google using uploaded videos for its own AI. Creators can only control third-party companies, and that is off unless they turn it on.",
+          "url": "https://studio.youtube.com/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Creators: sign in to YouTube Studio on a computer and click Settings.",
+            "Open Channel › Advanced settings and check “Third-party training”.",
+            "Make sure third-party training is not allowed (no companies selected), then click Save.",
+            "To keep a video out of Google’s use entirely, the only option is not to upload it, or to delete it."
+          ],
+          "effect": "Keeping third-party training off means YouTube doesn’t authorise other AI companies to train on your videos. Google’s own training continues, and content already used stays in its models."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://www.youtube.com",
+            "name": "LOGIN_INFO"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyRequestUrl": "https://support.google.com/policies/troubleshooter/7575787",
+        "postalAddress": "Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA (EEA/Switzerland: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland)"
+      },
+      "policyUrls": [
+        "https://policies.google.com/privacy",
+        "https://www.youtube.com/t/terms",
+        "https://support.google.com/youtube/answer/15509945"
+      ],
+      "sources": [
+        {
+          "title": "Third-party training | YouTube Help",
+          "url": "https://support.google.com/youtube/answer/15509945",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "YouTube Terms of Service",
+          "url": "https://www.youtube.com/t/terms",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Google Privacy Policy",
+          "url": "https://policies.google.com/privacy",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom",
+      "company": "Zoom Communications, Inc.",
+      "category": "communication",
+      "brandColor": "#0b5cff",
+      "domains": [
+        "zoom.us",
+        "zoom.com"
+      ],
+      "summary": "Zoom says it does not use your meeting audio, video, chat, screen sharing, files or other communications content, including AI Companion summaries and transcripts, to train its own or third-party AI models.",
+      "training": {
+        "trainsOnUserData": "no",
+        "defaultState": "not_applicable",
+        "dataTypes": [],
+        "details": "Zoom's terms of service and AI Companion documentation state that Zoom does not use any audio, video, chat, screen sharing, attachments or other communications-like customer content (such as poll results, whiteboards and reactions) to train Zoom's or third-party artificial intelligence models. Zoom treats AI-generated outputs such as meeting transcripts and summaries as part of that content. Feedback you choose to send about AI Companion, including the prompt you used, is used to improve the product but, according to Zoom, not for model training. The earlier AI Companion data-sharing option has been removed. The commitment covers communications content; it does not describe every use of service-generated usage data.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "no-training",
+          "type": "none",
+          "title": "Nothing to do: Zoom doesn't train AI on your meetings",
+          "description": "There is no training to opt out of. Account owners and admins can still limit which AI Companion features run.",
+          "url": "https://www.zoom.com/en/products/ai-assistant/resources/privacy-security/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "No action is needed.",
+            "Optional: account owners and admins can switch individual AI Companion features on or off in the Zoom web portal under Settings, AI Companion.",
+            "Avoid sending AI Companion feedback if you don't want your prompt shared with Zoom."
+          ],
+          "effect": "Zoom does not use your communications content for AI training either way. Turning AI Companion features off only stops those features processing your meetings."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@zoom.us"
+      },
+      "policyUrls": [
+        "https://www.zoom.com/en/trust/privacy/privacy-statement/",
+        "https://www.zoom.com/en/trust/terms/"
+      ],
+      "sources": [
+        {
+          "title": "AI Companion Security and Privacy | Zoom",
+          "url": "https://www.zoom.com/en/products/ai-assistant/resources/privacy-security/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How Zoom's terms of service and practices apply to AI features | Zoom Blog",
+          "url": "https://www.zoom.com/en/blog/zooms-term-service-ai/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Zoom Terms of Service | Zoom",
+          "url": "https://www.zoom.com/en/trust/terms/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Zoom Privacy Statement | Zoom",
+          "url": "https://www.zoom.com/en/trust/privacy/privacy-statement/",
           "accessed": "2026-09-28"
         }
       ],

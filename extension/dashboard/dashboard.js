@@ -204,7 +204,7 @@ function renderApp({ navigated }) {
     current.key = `${route.name}/`;
   }
   const def = ROUTES[route.name];
-  const ctx = { state, route, store, navigate, rerender: () => renderApp({ navigated: false }) };
+  const ctx = { state, route, store, navigate, navigated, rerender: () => renderApp({ navigated: false }) };
 
   let body;
   let title = 'NoTrain';

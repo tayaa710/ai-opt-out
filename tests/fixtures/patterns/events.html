@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: event sequences of different widget libraries</title>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .spacer-tall {
+        height: 1600px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Widgets</h1>
+      <div class="card">
+        <div class="row"><span>Plain onclick</span><button type="button" id="click-only">Save choice</button></div>
+        <div class="row"><span>Press on pointerup (react-aria style)</span><button type="button" id="press">Confirm opt-out</button></div>
+        <div class="row"><span>Open on pointerdown (Radix menu style)</span><button type="button" id="menu-trigger" aria-haspopup="menu" aria-expanded="false">More options</button></div>
+        <form id="form" onsubmit="window.submitted += 1; return false;">
+          <div class="row">
+            <label for="name">Display name</label>
+            <input id="name" name="name" value="" />
+          </div>
+          <div class="row"><span>Submit button</span><button type="submit" id="submit">Submit form</button></div>
+        </form>
+      </div>
+      <div class="spacer-tall"></div>
+      <div class="card">
+        <div class="row"><span>Far below the fold</span><button type="button" id="logger">Log events</button></div>
+      </div>
+    </main>
+    <script>
+      window.events = [];
+      window.counts = { clickOnly: 0, press: 0, menu: 0 };
+      window.submitted = 0;
+      const logger = document.getElementById('logger');
+      for (const type of ['pointerover', 'pointerenter', 'mouseover', 'mouseenter', 'pointermove', 'mousemove', 'pointerdown', 'mousedown', 'focus', 'pointerup', 'mouseup', 'click']) {
+        logger.addEventListener(type, (e) => {
+          const r = logger.getBoundingClientRect();
+          window.events.push({
+            type,
+            inside: e.clientX === undefined ? null : e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom,
+            button: e.button,
+            bubbles: e.bubbles,
+          });
+        });
+      }
+      document.getElementById('click-only').addEventListener('click', () => (window.counts.clickOnly += 1));
+      // react-aria usePress-like: acts on pointerup after a pointerdown on the element, ignores the
+      // following click; only a "virtual" click (detail 0, no pointer type) triggers on click.
+      const press = document.getElementById('press');
+      let pressed = false;
+      let ignoreClick = false;
+      press.addEventListener('pointerdown', (e) => {
+        if (e.button === 0) pressed = true;
+      });
+      press.addEventListener('pointerup', (e) => {
+        if (pressed && e.button === 0) {
+          const r = press.getBoundingClientRect();
+          if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+            window.counts.press += 1;
+            ignoreClick = true;
+          }
+        }
+        pressed = false;
+      });
+      press.addEventListener('click', (e) => {
+        if (ignoreClick) {
+          ignoreClick = false;
+          return;
+        }
+        if (e.detail === 0 && !e.pointerType) window.counts.press += 1;
+      });
+      // Radix DropdownMenu.Trigger-like: toggles on pointerdown, never on click.
+      const menu = document.getElementById('menu-trigger');
+      menu.addEventListener('pointerdown', (e) => {
+        if (e.button === 0 && !e.ctrlKey) {
+          window.counts.menu += 1;
+          menu.setAttribute('aria-expanded', String(menu.getAttribute('aria-expanded') !== 'true'));
+          e.preventDefault();
+        }
+      });
+      document.getElementById('name').addEventListener('input', () => (window.typed = true));
+    </script>
+  </body>
+</html>

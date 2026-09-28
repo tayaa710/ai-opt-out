@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: confirmation dialog</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <div id="root">
+      <main>
+        <h1>AI preferences</h1>
+        <div class="card">
+          <div class="row">
+            <div>
+              <span class="row-title" id="allow-label">Allow AI training</span>
+              <p class="row-desc">Use your messages to train our models.</p>
+            </div>
+            <button type="button" role="switch" aria-labelledby="allow-label" id="allow" aria-checked="true" class="switch"></button>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      // Radix-like modal: the rest of the page gets aria-hidden while a dialog is open,
+      // and the switch only changes once the user confirms.
+      const root = document.getElementById('root');
+      const sw = document.getElementById('allow');
+      window.confirmations = 0;
+      function openDialog(html) {
+        closeDialog();
+        const portal = document.createElement('div');
+        portal.id = 'portal';
+        portal.innerHTML = `<div class="backdrop"></div>${html}`;
+        document.body.appendChild(portal);
+        root.setAttribute('aria-hidden', 'true');
+        return portal;
+      }
+      function closeDialog() {
+        document.getElementById('portal')?.remove();
+        root.removeAttribute('aria-hidden');
+      }
+      sw.addEventListener('click', () => {
+        if (sw.getAttribute('aria-checked') === 'false') {
+          sw.setAttribute('aria-checked', 'true');
+          return;
+        }
+        const portal = openDialog(`<div role="dialog" aria-modal="true" aria-labelledby="t1">
+            <h2 id="t1">Turn off AI training?</h2>
+            <p>Future messages won't be used to train our models.</p>
+            <div class="dialog-actions"><button type="button" id="cancel">Cancel</button><button type="button" id="confirm">Turn off</button></div>
+          </div>`);
+        portal.querySelector('#cancel').addEventListener('click', closeDialog);
+        portal.querySelector('#confirm').addEventListener('click', () => {
+          window.confirmations += 1;
+          sw.setAttribute('aria-checked', 'false');
+          const done = openDialog(`<div role="alertdialog" aria-modal="true" aria-labelledby="t2">
+              <h2 id="t2">Your choice was saved</h2>
+              <div class="dialog-actions"><button type="button" id="done">Done</button></div>
+            </div>`);
+          done.querySelector('#done').addEventListener('click', closeDialog);
+        });
+      });
+    </script>
+  </body>
+</html>

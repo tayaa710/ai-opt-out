@@ -14,7 +14,7 @@ import { monogram } from '../../shared/monogram.js';
 import { toast } from '../../shared/toast.js';
 import { plural } from '../../shared/format.js';
 import { CATEGORY_ORDER, categoryLabel } from '../../shared/labels.js';
-import { button, detectAccountsFlow, detectionOrigins } from '../common.js';
+import { button, detectAccountsFlow } from '../common.js';
 import { matchesQuery } from './services.js';
 
 const STEPS = ['Welcome', 'Your region', 'Your services', 'Done'];
@@ -310,9 +310,6 @@ function stepServices(ctx) {
       }),
     );
 
-  // detectionOrigins is exported for tests and to keep the permission list visible in one place.
-  void detectionOrigins;
-
   return [
     h(
       'div',
@@ -417,6 +414,12 @@ function stepDone(ctx) {
 }
 
 export function render(ctx) {
+  if (ctx.navigated) {
+    // Arriving fresh (e.g. after a reset): start from the first step.
+    wz.step = 0;
+    wz.selected = null;
+    wz.q = '';
+  }
   init(ctx.state);
   const steps = [stepIntro, stepRegion, stepServices, stepDone];
   return h('div', { class: ['w-wrap', `w-wrap--step${wz.step}`], 'data-testid': `welcome-step-${wz.step + 1}` }, progress(), h('div', { class: 'nt-card w-card' }, steps[wz.step](ctx)));

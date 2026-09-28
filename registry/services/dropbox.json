@@ -1,0 +1,66 @@
+{
+  "id": "dropbox",
+  "name": "Dropbox",
+  "company": "Dropbox, Inc.",
+  "category": "productivity",
+  "brandColor": "#0061fe",
+  "domains": ["dropbox.com"],
+  "summary": "Dropbox says it doesn't use your files to train AI models, and its third-party AI partners aren't allowed to either. One optional setting stops your content being sent to third-party AI features at all.",
+  "training": {
+    "trainsOnUserData": "no",
+    "defaultState": "not_applicable",
+    "dataTypes": [],
+    "details": "Dropbox states that it does not use customer files to train AI models, and that the third-party AI partners behind some of its features (such as OpenAI) may not train on data sent to them from Dropbox; Dropbox has said that data is deleted from partners' servers within 30 days. A separate “Third-party AI” setting controls whether Dropbox features that rely on outside AI partners can process your content at all. It was switched on by default for eligible accounts in late 2023, which caused confusion; Dropbox said content is only sent when you actively use an AI feature. NoTrain could not re-read Dropbox's AI pages directly when this entry was checked, so see the linked sources for the latest wording.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "no-training",
+      "type": "none",
+      "title": "Nothing to do: Dropbox doesn't train AI on your files",
+      "description": "There is no training to opt out of. You can optionally stop third-party AI features from processing your content.",
+      "url": "https://www.dropbox.com/account",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "No action is needed.",
+        "Optional: sign in on dropbox.com, click your avatar, then Settings.",
+        "Open the Third-party AI tab and turn the toggle off if you don't want partner AI features to process your content."
+      ],
+      "effect": "Dropbox does not train on your files either way. Turning off third-party AI only stops partner-powered AI features from processing your content (those features may then stop working)."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@dropbox.com"
+  },
+  "policyUrls": [
+    "https://www.dropbox.com/privacy"
+  ],
+  "sources": [
+    {
+      "title": "Dropbox Privacy Policy",
+      "url": "https://www.dropbox.com/privacy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Dropbox AI Principles",
+      "url": "https://www.dropbox.com/ai-principles",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How to turn third-party AI on or off | Dropbox Help",
+      "url": "https://help.dropbox.com/account-settings/third-party-ai",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "id": "grammarly",
+  "name": "Grammarly",
+  "company": "Superhuman Platform Inc. (formerly Grammarly)",
+  "category": "productivity",
+  "brandColor": "#15c39a",
+  "domains": ["grammarly.com"],
+  "summary": "Grammarly can use what you write to train its AI models unless you turn off “Product Improvement and Training”. It is on by default for Free, Premium and single-user Pro accounts.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["documents", "messages", "chats", "activity"],
+    "details": "Grammarly (now part of Superhuman) may use the content you write wherever Grammarly is active, including text processed by its generative AI features, to train and validate its AI and machine-learning models and to decide which features to build. The “Product Improvement and Training” control is on by default for Grammarly Free, Premium and single-user Pro accounts. It is off by default for Enterprise, Education and sales-purchased Business or Pro accounts; for multi-user Pro accounts bought on the website it starts on and only an admin can change it. Even with the control off, Grammarly may still use non-content data such as writing statistics (words written, suggestions accepted, mistakes made) for product improvement and training. Superhuman says it does not let its AI service providers train their models on customer content.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Superhuman Platform Inc. is the data controller; you can also object to processing by emailing privacy@superhuman.com.",
+      "UK": "Superhuman Platform Inc. is the data controller; you can also object to processing by emailing privacy@superhuman.com."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "product-improvement-training",
+      "type": "toggle",
+      "title": "Turn off “Product Improvement and Training”",
+      "description": "The account-level switch for Grammarly Free and Premium accounts.",
+      "url": "https://account.grammarly.com/security/privacy",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to your Grammarly account.",
+        "Open your account's privacy settings (the link goes straight there).",
+        "Switch off “Product Improvement and Training”."
+      ],
+      "effect": "Grammarly stops using the content you write to train its models and improve the product for others. Non-content data such as writing statistics may still be used. Content already used is not removed.",
+      "automation": {
+        "confidence": "medium",
+        "hostPermissions": ["https://account.grammarly.com/*"],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Product Improvement and Training"] },
+            "timeoutMs": 15000,
+            "description": "Waiting for privacy settings to load"
+          },
+          {
+            "action": "setToggle",
+            "target": { "role": "switch", "text": ["Product Improvement and Training", "Data Training Settings"] },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off “Product Improvement and Training”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Product Improvement and Training"] },
+            "timeoutMs": 15000
+          },
+          {
+            "action": "assertToggle",
+            "target": { "role": "switch", "text": ["Product Improvement and Training", "Data Training Settings"] },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    },
+    {
+      "id": "admin-data-settings",
+      "type": "toggle",
+      "title": "Pro accounts and team admins: turn it off in Data settings",
+      "description": "For single-user Grammarly Pro accounts and admins of multi-user Pro accounts bought on the website. Team members must ask their admin.",
+      "url": "https://account.grammarly.com/admin/data_settings",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in as the account owner or an admin.",
+        "Open the account's data settings (the link goes straight there).",
+        "Switch off “Product Improvement and Training”."
+      ],
+      "effect": "Stops content from everyone on the account being used to train Grammarly's models or improve the product for other customers. Aggregated, de-identified statistics may still be used."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@superhuman.com",
+    "postalAddress": "Superhuman Platform Inc., 2261 Market Street, STE 85232, San Francisco, CA 94114, United States"
+  },
+  "policyUrls": [
+    "https://superhuman.com/legal/privacy-policy",
+    "https://support.grammarly.com/hc/en-us/articles/25555503115277-Product-Improvement-and-Training-Control"
+  ],
+  "sources": [
+    {
+      "title": "Product Improvement and Training Control | Grammarly Support",
+      "url": "https://support.grammarly.com/hc/en-us/articles/25555503115277-Product-Improvement-and-Training-Control",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy (effective 6 July 2026) | Superhuman",
+      "url": "https://superhuman.com/legal/privacy-policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Superhuman Go: Data & Privacy FAQ | Superhuman Help Center",
+      "url": "https://help.superhuman.com/hc/en-us/articles/47716615380109-Superhuman-Go-Data-Privacy-FAQ",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

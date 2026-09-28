@@ -1,0 +1,72 @@
+{
+  "id": "notion",
+  "name": "Notion",
+  "company": "Notion Labs, Inc.",
+  "category": "productivity",
+  "brandColor": "#191919",
+  "domains": ["notion.so", "notion.com"],
+  "summary": "Notion says it doesn't use your workspace content to train AI models by default, and its AI providers are contractually barred from doing so. Training only happens if a workspace opts in to Notion's AI LEAP program.",
+  "training": {
+    "trainsOnUserData": "no",
+    "defaultState": "opted_out",
+    "dataTypes": [],
+    "details": "Notion states that, by default, neither Notion nor its AI subprocessors (the model providers behind Notion AI) use customer data to train any models, and that its contracts with those subprocessors prohibit training on customer data. Notion runs an opt-in program, AI LEAP, in which a workspace can choose to share workspace data to improve the underlying models in exchange for early access to new AI features; data is only used for training if the workspace opts in. On Enterprise plans the model providers apply zero data retention; on other plans providers may keep data for a limited period, but not for training. Notion AI respects existing page permissions.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "no-training",
+      "type": "none",
+      "title": "Nothing to do unless your workspace joined AI LEAP",
+      "description": "Notion does not train on workspace content by default. Only a workspace that opted in to the AI LEAP program shares data for training.",
+      "url": "https://www.notion.com/help/notion-ai-security-practices",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "No action is needed by default.",
+        "If you are not sure whether your workspace joined Notion's opt-in AI LEAP program, ask your workspace owner.",
+        "Workspace owners who joined AI LEAP and want to leave should contact Notion."
+      ],
+      "effect": "By default your content is not used for training. Leaving AI LEAP stops future sharing but may not undo data already shared."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      { "url": "https://www.notion.so", "name": "token_v2" }
+    ]
+  },
+  "contacts": {
+    "privacyEmail": "team@makenotion.com"
+  },
+  "policyUrls": [
+    "https://www.notion.com/help/notion-ai-security-practices",
+    "https://privacycenter.notion.so/policies"
+  ],
+  "sources": [
+    {
+      "title": "Notion AI security & privacy practices | Notion Help Center",
+      "url": "https://www.notion.com/help/notion-ai-security-practices",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Notion's commitment to AI safety | Notion Help Center",
+      "url": "https://www.notion.com/help/ai-safety",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy practices at Notion | Notion Help Center",
+      "url": "https://www.notion.com/help/privacy",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

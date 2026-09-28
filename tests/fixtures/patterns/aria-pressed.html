@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: aria-pressed toggle buttons</title>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      [aria-pressed='true'] {
+        background: #2f6feb;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Personalisation</h1>
+      <div class="card">
+        <div class="row">
+          <span class="row-desc">Let us use what you do here to train our assistant.</span>
+          <button type="button" id="activity" aria-pressed="true">Use my activity for AI</button>
+        </div>
+        <div class="row">
+          <span class="row-desc">Show topics you might like.</span>
+          <button type="button" id="topics" aria-pressed="false">Suggested topics</button>
+        </div>
+      </div>
+    </main>
+    <script>
+      window.clicks = 0;
+      document.querySelectorAll('[aria-pressed]').forEach((b) =>
+        b.addEventListener('click', () => {
+          window.clicks += 1;
+          b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
+        }),
+      );
+    </script>
+  </body>
+</html>

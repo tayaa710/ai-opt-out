@@ -1,0 +1,73 @@
+{
+  "id": "canva",
+  "name": "Canva",
+  "company": "Canva Pty Ltd",
+  "category": "creative",
+  "brandColor": "#00c4cc",
+  "domains": ["canva.com"],
+  "summary": "Canva only uses your designs and uploads to improve its AI if your privacy settings allow it, and says this is off unless you opt in. Teams, Business, Enterprise and Education content is never used.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_out",
+    "dataTypes": ["images", "creative-works", "activity"],
+    "details": "Canva's privacy policy says it may analyse your activity, content, media uploads and related data to train its algorithms, models and AI products, subject to the choices in your privacy settings. Canva states it only uses your content (text in your designs and media you upload) to improve AI-powered features, or lets trusted partners do so, when your privacy settings allow it, and its announcements say this is off by default and needs you to opt in. Some third-party guides describe it as on by default for Free and Pro users, so it is worth checking your own settings. Content from Canva Teams, Business, Enterprise and Education accounts is not used, and the setting cannot be turned on for them. Canva Creators (template contributors) are handled separately: they can opt out of their contributed content being used, and those who stay in are paid.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "privacy-settings-ai",
+      "type": "toggle",
+      "title": "Check that Canva's AI training privacy setting is off",
+      "description": "Personal (Free and Pro) accounts have a privacy control for using your content to improve AI-powered features. It should be off unless you opted in.",
+      "url": "https://www.canva.com/settings/privacy-preferences",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Canva.",
+        "Open Settings, then Privacy settings (the link goes straight there).",
+        "Find the controls for using your content to improve AI-powered features and make sure they are turned off.",
+        "Canva Creators: manage AI training for your contributed templates in your Creator settings."
+      ],
+      "effect": "Keeps Canva and its partners from using your designs and uploads to improve AI features from now on. It does not remove content already used."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@canva.com"
+  },
+  "policyUrls": [
+    "https://www.canva.com/policies/privacy-policy/",
+    "https://www.canva.com/help/manage-privacy-settings/"
+  ],
+  "sources": [
+    {
+      "title": "Manage your privacy preferences | Canva Help Center",
+      "url": "https://www.canva.com/help/manage-privacy-settings/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy | Canva",
+      "url": "https://www.canva.com/policies/privacy-policy/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Canva Shield: Safe, fair and secure AI | Canva Newsroom",
+      "url": "https://www.canva.com/newsroom/news/safe-ai-canva-shield/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "AI Product Terms | Canva",
+      "url": "https://www.canva.com/policies/ai-product-terms/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

@@ -693,13 +693,20 @@
     }
     const modal = openModalDialog();
     if (modal && !composedContains(modal, el)) return false;
-    if (!isRendered(el)) return false;
     if (isNativeToggleInput(el)) {
-      if (hasBox(el) && notObscured(el)) return true;
-      const proxies = [...(el.labels || []), parentOf(el)].filter((p) => p && p.nodeType === 1);
-      return proxies.some((p) => isRendered(p) && hasBox(p) && notObscured(p));
+      if (isRendered(el) && hasBox(el) && notObscured(el)) return true;
+      // Custom-styled checkbox: the <label> (even for a display:none input) or,
+      // for a transparent / clipped input, its wrapper is what people see.
+      if ([...(el.labels || [])].some(showsBox)) return true;
+      const parent = parentOf(el);
+      return isRendered(el) && !!parent && parent.nodeType === 1 && showsBox(parent);
     }
+    if (!isRendered(el)) return false;
     return hasBox(el) && notObscured(el);
+  }
+
+  function showsBox(el) {
+    return isRendered(el) && hasBox(el) && notObscured(el);
   }
 
   // ---------------------------------------------------------------------------
@@ -998,11 +1005,15 @@
     return isDisabled(el);
   }
 
+  /** Pressing it flips a state (so only setToggle may press it). */
   function isToggleLike(el) {
     if (!el || el.nodeType !== 1) return false;
     if (TOGGLE_ROLES.has(roleOf(el))) return true;
     if (el.localName === 'label' && el.control && TOGGLE_ROLES.has(roleOf(el.control))) return true;
-    return false;
+    const pressed = (el.getAttribute('aria-pressed') || '').toLowerCase();
+    if (pressed === 'true' || pressed === 'false') return true;
+    const ds = (el.getAttribute('data-state') || '').toLowerCase();
+    return ds === 'checked' || ds === 'unchecked' || ds === 'on' || ds === 'off';
   }
 
   // ---------------------------------------------------------------------------
@@ -1283,12 +1294,12 @@
 
   function firstVisibleLabel(control) {
     const labels = control && control.labels ? [...control.labels] : [];
-    return labels.find((l) => isRendered(l) && hasBox(l) && notObscured(l)) || null;
+    return labels.find(showsBox) || null;
   }
 
   /** Where to press a toggle: the control, or its label if the control itself is invisible. */
   function primaryToggleTarget(control) {
-    if (isNativeToggleInput(control) && !(isRendered(control) && hasBox(control) && notObscured(control))) {
+    if (isNativeToggleInput(control) && !showsBox(control)) {
       const label = firstVisibleLabel(control);
       if (label) return label;
     }

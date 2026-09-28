@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: toggles that save asynchronously</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Settings</h1>
+      <div class="card" id="list">
+        <div class="row">
+          <span class="row-title">Slow server save</span>
+          <button type="button" role="switch" id="slow" aria-checked="true" class="switch"></button>
+        </div>
+        <div class="row">
+          <span class="row-title">Very slow silent save</span>
+          <button type="button" role="switch" id="silent" aria-checked="true" class="switch"></button>
+        </div>
+        <div class="row" id="replaced-row">
+          <span class="row-title">Re-rendered switch</span>
+          <button type="button" role="switch" id="replaced" aria-checked="true" class="switch"></button>
+        </div>
+      </div>
+    </main>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const slowMs = Number(params.get('slow') || 1500);
+      const silentMs = Number(params.get('silent') || 1800);
+      window.clicks = { slow: 0, silent: 0, replaced: 0 };
+      // Saves for slowMs with aria-busy + disabled, then flips.
+      const slow = document.getElementById('slow');
+      slow.addEventListener('click', () => {
+        if (slow.disabled) return;
+        window.clicks.slow += 1;
+        slow.disabled = true;
+        slow.setAttribute('aria-busy', 'true');
+        setTimeout(() => {
+          slow.disabled = false;
+          slow.removeAttribute('aria-busy');
+          slow.setAttribute('aria-checked', String(slow.getAttribute('aria-checked') !== 'true'));
+        }, slowMs);
+      });
+      // Saves silently (no busy state) and flips late.
+      const silent = document.getElementById('silent');
+      silent.addEventListener('click', () => {
+        window.clicks.silent += 1;
+        setTimeout(() => silent.setAttribute('aria-checked', String(silent.getAttribute('aria-checked') !== 'true')), silentMs);
+      });
+      // React-style re-render: the element is replaced by a new one with the new state.
+      function wireReplaced(el) {
+        el.addEventListener('click', () => {
+          window.clicks.replaced += 1;
+          const next = el.getAttribute('aria-checked') !== 'true';
+          setTimeout(() => {
+            const fresh = el.cloneNode(false);
+            fresh.setAttribute('aria-checked', String(next));
+            el.replaceWith(fresh);
+            wireReplaced(fresh);
+          }, 200);
+        });
+      }
+      wireReplaced(document.getElementById('replaced'));
+    </script>
+  </body>
+</html>

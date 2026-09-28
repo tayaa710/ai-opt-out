@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: native checkbox with label for</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Privacy preferences</h1>
+      <form id="prefs" class="card" action="/save" method="post" onsubmit="window.submitted = true; return false;">
+        <fieldset style="border: 0; padding: 0; margin: 0">
+          <legend class="row-title" style="padding-top: 12px">How we use your data</legend>
+          <div class="row">
+            <label for="train">Use my data to improve AI models</label>
+            <input type="checkbox" id="train" name="train" checked />
+          </div>
+          <div class="row">
+            <label for="news">Send me the product newsletter</label>
+            <input type="checkbox" id="news" name="news" />
+          </div>
+          <div class="row">
+            <label for="research">Use my data for research</label>
+            <input type="checkbox" id="research" name="research" checked aria-checked="false" />
+          </div>
+        </fieldset>
+        <div class="row">
+          <span></span>
+          <button type="submit">Save preferences</button>
+        </div>
+      </form>
+    </main>
+    <script>
+      window.submitted = false;
+    </script>
+  </body>
+</html>

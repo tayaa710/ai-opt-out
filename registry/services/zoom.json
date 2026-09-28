@@ -1,0 +1,72 @@
+{
+  "id": "zoom",
+  "name": "Zoom",
+  "company": "Zoom Communications, Inc.",
+  "category": "communication",
+  "brandColor": "#0b5cff",
+  "domains": ["zoom.us", "zoom.com"],
+  "summary": "Zoom says it does not use your meeting audio, video, chat, screen sharing, files or other communications content, including AI Companion summaries and transcripts, to train its own or third-party AI models.",
+  "training": {
+    "trainsOnUserData": "no",
+    "defaultState": "not_applicable",
+    "dataTypes": [],
+    "details": "Zoom's terms of service and AI Companion documentation state that Zoom does not use any audio, video, chat, screen sharing, attachments or other communications-like customer content (such as poll results, whiteboards and reactions) to train Zoom's or third-party artificial intelligence models. Zoom treats AI-generated outputs such as meeting transcripts and summaries as part of that content. Feedback you choose to send about AI Companion, including the prompt you used, is used to improve the product but, according to Zoom, not for model training. The earlier AI Companion data-sharing option has been removed. The commitment covers communications content; it does not describe every use of service-generated usage data.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "no-training",
+      "type": "none",
+      "title": "Nothing to do: Zoom doesn't train AI on your meetings",
+      "description": "There is no training to opt out of. Account owners and admins can still limit which AI Companion features run.",
+      "url": "https://www.zoom.com/en/products/ai-assistant/resources/privacy-security/",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "No action is needed.",
+        "Optional: account owners and admins can switch individual AI Companion features on or off in the Zoom web portal under Settings, AI Companion.",
+        "Avoid sending AI Companion feedback if you don't want your prompt shared with Zoom."
+      ],
+      "effect": "Zoom does not use your communications content for AI training either way. Turning AI Companion features off only stops those features processing your meetings."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@zoom.us"
+  },
+  "policyUrls": [
+    "https://www.zoom.com/en/trust/privacy/privacy-statement/",
+    "https://www.zoom.com/en/trust/terms/"
+  ],
+  "sources": [
+    {
+      "title": "AI Companion Security and Privacy | Zoom",
+      "url": "https://www.zoom.com/en/products/ai-assistant/resources/privacy-security/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How Zoom's terms of service and practices apply to AI features | Zoom Blog",
+      "url": "https://www.zoom.com/en/blog/zooms-term-service-ai/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Zoom Terms of Service | Zoom",
+      "url": "https://www.zoom.com/en/trust/terms/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Zoom Privacy Statement | Zoom",
+      "url": "https://www.zoom.com/en/trust/privacy/privacy-statement/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

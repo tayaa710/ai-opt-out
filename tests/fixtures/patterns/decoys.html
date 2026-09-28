@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: hidden decoy toggles with the same label</title>
+    <link rel="stylesheet" href="base.css" />
+    <style>
+      .mobile-only {
+        display: none;
+      }
+      .collapsed {
+        height: 0;
+        overflow: hidden;
+      }
+      .offscreen {
+        position: absolute;
+        left: -10000px;
+        top: 0;
+      }
+      .transparent {
+        opacity: 0;
+      }
+      .zero .switch {
+        width: 0;
+        height: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Every decoy sits before the real control in document order. Clicking a decoy records it. -->
+    <div class="mobile-only" data-decoy-group="display-none">
+      <div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="display-none"></button></div>
+    </div>
+    <div class="row" style="visibility: hidden"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="visibility-hidden"></button></div>
+    <section hidden><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="hidden-attr"></button></div></section>
+    <nav aria-hidden="true"><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="aria-hidden"></button></div></nav>
+    <div inert><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="inert"></button></div></div>
+    <div class="transparent"><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="opacity"></button></div></div>
+    <div class="collapsed"><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="collapsed"></button></div></div>
+    <div class="offscreen"><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="offscreen"></button></div></div>
+    <details><summary>Advanced</summary><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="details"></button></div></details>
+    <div class="zero"><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="zero-size"></button></div></div>
+    <template><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="template"></button></div></template>
+    <dialog><div class="row"><span>Use my data for AI training</span><button role="switch" aria-checked="true" class="switch" data-decoy="closed-dialog"></button></div></dialog>
+    <main>
+      <h1>Privacy</h1>
+      <div class="card">
+        <div class="row">
+          <span class="row-title">Use my data for AI training</span>
+          <button type="button" role="switch" id="real" aria-checked="true" class="switch"></button>
+        </div>
+      </div>
+      <p class="row-desc" style="visibility: hidden">Use my data for AI training</p>
+    </main>
+    <script>
+      window.decoyClicked = null;
+      document.querySelectorAll('[data-decoy]').forEach((d) =>
+        d.addEventListener('click', () => {
+          window.decoyClicked = d.dataset.decoy;
+          d.setAttribute('aria-checked', 'false');
+        }),
+      );
+      const real = document.getElementById('real');
+      real.addEventListener('click', () => real.setAttribute('aria-checked', String(real.getAttribute('aria-checked') !== 'true')));
+    </script>
+  </body>
+</html>

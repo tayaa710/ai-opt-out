@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: toggles that refuse to change</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Settings</h1>
+      <div class="card">
+        <div class="row">
+          <span class="row-title">Ignores clicks</span>
+          <button type="button" role="switch" id="ignore" aria-checked="true" class="switch"></button>
+        </div>
+        <div class="row">
+          <label for="native-refuse" class="row-title">Native checkbox that cancels clicks</label>
+          <input type="checkbox" id="native-refuse" checked />
+        </div>
+        <div class="row">
+          <span class="row-title">Reverts after saving fails</span>
+          <button type="button" role="switch" id="revert" aria-checked="true" class="switch"></button>
+        </div>
+        <div class="row">
+          <span class="row-title">Managed by your organisation</span>
+          <button type="button" role="switch" id="locked" aria-checked="true" aria-disabled="true" class="switch"></button>
+        </div>
+        <div class="row">
+          <label for="native-disabled" class="row-title">Disabled checkbox</label>
+          <input type="checkbox" id="native-disabled" checked disabled />
+        </div>
+        <div class="row">
+          <span class="row-title">Unknown state</span>
+          <button type="button" role="switch" id="unknown" class="switch"></button>
+        </div>
+      </div>
+    </main>
+    <script>
+      window.clicks = { ignore: 0, native: 0, revert: 0, locked: 0 };
+      document.getElementById('ignore').addEventListener('click', () => (window.clicks.ignore += 1));
+      document.getElementById('native-refuse').addEventListener('click', (e) => {
+        window.clicks.native += 1;
+        e.preventDefault();
+      });
+      const revert = document.getElementById('revert');
+      revert.addEventListener('click', () => {
+        window.clicks.revert += 1;
+        revert.setAttribute('aria-checked', 'false');
+        setTimeout(() => revert.setAttribute('aria-checked', 'true'), 250);
+      });
+      document.getElementById('locked').addEventListener('click', () => (window.clicks.locked += 1));
+    </script>
+  </body>
+</html>

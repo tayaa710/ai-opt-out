@@ -1,0 +1,252 @@
+{
+  "crawlers": [
+    {
+      "token": "AI2Bot",
+      "operator": "Ai2 (Allen Institute for AI)",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://allenai.org/crawler",
+      "notes": "Crawls selected sites to collect data for training Ai2's open language models."
+    },
+    {
+      "token": "Ai2Bot-Dolma",
+      "operator": "Ai2 (Allen Institute for AI)",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://allenai.org/crawler",
+      "notes": "Ai2 token for its open training data (the Dolma dataset). Block it together with AI2Bot."
+    },
+    {
+      "token": "Amazonbot",
+      "operator": "Amazon",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developer.amazon.com/amazonbot",
+      "notes": "Used to improve Amazon products and services, such as Alexa answers. Amazon says the data may also be used to train its AI models."
+    },
+    {
+      "token": "Claude-SearchBot",
+      "operator": "Anthropic",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Indexes pages to improve the quality of Claude's search results. Blocking it may reduce how often your site appears in Claude's answers."
+    },
+    {
+      "token": "Claude-User",
+      "operator": "Anthropic",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Fetches a page when a Claude user asks a question that needs it. Blocking it stops Claude retrieving your pages for users."
+    },
+    {
+      "token": "ClaudeBot",
+      "operator": "Anthropic",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Collects public web content that may be used to train Anthropic's Claude models. Older tokens such as anthropic-ai and Claude-Web are no longer documented by Anthropic."
+    },
+    {
+      "token": "Applebot-Extended",
+      "operator": "Apple",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.apple.com/en-us/119829",
+      "notes": "A control token, not a separate crawler. It tells Apple not to use pages crawled by Applebot to train its foundation models (Apple Intelligence). Your site stays in Siri and Spotlight results."
+    },
+    {
+      "token": "Bytespider",
+      "operator": "ByteDance",
+      "purpose": "training",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "notes": "ByteDance (TikTok's owner) publishes no documentation for this crawler, which collects data for its AI models. It has been widely reported to ignore robots.txt, so server-level blocking may be needed."
+    },
+    {
+      "token": "cohere-ai",
+      "operator": "Cohere",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "notes": "Cohere has not published crawler documentation. Community trackers report this agent fetches pages in response to user prompts in Cohere products."
+    },
+    {
+      "token": "cohere-training-data-crawler",
+      "operator": "Cohere",
+      "purpose": "training",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "notes": "Reported by community trackers to download web pages as training data for Cohere's language models. Cohere has not published documentation for it."
+    },
+    {
+      "token": "CCBot",
+      "operator": "Common Crawl",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://commoncrawl.org/ccbot",
+      "notes": "Builds Common Crawl's free, public web archive, one of the most widely used sources of AI training data. Blocking it keeps new crawls of your site out of future datasets."
+    },
+    {
+      "token": "Diffbot",
+      "operator": "Diffbot",
+      "purpose": "mixed",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://docs.diffbot.com/docs/does-crawl-respect-robotstxt",
+      "notes": "Extracts structured data for Diffbot's Knowledge Graph and for customers' own crawls, which are used for AI and analytics. Whether robots.txt is honoured can depend on the customer's crawl settings."
+    },
+    {
+      "token": "DuckAssistBot",
+      "operator": "DuckDuckGo",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot/",
+      "notes": "Fetches pages to generate DuckAssist AI answers in DuckDuckGo search. DuckDuckGo says the data is not used to train AI models."
+    },
+    {
+      "token": "Google-Extended",
+      "operator": "Google",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers",
+      "notes": "A control token, not a separate crawler. It stops Google using your pages to train Gemini models and for grounding in Gemini apps and Vertex AI. It does not affect Google Search or AI Overviews. Never block Googlebot for this."
+    },
+    {
+      "token": "FacebookBot",
+      "operator": "Meta",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/bot/",
+      "notes": "Meta says it crawls public pages to improve language models for its speech recognition technology. Link previews use facebookexternalhit, which is not listed here."
+    },
+    {
+      "token": "Meta-ExternalAgent",
+      "operator": "Meta",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+      "notes": "Meta says it crawls the web for uses such as training AI models or improving products by indexing content directly."
+    },
+    {
+      "token": "Meta-ExternalFetcher",
+      "operator": "Meta",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+      "notes": "Fetches individual links when Meta AI users ask for them. Meta says that because these fetches are user-initiated they may bypass robots.txt."
+    },
+    {
+      "token": "Meta-WebIndexer",
+      "operator": "Meta",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+      "notes": "Indexes pages to improve Meta AI search results so Meta AI can cite and link to your content. Blocking it may reduce citations in Meta AI."
+    },
+    {
+      "token": "MistralAI-Index",
+      "operator": "Mistral AI",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.mistral.ai/robots",
+      "notes": "Indexes pages for Mistral's search, which helps answer questions in its assistant. Mistral says this content is not used for generative AI training of any kind."
+    },
+    {
+      "token": "MistralAI-Training",
+      "operator": "Mistral AI",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.mistral.ai/robots",
+      "notes": "Crawls web content to build datasets for training Mistral's generative AI models. Mistral says it is not used for search indexing or live answers."
+    },
+    {
+      "token": "MistralAI-User",
+      "operator": "Mistral AI",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.mistral.ai/robots",
+      "notes": "Visits a page when a user's question in Mistral's assistant needs it and links the source. Mistral says it is not used for automatic crawling or for training."
+    },
+    {
+      "token": "Kimi-SearchBot",
+      "operator": "Moonshot AI",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://www.kimi.ai/policies/kimi-crawlers",
+      "notes": "Indexes pages for search results in Moonshot AI's Kimi assistant."
+    },
+    {
+      "token": "KimiBot",
+      "operator": "Moonshot AI",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://www.kimi.ai/policies/kimi-crawlers",
+      "notes": "Collects web content that may be used to train Moonshot AI's Kimi models."
+    },
+    {
+      "token": "ChatGPT-User",
+      "operator": "OpenAI",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://developers.openai.com/api/docs/bots",
+      "notes": "Visits a page when a ChatGPT user or custom GPT asks for it. OpenAI says robots.txt rules may not apply to these user-initiated requests, and that this agent is not used for training."
+    },
+    {
+      "token": "GPTBot",
+      "operator": "OpenAI",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.openai.com/api/docs/bots",
+      "notes": "Collects public web content that may be used to train OpenAI's generative AI models. Blocking it does not remove you from ChatGPT search results (that is OAI-SearchBot)."
+    },
+    {
+      "token": "OAI-SearchBot",
+      "operator": "OpenAI",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.openai.com/api/docs/bots",
+      "notes": "Indexes sites so they can appear and be linked in ChatGPT search results. OpenAI says it is not used to train its models. Blocking it can stop your pages being cited in ChatGPT."
+    },
+    {
+      "token": "Perplexity-User",
+      "operator": "Perplexity",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://docs.perplexity.ai/guides/bots",
+      "notes": "Fetches pages when a Perplexity user asks a question. Perplexity says it generally ignores robots.txt because the fetch was requested by a user."
+    },
+    {
+      "token": "PerplexityBot",
+      "operator": "Perplexity",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.perplexity.ai/guides/bots",
+      "notes": "Indexes sites so Perplexity can surface and link them in its answers; Perplexity says it is not used to crawl content for AI foundation models. Cloudflare reported in 2025 that Perplexity also used undeclared crawlers to get around blocks."
+    },
+    {
+      "token": "Timpibot",
+      "operator": "Timpi",
+      "purpose": "training",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://timpi.io/",
+      "notes": "Crawler for Timpi's decentralised search index; community trackers report the data is offered for training AI models. No crawler documentation found."
+    },
+    {
+      "token": "omgili",
+      "operator": "Webz.io",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://webz.io/blog/web-data/what-is-the-omgili-bot-and-why-is-it-crawling-your-website/",
+      "notes": "Collects web data that Webz.io sells to other companies, including for AI model training."
+    },
+    {
+      "token": "omgilibot",
+      "operator": "Webz.io",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://webz.io/blog/web-data/what-is-the-omgili-bot-and-why-is-it-crawling-your-website/",
+      "notes": "Older Webz.io (Omgili) user agent. Block it together with omgili."
+    }
+  ]
+}

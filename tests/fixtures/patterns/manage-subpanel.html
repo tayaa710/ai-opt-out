@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: setting behind a Manage button</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Privacy</h1>
+      <section class="card" id="overview">
+        <div class="row">
+          <div><span class="row-title">Ad preferences</span></div>
+          <button type="button" data-open="ads">Manage</button>
+        </div>
+        <div class="row">
+          <div>
+            <span class="row-title">AI training data</span>
+            <p class="row-desc">Choose whether your content is used to train AI.</p>
+          </div>
+          <button type="button" data-open="ai">Manage</button>
+        </div>
+        <div class="row">
+          <div><span class="row-title">Connected apps</span></div>
+          <button type="button" data-open="apps">Manage</button>
+        </div>
+      </section>
+      <section class="card" id="panel-ai" hidden>
+        <div class="row">
+          <button type="button" data-back>Back</button>
+          <h2 style="margin: 0">AI training data</h2>
+        </div>
+        <div class="row">
+          <span class="row-title" id="use-label">Use my content to train AI</span>
+          <button type="button" role="switch" aria-labelledby="use-label" id="use" aria-checked="true" class="switch"></button>
+        </div>
+      </section>
+      <section class="card" id="panel-ads" hidden>
+        <button type="button" data-back>Back</button>
+        <div class="row">
+          <span class="row-title">Personalised ads</span>
+          <button type="button" role="switch" id="ads" aria-checked="true" class="switch"></button>
+        </div>
+      </section>
+    </main>
+    <script>
+      window.opened = [];
+      document.querySelectorAll('[data-open]').forEach((b) =>
+        b.addEventListener('click', () => {
+          window.opened.push(b.dataset.open);
+          setTimeout(() => {
+            document.getElementById('overview').hidden = true;
+            const panel = document.getElementById(`panel-${b.dataset.open}`);
+            if (panel) panel.hidden = false;
+          }, 300);
+        }),
+      );
+      document.querySelectorAll('[data-back]').forEach((b) =>
+        b.addEventListener('click', () => {
+          document.querySelectorAll('section[id^="panel-"]').forEach((p) => (p.hidden = true));
+          document.getElementById('overview').hidden = false;
+        }),
+      );
+      document.querySelectorAll('[role="switch"]').forEach((sw) =>
+        sw.addEventListener('click', () => sw.setAttribute('aria-checked', String(sw.getAttribute('aria-checked') !== 'true'))),
+      );
+    </script>
+  </body>
+</html>

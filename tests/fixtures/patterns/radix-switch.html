@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: Radix-style switches</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <!-- Radix UI Switch markup: button[role=switch][aria-checked][data-state] with a
+         data-state thumb and, inside a form, an aria-hidden "bubble" checkbox. -->
+    <header class="topbar">
+      <a href="#home">Home</a>
+      <button type="button">Help</button>
+      <span class="spacer"></span>
+      <button type="button" aria-label="Open account menu">AB</button>
+    </header>
+    <main>
+      <h1>Data controls</h1>
+      <form class="card" id="prefs" onsubmit="window.submitted = true; return false;">
+        <div class="row">
+          <div>
+            <label for="improve" class="row-title">Improve the model for everyone</label>
+            <p class="row-desc">
+              Allow your content to be used to train our models, which makes the product better for you and
+              everyone who uses it.
+            </p>
+          </div>
+          <button type="button" role="switch" id="improve" aria-checked="true" data-state="checked" value="on" class="switch">
+            <span class="thumb" data-state="checked"></span>
+          </button>
+          <input
+            type="checkbox"
+            aria-hidden="true"
+            tabindex="-1"
+            checked
+            style="transform: translateX(-100%); position: absolute; pointer-events: none; opacity: 0; margin: 0; width: 42px; height: 24px"
+          />
+        </div>
+        <div class="row">
+          <div><span id="audio-label" class="row-title">Include your audio recordings</span></div>
+          <button type="button" role="switch" aria-labelledby="audio-label" aria-checked="true" data-state="checked" class="switch">
+            <span class="thumb" data-state="checked"></span>
+          </button>
+        </div>
+        <div class="row">
+          <div>
+            <span class="row-title">Chat history</span>
+            <p class="row-desc">Save new chats to your history.</p>
+          </div>
+          <button type="button" role="switch" aria-checked="false" data-state="unchecked" class="switch">
+            <span class="thumb" data-state="unchecked"></span>
+          </button>
+        </div>
+        <div class="row">
+          <span class="row-title">Shared links</span>
+          <button type="button">Manage</button>
+        </div>
+        <div class="row">
+          <span class="row-title">Export data</span>
+          <button type="submit">Export</button>
+        </div>
+      </form>
+    </main>
+    <script>
+      window.fixtureLog = [];
+      window.submitted = false;
+      document.querySelectorAll('[role="switch"]').forEach((sw) => {
+        sw.addEventListener('click', () => {
+          const on = sw.getAttribute('aria-checked') !== 'true';
+          sw.setAttribute('aria-checked', String(on));
+          sw.dataset.state = on ? 'checked' : 'unchecked';
+          sw.querySelector('.thumb').dataset.state = sw.dataset.state;
+          window.fixtureLog.push(`${sw.id || sw.getAttribute('aria-labelledby') || 'history'}:${on ? 'on' : 'off'}`);
+        });
+      });
+    </script>
+  </body>
+</html>

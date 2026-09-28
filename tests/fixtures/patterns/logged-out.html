@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: logged-out page</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <div id="app"><main><p>Loading…</p></main></div>
+    <script>
+      // ?late=ms   show the logged-out UI only after a delay (SPA hydration)
+      // ?flash=ms  show a "Log in" button briefly, then the signed-in settings (must NOT count as logged out)
+      const params = new URLSearchParams(location.search);
+      const app = document.getElementById('app');
+      const loggedOut = `
+        <header class="topbar"><strong>Example AI</strong><span class="spacer"></span>
+          <button type="button" id="login">Log in</button><button type="button">Sign up for free</button></header>
+        <main><h1>Welcome back</h1><p>Sign in to manage your privacy settings.</p>
+          <a class="btn" href="#signin">Sign in</a></main>`;
+      const settings = `
+        <header class="topbar"><strong>Example AI</strong><span class="spacer"></span><button type="button" aria-label="Account">AB</button></header>
+        <main><h1>Data controls</h1><div class="card"><div class="row"><span class="row-title">Improve the model for everyone</span>
+          <button type="button" role="switch" id="improve" aria-checked="true" class="switch"></button></div>
+          <div class="row"><span class="row-title">Security</span><p class="row-desc">Require a code when you sign in on a new device.</p><button type="button">Set up</button></div></div></main>`;
+      function render(html) {
+        app.innerHTML = html;
+        const sw = document.getElementById('improve');
+        if (sw) sw.addEventListener('click', () => sw.setAttribute('aria-checked', String(sw.getAttribute('aria-checked') !== 'true')));
+        const login = document.getElementById('login');
+        if (login) login.addEventListener('click', () => (window.loginClicked = true));
+      }
+      window.logIn = () => render(settings);
+      if (params.has('flash')) {
+        render(loggedOut);
+        setTimeout(() => render(settings), Number(params.get('flash')) || 500);
+      } else if (params.has('late')) {
+        setTimeout(() => render(loggedOut), Number(params.get('late')) || 800);
+      } else {
+        render(loggedOut);
+      }
+    </script>
+  </body>
+</html>

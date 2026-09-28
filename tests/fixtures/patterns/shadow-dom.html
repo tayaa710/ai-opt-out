@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pattern: toggles inside open shadow DOM</title>
+    <link rel="stylesheet" href="base.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Account</h1>
+      <!-- Web components: <privacy-settings> (open root) renders <setting-row>s (open roots)
+           whose titles are slotted from the light DOM. -->
+      <privacy-settings></privacy-settings>
+      <h2>Legacy widget</h2>
+      <!-- Closed shadow root: deliberately unreachable. -->
+      <closed-widget></closed-widget>
+    </main>
+    <script>
+      window.fixtureLog = [];
+      const ROW_CSS = `
+        :host { display: block; }
+        .row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #eef0f2; }
+        .title { font-weight: 600; display: block; }
+        .desc { color: #59636e; font-size: 13px; }
+        button { width: 42px; height: 24px; border-radius: 999px; border: 0; background: #c4c9d0; }
+        button[aria-checked="true"] { background: #2f6feb; }`;
+      class SettingRow extends HTMLElement {
+        constructor() {
+          super();
+          const root = this.attachShadow({ mode: 'open' });
+          root.innerHTML = `<style>${ROW_CSS}</style>
+            <div class="row">
+              <div class="text"><span class="title"><slot name="title"></slot></span><span class="desc"><slot name="desc"></slot></span></div>
+              <button part="switch" role="switch" aria-checked="${this.getAttribute('checked') || 'false'}"></button>
+            </div>`;
+          const sw = root.querySelector('button');
+          sw.addEventListener('click', () => {
+            const on = sw.getAttribute('aria-checked') !== 'true';
+            sw.setAttribute('aria-checked', String(on));
+            window.fixtureLog.push(`${this.id}:${on ? 'on' : 'off'}`);
+          });
+        }
+      }
+      customElements.define('setting-row', SettingRow);
+      class PrivacySettings extends HTMLElement {
+        constructor() {
+          super();
+          const root = this.attachShadow({ mode: 'open' });
+          root.innerHTML = `<style>section { background: #fff; border: 1px solid #e3e5e8; border-radius: 12px; padding: 4px 20px; }</style>
+            <section aria-label="AI and data">
+              <setting-row id="train" checked="true">
+                <span slot="title">Train generative AI on my content</span>
+                <span slot="desc">Your posts and photos help improve our AI.</span>
+              </setting-row>
+              <setting-row id="features" checked="false">
+                <span slot="title">Show AI features</span>
+              </setting-row>
+            </section>`;
+        }
+      }
+      customElements.define('privacy-settings', PrivacySettings);
+      class ClosedWidget extends HTMLElement {
+        constructor() {
+          super();
+          const root = this.attachShadow({ mode: 'closed' });
+          root.innerHTML = `<div><span>Closed training switch</span>
+            <button role="switch" aria-checked="true" aria-label="Closed training switch"></button></div>`;
+        }
+      }
+      customElements.define('closed-widget', ClosedWidget);
+    </script>
+  </body>
+</html>
