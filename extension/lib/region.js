@@ -131,15 +131,46 @@ const US_TZ_PREFIXES = [
 export function guessRegion(timeZone) {
   const tz = timeZone ?? safeTimeZone();
   if (!tz) return 'OTHER';
-  if (tz === 'Europe/London' || tz === 'Europe/Belfast' || tz === 'Europe/Guernsey' || tz === 'Europe/Isle_of_Man' || tz === 'Europe/Jersey') return 'UK';
+  if (
+    tz === 'Europe/London' ||
+    tz === 'Europe/Belfast' ||
+    tz === 'Europe/Guernsey' ||
+    tz === 'Europe/Isle_of_Man' ||
+    tz === 'Europe/Jersey'
+  )
+    return 'UK';
   if (tz === 'Europe/Zurich') return 'CH';
   if (tz.startsWith('Europe/') && !EU_TZ_EXCLUDE.has(tz)) return 'EU';
-  if (tz === 'Atlantic/Reykjavik' || tz === 'Atlantic/Canary' || tz === 'Atlantic/Madeira' || tz === 'Atlantic/Azores') return 'EU';
+  if (
+    tz === 'Atlantic/Reykjavik' ||
+    tz === 'Atlantic/Canary' ||
+    tz === 'Atlantic/Madeira' ||
+    tz === 'Atlantic/Azores'
+  )
+    return 'EU';
   if (tz === 'America/Los_Angeles') return 'US-CA';
   if (US_TZ_PREFIXES.some((p) => tz === p || (p.endsWith('/') && tz.startsWith(p)))) return 'US';
   if (CA_TZ.has(tz)) return 'CA';
   if (tz.startsWith('Australia/')) return 'AU';
-  if (tz === 'America/Sao_Paulo' || tz === 'America/Bahia' || tz === 'America/Fortaleza' || tz === 'America/Recife' || tz === 'America/Manaus' || tz === 'America/Belem' || tz === 'America/Cuiaba' || tz === 'America/Campo_Grande' || tz === 'America/Porto_Velho' || tz === 'America/Rio_Branco' || tz === 'America/Maceio' || tz === 'America/Araguaina' || tz === 'America/Boa_Vista' || tz === 'America/Santarem' || tz === 'America/Noronha' || tz === 'America/Eirunepe') return 'BR';
+  if (
+    tz === 'America/Sao_Paulo' ||
+    tz === 'America/Bahia' ||
+    tz === 'America/Fortaleza' ||
+    tz === 'America/Recife' ||
+    tz === 'America/Manaus' ||
+    tz === 'America/Belem' ||
+    tz === 'America/Cuiaba' ||
+    tz === 'America/Campo_Grande' ||
+    tz === 'America/Porto_Velho' ||
+    tz === 'America/Rio_Branco' ||
+    tz === 'America/Maceio' ||
+    tz === 'America/Araguaina' ||
+    tz === 'America/Boa_Vista' ||
+    tz === 'America/Santarem' ||
+    tz === 'America/Noronha' ||
+    tz === 'America/Eirunepe'
+  )
+    return 'BR';
   if (tz === 'Asia/Kolkata' || tz === 'Asia/Calcutta') return 'IN';
   if (tz === 'Asia/Tokyo') return 'JP';
   return 'OTHER';

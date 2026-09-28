@@ -33,9 +33,7 @@
   "contacts": {
     "privacyEmail": "privacy@dropbox.com"
   },
-  "policyUrls": [
-    "https://www.dropbox.com/privacy"
-  ],
+  "policyUrls": ["https://www.dropbox.com/privacy"],
   "sources": [
     {
       "title": "Dropbox Privacy Policy",

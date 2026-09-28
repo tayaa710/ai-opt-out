@@ -9,15 +9,31 @@ import { icon } from './icons.js';
  *   onConfirm runs synchronously inside the confirm click (a user gesture), e.g. for permission requests.
  * @returns {Promise<boolean>}
  */
-export function confirmDialog({ title, body, confirmLabel = 'Confirm', cancelLabel = 'Cancel', tone = 'primary', iconName, onConfirm }) {
+export function confirmDialog({
+  title,
+  body,
+  confirmLabel = 'Confirm',
+  cancelLabel = 'Cancel',
+  tone = 'primary',
+  iconName,
+  onConfirm,
+}) {
   return new Promise((resolve) => {
     const titleId = uid('dlg-title');
     const bodyId = uid('dlg-body');
     let result = false;
-    const cancelBtn = h('button', { type: 'button', class: 'nt-btn nt-btn--secondary', value: 'cancel' }, cancelLabel);
+    const cancelBtn = h(
+      'button',
+      { type: 'button', class: 'nt-btn nt-btn--secondary', value: 'cancel' },
+      cancelLabel,
+    );
     const confirmBtn = h(
       'button',
-      { type: 'button', class: ['nt-btn', tone === 'danger' ? 'nt-btn--danger' : 'nt-btn--primary'], value: 'confirm' },
+      {
+        type: 'button',
+        class: ['nt-btn', tone === 'danger' ? 'nt-btn--danger' : 'nt-btn--primary'],
+        value: 'confirm',
+      },
       confirmLabel,
     );
     const dialog = h(

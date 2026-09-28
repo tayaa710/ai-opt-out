@@ -4,6 +4,9 @@
 import js from '@eslint/js';
 import globals from 'globals';
 
+/** Globals the classic content scripts define for each other (see extension/content/*.js). */
+const contentScriptGlobals = { NoTrainEngine: 'readonly', NoTrainOverlay: 'readonly' };
+
 export default [
   {
     ignores: [
@@ -51,13 +54,14 @@ export default [
   },
   {
     // Content scripts are classic scripts injected into web pages; they cannot use
-    // import/export and share state through deliberate globals (e.g. NoTrainOverlay).
+    // import/export and share state through deliberate globals (NoTrainEngine, NoTrainOverlay).
     files: ['extension/content/**/*.js'],
     languageOptions: {
       sourceType: 'script',
       globals: {
         ...globals.browser,
         ...globals.webextensions,
+        ...contentScriptGlobals,
       },
     },
   },
@@ -78,7 +82,7 @@ export default [
     // Playwright tests evaluate callbacks inside pages and extension contexts.
     files: ['tests/e2e/**/*.{js,mjs}', 'tests/fixtures/**/*.{js,mjs}'],
     languageOptions: {
-      globals: { ...globals.node, ...globals.browser, ...globals.webextensions },
+      globals: { ...globals.node, ...globals.browser, ...globals.webextensions, ...contentScriptGlobals },
     },
   },
 ];

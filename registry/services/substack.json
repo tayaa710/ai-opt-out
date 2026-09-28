@@ -31,10 +31,7 @@
       "effect": "Adds robots.txt rules asking AI crawlers not to use your publication for training. Crawlers that ignore robots.txt are not blocked, content already collected is not removed, and your posts may show up less in AI tools."
     }
   ],
-  "policyUrls": [
-    "https://substack.com/privacy",
-    "https://substack.com/tos"
-  ],
+  "policyUrls": ["https://substack.com/privacy", "https://substack.com/tos"],
   "sources": [
     {
       "title": "Substack Privacy Policy",

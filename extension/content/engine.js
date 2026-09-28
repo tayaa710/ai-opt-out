@@ -213,7 +213,16 @@
 
   const DIALOG_SELECTOR = '[role="dialog"],[role="alertdialog"],dialog[open]';
 
-  const SKIP_TEXT_TAGS = new Set(['script', 'style', 'noscript', 'template', 'head', 'title', 'meta', 'link']);
+  const SKIP_TEXT_TAGS = new Set([
+    'script',
+    'style',
+    'noscript',
+    'template',
+    'head',
+    'title',
+    'meta',
+    'link',
+  ]);
 
   const BLOCK_TAGS = new Set([
     'address',
@@ -305,10 +314,13 @@
         clearTimeout(timer);
         reject(abortError(signal));
       };
-      const timer = setTimeout(() => {
-        if (signal) signal.removeEventListener('abort', onAbort);
-        resolve();
-      }, Math.max(0, ms));
+      const timer = setTimeout(
+        () => {
+          if (signal) signal.removeEventListener('abort', onAbort);
+          resolve();
+        },
+        Math.max(0, ms),
+      );
       if (signal) signal.addEventListener('abort', onAbort, { once: true });
     });
   }
@@ -332,7 +344,7 @@
     });
   }
 
-  const ZERO_WIDTH = /[​-‍⁠﻿­]/g;
+  const ZERO_WIDTH = /[\u200B-\u200D\u2060\uFEFF\u00AD]/g;
 
   /**
    * Case-insensitive, whitespace-normalised form used for all text matching.
@@ -492,7 +504,7 @@
     const root = el.getRootNode();
     const parts = [];
     for (const id of ids) {
-      let ref = null;
+      let ref;
       try {
         ref = typeof root.getElementById === 'function' ? root.getElementById(id) : null;
       } catch {
@@ -605,7 +617,7 @@
   function openModalDialog() {
     const t = now();
     if (t - modalDialogCache.at < 30) return modalDialogCache.el;
-    let el = null;
+    let el;
     try {
       el = document.querySelector('dialog:modal');
     } catch {
@@ -824,7 +836,8 @@
       const walker = doc.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
         acceptNode(node) {
           if (node.nodeType === 1) {
-            if (SKIP_TEXT_TAGS.has(node.localName) || node.hasAttribute(UI_ATTR)) return NodeFilter.FILTER_REJECT;
+            if (SKIP_TEXT_TAGS.has(node.localName) || node.hasAttribute(UI_ATTR))
+              return NodeFilter.FILTER_REJECT;
             return NodeFilter.FILTER_SKIP;
           }
           return NodeFilter.FILTER_ACCEPT;
@@ -869,7 +882,13 @@
     const add = (el, tier, len) => {
       const prev = found.get(el);
       if (!prev || tier < prev.tier) {
-        found.set(el, { el, tier, len, order: prev ? prev.order : order++, interactive: isInteractive(el) ? 0 : 1 });
+        found.set(el, {
+          el,
+          tier,
+          len,
+          order: prev ? prev.order : order++,
+          interactive: isInteractive(el) ? 0 : 1,
+        });
       }
     };
     for (const scope of scopes) {
@@ -1090,7 +1109,7 @@
         pending = null;
         if (done) return;
         lastCheck = now();
-        let el = null;
+        let el;
         try {
           const all = findAll(target, root);
           el = filter ? all.find(filter) || null : all[0] || null;
@@ -1132,10 +1151,13 @@
         observer = null;
       }
       interval = setInterval(check, pollMs);
-      timer = setTimeout(() => {
-        check();
-        if (!done) finish({ element: null, needsLogin: hasLogin && checkLogin(loginIndicators, root) });
-      }, Math.max(0, timeoutMs));
+      timer = setTimeout(
+        () => {
+          check();
+          if (!done) finish({ element: null, needsLogin: hasLogin && checkLogin(loginIndicators, root) });
+        },
+        Math.max(0, timeoutMs),
+      );
     });
   }
 
@@ -1221,7 +1243,8 @@
    */
   async function clickElement(el, signal) {
     throwIfAborted(signal);
-    if (!el || !el.isConnected) throw new EngineError('detached', 'The element disappeared before it could be clicked');
+    if (!el || !el.isConnected)
+      throw new EngineError('detached', 'The element disappeared before it could be clicked');
     try {
       el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
     } catch {
@@ -1317,6 +1340,11 @@
     } catch {
       return false;
     }
+  }
+
+  /** The element currently ringed by highlight(), if any. */
+  function highlightedElement() {
+    return hl && hl.el && hl.el.isConnected ? hl.el : null;
   }
 
   function clearHighlight() {
@@ -1546,10 +1574,13 @@
       };
       if (signal) signal.addEventListener('abort', onAbort, { once: true });
       const interval = setInterval(check, 100);
-      const timer = setTimeout(() => {
-        check();
-        if (!done) finish(latest && isBusy(latest) ? 'busy' : 'unchanged');
-      }, Math.max(0, timeoutMs));
+      const timer = setTimeout(
+        () => {
+          check();
+          if (!done) finish(latest && isBusy(latest) ? 'busy' : 'unchanged');
+        },
+        Math.max(0, timeoutMs),
+      );
       try {
         observer = new MutationObserver(() => {
           if (!pending) pending = setTimeout(check, 30);
@@ -1566,23 +1597,30 @@
     });
   }
 
-  /** Polls (re-resolving the target) until the toggle reads `desired`. */
-  async function waitForState(target, desired, timeoutMs, signal) {
+  /**
+   * Polls until the toggle reads `desired`. Reads `control` while it is still
+   * in the page (even if a dialog now hides it), else re-resolves `target`.
+   */
+  async function waitForState(target, desired, timeoutMs, signal, control = null) {
     const end = now() + timeoutMs;
     let seen = null;
+    let found = false;
     for (;;) {
       throwIfAborted(signal);
-      let el = null;
-      try {
-        el = findTarget(target);
-      } catch {
-        el = null;
+      let el = control && control.isConnected ? control : null;
+      if (!el) {
+        try {
+          el = findTarget(target);
+        } catch {
+          el = null;
+        }
       }
       if (el) {
+        found = true;
         seen = readToggleState(el);
         if (seen === desired) return { found: true, state: seen };
       }
-      if (now() >= end) return { found: !!el, state: seen };
+      if (now() >= end) return { found, state: seen };
       await sleep(150, signal);
     }
   }
@@ -1689,7 +1727,12 @@
       // A confirmation dialog opened; the following recipe steps confirm it and
       // runSteps checks the final state at the end.
       await settle(signal);
-      return { status: 'pending', toggle: true, changed: true, pending: { target: step.target, desired, label } };
+      return {
+        status: 'pending',
+        toggle: true,
+        changed: true,
+        pending: { target: step.target, desired, label, control: currentControl(control, step.target) },
+      };
     }
     if (outcome !== 'flipped') {
       return stepResult(OUTCOMES.failed, `“${label}” didn't change when NoTrain pressed it.`);
@@ -1713,10 +1756,12 @@
         if (ctx.passive) return { status: 'skipped' };
         return runClick(step, ctx);
       case 'setToggle':
-        if (step.state !== 'on' && step.state !== 'off') return stepResult(OUTCOMES.failed, 'Invalid toggle state in recipe.');
+        if (step.state !== 'on' && step.state !== 'off')
+          return stepResult(OUTCOMES.failed, 'Invalid toggle state in recipe.');
         return runSetToggle(step, ctx);
       case 'assertToggle':
-        if (step.state !== 'on' && step.state !== 'off') return stepResult(OUTCOMES.failed, 'Invalid toggle state in recipe.');
+        if (step.state !== 'on' && step.state !== 'off')
+          return stepResult(OUTCOMES.failed, 'Invalid toggle state in recipe.');
         return runAssertToggle(step, ctx);
       case 'wait':
         await sleep(Math.min(Math.max(Number(step.ms) || 0, 0), 10000), ctx.signal);
@@ -1740,7 +1785,13 @@
    * @returns {Promise<{ outcome: string, message: string, failedStep?: number }>}
    */
   async function runSteps(steps, options = {}) {
-    const { signal, onProgress, mode = 'auto', loginIndicators = [], highlight: showHighlight = false } = options;
+    const {
+      signal,
+      onProgress,
+      mode = 'auto',
+      loginIndicators = [],
+      highlight: showHighlight = false,
+    } = options;
     const ctx = {
       signal,
       readOnly: mode === 'verify',
@@ -1756,7 +1807,13 @@
       if (typeof onProgress !== 'function') return;
       try {
         const step = steps[stepIndex];
-        onProgress({ stepIndex, total, description: describeStep(step), action: step && step.action, status });
+        onProgress({
+          stepIndex,
+          total,
+          description: describeStep(step),
+          action: step && step.action,
+          status,
+        });
       } catch {
         /* a broken listener must not break the run */
       }
@@ -1803,7 +1860,7 @@
       }
       index = total;
       for (const p of pendings) {
-        const res = await waitForState(p.target, p.desired, DEFAULTS.toggleTimeoutMs, signal);
+        const res = await waitForState(p.target, p.desired, DEFAULTS.toggleTimeoutMs, signal, p.control);
         if (res.found && res.state !== p.desired) {
           return {
             outcome: OUTCOMES.failed,
@@ -1826,10 +1883,19 @@
       };
     } catch (err) {
       if (isAbortError(err) || (signal && signal.aborted)) {
-        return { outcome: OUTCOMES.cancelled, message: 'Stopped.', ...(index >= 0 && index < total ? { failedStep: index } : {}) };
+        return {
+          outcome: OUTCOMES.cancelled,
+          message: 'Stopped.',
+          ...(index >= 0 && index < total ? { failedStep: index } : {}),
+        };
       }
-      const message = err instanceof EngineError ? err.message : `Unexpected error: ${(err && err.message) || err}`;
-      return { outcome: OUTCOMES.failed, message, ...(index >= 0 && index < total ? { failedStep: index } : {}) };
+      const message =
+        err instanceof EngineError ? err.message : `Unexpected error: ${(err && err.message) || err}`;
+      return {
+        outcome: OUTCOMES.failed,
+        message,
+        ...(index >= 0 && index < total ? { failedStep: index } : {}),
+      };
     } finally {
       if (ctx.highlight) clearHighlight();
     }
@@ -1848,6 +1914,7 @@
     waitForTarget,
     highlight,
     clearHighlight,
+    highlightedElement,
     describeStep,
     accessibleName,
     roleOf,

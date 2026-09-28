@@ -1,0 +1,55 @@
+name: Add a service
+description: Suggest a service NoTrain should cover.
+title: '[New service] '
+labels: ['registry', 'new-service']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        NoTrain covers services that people use with an account and that use (or say they do not use) user data
+        to train AI. If you can, open a pull request instead: CONTRIBUTING.md explains how to add a service file
+        and test an automation recipe.
+  - type: input
+    id: name
+    attributes:
+      label: Service name
+      placeholder: Example Notes
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Website
+      placeholder: https://example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: trains
+    attributes:
+      label: Does it train AI on user data?
+      options:
+        - 'Yes, by default'
+        - 'Yes, but only if you opt in'
+        - Only in some regions or products
+        - It says it does not
+        - Unclear
+    validations:
+      required: true
+  - type: textarea
+    id: optout
+    attributes:
+      label: How do you opt out?
+      description: Settings path, form or email address, and which regions it applies to.
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Links to the company's own privacy policy, AI terms or help articles.
+    validations:
+      required: true
+  - type: checkboxes
+    id: willing
+    attributes:
+      label: Contributing
+      options:
+        - label: I would like to open a pull request for this myself.

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "Example Social",
+  "trains_on_user_content": "conditional",
+  "default": "opted_in",
+  "opt_out_url": "https://www.example.net/account/privacy/generative-ai",
+  "policy_url": "https://www.example.net/legal/privacy#generative-ai",
+  "data_types": ["posts", "comments", "images", "profile"],
+  "regions": ["US", "CA", "AU", "OTHER"],
+  "last_updated": "2026-05-20",
+  "contact": "dpo@example.net"
+}

@@ -179,13 +179,19 @@ function cleanStep(raw, path, c) {
   if (raw.action === 'wait' || raw.ms !== undefined) {
     if (c.check(isInt(raw.ms, 0, 10000), `${path}.ms`, 'must be 0-10000')) out.ms = raw.ms;
   }
-  if (raw.timeoutMs !== undefined && c.check(isInt(raw.timeoutMs, 0, 60000), `${path}.timeoutMs`, 'invalid')) {
+  if (
+    raw.timeoutMs !== undefined &&
+    c.check(isInt(raw.timeoutMs, 0, 60000), `${path}.timeoutMs`, 'invalid')
+  ) {
     out.timeoutMs = raw.timeoutMs;
   }
   if (raw.optional !== undefined && c.check(typeof raw.optional === 'boolean', `${path}.optional`, 'bool')) {
     out.optional = raw.optional;
   }
-  if (raw.description !== undefined && c.check(isStr(raw.description, 0, 200), `${path}.description`, 'bad')) {
+  if (
+    raw.description !== undefined &&
+    c.check(isStr(raw.description, 0, 200), `${path}.description`, 'bad')
+  ) {
     out.description = raw.description;
   }
   return out;
@@ -210,13 +216,24 @@ export function validateAutomation(raw, path = 'automation') {
   }
   const hp = raw.hostPermissions;
   const hpOk =
-    Array.isArray(hp) && hp.length >= 1 && hp.length <= 20 && hp.every((p) => isStr(p, 1, 300) && HOST_PATTERN_RE.test(p));
+    Array.isArray(hp) &&
+    hp.length >= 1 &&
+    hp.length <= 20 &&
+    hp.every((p) => isStr(p, 1, 300) && HOST_PATTERN_RE.test(p));
   if (c.check(hpOk, `${path}.hostPermissions`, 'must be https://host/* patterns')) {
     out.hostPermissions = [...new Set(hp)];
   }
   if (raw.loginIndicators !== undefined) {
-    if (c.check(Array.isArray(raw.loginIndicators) && raw.loginIndicators.length <= 20, `${path}.loginIndicators`, 'bad')) {
-      out.loginIndicators = raw.loginIndicators.map((t, i) => cleanTarget(t, `${path}.loginIndicators[${i}]`, c));
+    if (
+      c.check(
+        Array.isArray(raw.loginIndicators) && raw.loginIndicators.length <= 20,
+        `${path}.loginIndicators`,
+        'bad',
+      )
+    ) {
+      out.loginIndicators = raw.loginIndicators.map((t, i) =>
+        cleanTarget(t, `${path}.loginIndicators[${i}]`, c),
+      );
     }
   }
   const steps = cleanSteps(raw.steps, `${path}.steps`, c);
@@ -234,7 +251,10 @@ function cleanOptOut(raw, path, c, warnings) {
   if (c.check(isStr(raw.id, 1, 80) && ID_RE.test(raw.id), `${path}.id`, 'invalid id')) out.id = raw.id;
   if (c.check(OPT_OUT_TYPES.includes(raw.type), `${path}.type`, 'unknown type')) out.type = raw.type;
   if (c.check(isStr(raw.title, 1, 200), `${path}.title`, 'required')) out.title = raw.title;
-  if (raw.description !== undefined && c.check(isStr(raw.description, 0, 1000), `${path}.description`, 'bad')) {
+  if (
+    raw.description !== undefined &&
+    c.check(isStr(raw.description, 0, 1000), `${path}.description`, 'bad')
+  ) {
     out.description = raw.description;
   }
   if (raw.url !== undefined && c.check(isHttpsUrl(raw.url), `${path}.url`, 'must be an https URL')) {
@@ -247,10 +267,16 @@ function cleanOptOut(raw, path, c, warnings) {
   }
   if (c.check(EFFORTS.includes(raw.effort), `${path}.effort`, 'unknown')) out.effort = raw.effort;
   const stepsOk =
-    Array.isArray(raw.steps) && raw.steps.length >= 1 && raw.steps.length <= 30 && raw.steps.every((s) => isStr(s, 1, 500));
+    Array.isArray(raw.steps) &&
+    raw.steps.length >= 1 &&
+    raw.steps.length <= 30 &&
+    raw.steps.every((s) => isStr(s, 1, 500));
   if (c.check(stepsOk, `${path}.steps`, 'must be 1-30 strings')) out.steps = [...raw.steps];
   if (c.check(isStr(raw.effect, 1, 600), `${path}.effect`, 'required')) out.effect = raw.effect;
-  if (raw.perDevice !== undefined && c.check(typeof raw.perDevice === 'boolean', `${path}.perDevice`, 'bool')) {
+  if (
+    raw.perDevice !== undefined &&
+    c.check(typeof raw.perDevice === 'boolean', `${path}.perDevice`, 'bool')
+  ) {
     out.perDevice = raw.perDevice;
   }
   if (raw.automation !== undefined) {
@@ -294,7 +320,9 @@ export function validateService(raw) {
     if (c.check(DEFAULT_STATES.includes(t.defaultState), 'training.defaultState', 'unknown')) {
       tr.defaultState = t.defaultState;
     }
-    tr.dataTypes = Array.isArray(t.dataTypes) ? [...new Set(t.dataTypes.filter((d) => DATA_TYPES.includes(d)))] : [];
+    tr.dataTypes = Array.isArray(t.dataTypes)
+      ? [...new Set(t.dataTypes.filter((d) => DATA_TYPES.includes(d)))]
+      : [];
     if (c.check(isStr(t.details, 1, 2000), 'training.details', 'required')) tr.details = t.details;
     if (t.since !== undefined && typeof t.since === 'string' && SINCE_RE.test(t.since)) tr.since = t.since;
     tr.retroactiveRemoval = t.retroactiveRemoval === true;
@@ -308,7 +336,13 @@ export function validateService(raw) {
     s.training = tr;
   }
 
-  if (c.check(Array.isArray(raw.optOuts) && raw.optOuts.length >= 1 && raw.optOuts.length <= 30, 'optOuts', 'invalid')) {
+  if (
+    c.check(
+      Array.isArray(raw.optOuts) && raw.optOuts.length >= 1 && raw.optOuts.length <= 30,
+      'optOuts',
+      'invalid',
+    )
+  ) {
     s.optOuts = raw.optOuts.map((o, i) => cleanOptOut(o, `optOuts[${i}]`, c, warnings));
     const ids = s.optOuts.map((o) => o?.id).filter(Boolean);
     c.check(new Set(ids).size === ids.length, 'optOuts', 'duplicate opt-out ids');
@@ -341,10 +375,15 @@ export function validateService(raw) {
     ? raw.sources
         .filter((x) => isObj(x) && isStr(x.title, 1, 300) && isHttpsUrl(x.url))
         .slice(0, 50)
-        .map((x) => ({ title: x.title, url: x.url, ...(isValidDate(x.accessed) ? { accessed: x.accessed } : {}) }))
+        .map((x) => ({
+          title: x.title,
+          url: x.url,
+          ...(isValidDate(x.accessed) ? { accessed: x.accessed } : {}),
+        }))
     : [];
   if (c.check(sources.length > 0, 'sources', 'needs at least one https source')) s.sources = sources;
-  if (c.check(isValidDate(raw.lastVerified), 'lastVerified', 'must be YYYY-MM-DD')) s.lastVerified = raw.lastVerified;
+  if (c.check(isValidDate(raw.lastVerified), 'lastVerified', 'must be YYYY-MM-DD'))
+    s.lastVerified = raw.lastVerified;
   if (c.check(isInt(raw.policyVersion, 1, 1e6), 'policyVersion', 'must be a positive integer')) {
     s.policyVersion = raw.policyVersion;
   }
@@ -370,7 +409,11 @@ function cleanCrawler(raw) {
   if (!isObj(raw) || !isStr(raw.token, 1, 100) || !isStr(raw.operator, 1, 120)) return null;
   const out = { token: raw.token, operator: raw.operator };
   if (CRAWLER_PURPOSES.includes(raw.purpose)) out.purpose = raw.purpose;
-  if (raw.respectsRobotsTxt === true || raw.respectsRobotsTxt === false || raw.respectsRobotsTxt === 'unknown') {
+  if (
+    raw.respectsRobotsTxt === true ||
+    raw.respectsRobotsTxt === false ||
+    raw.respectsRobotsTxt === 'unknown'
+  ) {
     out.respectsRobotsTxt = raw.respectsRobotsTxt;
   }
   if (isHttpsUrl(raw.docsUrl)) out.docsUrl = raw.docsUrl;
@@ -435,5 +478,10 @@ export function validateRegistry(raw, { now = new Date() } = {}) {
 
 /** Empty but valid registry, used when the bundled copy is missing or broken. */
 export function emptyRegistry() {
-  return { formatVersion: REGISTRY_FORMAT_VERSION, generatedAt: new Date(0).toISOString(), services: [], crawlers: [] };
+  return {
+    formatVersion: REGISTRY_FORMAT_VERSION,
+    generatedAt: new Date(0).toISOString(),
+    services: [],
+    crawlers: [],
+  };
 }

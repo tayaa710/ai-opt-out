@@ -37,9 +37,7 @@
     }
   ],
   "detection": {
-    "cookies": [
-      { "url": "https://app.slack.com", "name": "d" }
-    ]
+    "cookies": [{ "url": "https://app.slack.com", "name": "d" }]
   },
   "contacts": {
     "privacyEmail": "privacy@slack.com",

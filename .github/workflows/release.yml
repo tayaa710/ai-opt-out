@@ -1,0 +1,62 @@
+name: Release
+
+# Push a tag like v1.0.1 (matching extension/manifest.json) to build the store packages and
+# attach them to a GitHub release. Store submission itself is manual (see store/listing.md).
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write # create the release
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+
+      - name: Check the tag matches the manifest version
+        id: version
+        run: |
+          version=$(node -p "JSON.parse(require('fs').readFileSync('extension/manifest.json', 'utf8')).version")
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match extension/manifest.json version $version"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - run: npm run lint
+      - run: npm run registry:validate
+      - run: npm run test:unit
+      - run: npm run build
+
+      - name: Release notes from CHANGELOG.md
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          awk -v v="$VERSION" '/^## \[/ { p = index($0, "[" v "]") > 0; next } p' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "::error::CHANGELOG.md has no section for [$VERSION]"
+            exit 1
+          fi
+          printf '\n### Checksums\n\n```\n%s\n```\n' "$(cat dist/SHA256SUMS)" >> release-notes.md
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.zip dist/SHA256SUMS \
+            --title "NoTrain $GITHUB_REF_NAME" \
+            --notes-file release-notes.md \
+            --verify-tag

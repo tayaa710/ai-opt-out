@@ -10,6 +10,9 @@ export const TEST_MANIFEST = {
 
 const clone = (v) => structuredClone(v);
 
+/** A script URL, assembled so linters do not mistake the test input for real use. */
+export const SCRIPT_URL = ['javascript', 'alert(1)'].join(':');
+
 export function toggleOptOut(overrides = {}) {
   return {
     id: 'improve-model-toggle',
@@ -35,7 +38,11 @@ export function toggleOptOut(overrides = {}) {
       ],
       verify: [
         { action: 'waitFor', target: { text: ['Improve the model for everyone'] } },
-        { action: 'assertToggle', target: { role: 'switch', text: ['Improve the model for everyone'] }, state: 'off' },
+        {
+          action: 'assertToggle',
+          target: { role: 'switch', text: ['Improve the model for everyone'] },
+          state: 'off',
+        },
       ],
     },
     ...overrides,
@@ -77,7 +84,9 @@ export function makeService(overrides = {}) {
     sources: [{ title: 'Data controls FAQ', url: 'https://help.openai.com/en/articles/7730893' }],
     lastVerified: '2026-09-01',
     policyVersion: 1,
-    changelog: [{ version: 1, date: '2026-09-01', summary: 'Added to the NoTrain registry.', severity: 'info' }],
+    changelog: [
+      { version: 1, date: '2026-09-01', summary: 'Added to the NoTrain registry.', severity: 'info' },
+    ],
     ...overrides,
   });
 }
@@ -98,7 +107,9 @@ export function exampleService(overrides = {}) {
           confidence: 'high',
           hostPermissions: ['https://app.example.org/*'],
           steps: [{ action: 'setToggle', target: { role: 'switch', text: ['Use my data'] }, state: 'off' }],
-          verify: [{ action: 'assertToggle', target: { role: 'switch', text: ['Use my data'] }, state: 'off' }],
+          verify: [
+            { action: 'assertToggle', target: { role: 'switch', text: ['Use my data'] }, state: 'off' },
+          ],
         },
       }),
     ],
@@ -128,12 +139,19 @@ export function rogueService() {
   });
 }
 
-export function makeRegistry(services = [makeService(), exampleService()], generatedAt = '2026-09-01T00:00:00.000Z') {
+export function makeRegistry(
+  services = [makeService(), exampleService()],
+  generatedAt = '2026-09-01T00:00:00.000Z',
+) {
   return clone({ formatVersion: 1, generatedAt, services, crawlers: [] });
 }
 
 /** A later version of a service with a policy change. */
-export function bumpPolicy(service, severity = 'warning', summary = 'Now trains on voice recordings by default.') {
+export function bumpPolicy(
+  service,
+  severity = 'warning',
+  summary = 'Now trains on voice recordings by default.',
+) {
   const next = clone(service);
   next.policyVersion = service.policyVersion + 1;
   next.changelog = [

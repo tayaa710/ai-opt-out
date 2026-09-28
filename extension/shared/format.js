@@ -63,7 +63,10 @@ export function plural(n, one, many = `${one}s`) {
 /** Oxford-less natural list: ["a","b","c"] → "a, b and c". */
 export function listJoin(items, conj = 'and') {
   try {
-    return new Intl.ListFormat(LOCALE, { style: 'long', type: conj === 'or' ? 'disjunction' : 'conjunction' }).format(items);
+    return new Intl.ListFormat(LOCALE, {
+      style: 'long',
+      type: conj === 'or' ? 'disjunction' : 'conjunction',
+    }).format(items);
   } catch {
     if (items.length <= 1) return items.join('');
     return `${items.slice(0, -1).join(', ')} ${conj} ${items[items.length - 1]}`;

@@ -27,7 +27,8 @@ const K = STORAGE_KEYS;
 export function expectedToggleState(optOut) {
   const find = (steps, action) => {
     for (let i = (steps?.length ?? 0) - 1; i >= 0; i -= 1) {
-      if (steps[i].action === action && (steps[i].state === 'on' || steps[i].state === 'off')) return steps[i].state;
+      if (steps[i].action === action && (steps[i].state === 'on' || steps[i].state === 'off'))
+        return steps[i].state;
     }
     return null;
   };
@@ -122,7 +123,9 @@ async function syncOnce() {
   try {
     const state = await readLocal([K.registry, K.userState, K.settings]);
     const desired = await activePassiveChecks(state);
-    const existing = (await scripting.getRegisteredContentScripts()).filter((s) => s.id.startsWith(PASSIVE_PREFIX));
+    const existing = (await scripting.getRegisteredContentScripts()).filter((s) =>
+      s.id.startsWith(PASSIVE_PREFIX),
+    );
     const keep = new Set();
     const remove = [];
     for (const s of existing) {
@@ -214,7 +217,8 @@ export async function handlePassiveResult(msg, sender, { now = new Date() } = {}
   const state = await readLocal([K.registry, K.userState, K.settings]);
   const entry = (await activePassiveChecks(state)).get(msg.serviceId);
   const check = entry?.checks.find((c) => c.optOutId === msg.optOutId);
-  if (!check || !urlMatchesAny(sender.url, check.patterns)) throw new UserError('No passive check for this page');
+  if (!check || !urlMatchesAny(sender.url, check.patterns))
+    throw new UserError('No passive check for this page');
   if (msg.state === 'unknown') return { recorded: false };
 
   const { alert, notifyFlips } = await updateLocal(
@@ -227,7 +231,10 @@ export async function handlePassiveResult(msg, sender, { now = new Date() } = {}
       if (msg.state === expectedToggleState(optOut)) {
         const last = Date.parse(rec.verifiedAt ?? '');
         if (!Number.isNaN(last) && now.getTime() - last < VERIFY_REFRESH_MS) return { result: {} };
-        return { set: { [K.userState]: touchVerified(v[K.userState], service.id, optOut.id, now) }, result: {} };
+        return {
+          set: { [K.userState]: touchVerified(v[K.userState], service.id, optOut.id, now) },
+          result: {},
+        };
       }
       const userState = setOptOutStatus(
         v[K.userState],

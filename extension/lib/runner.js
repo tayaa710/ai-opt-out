@@ -185,12 +185,14 @@ export function startOverlayInPage(cfg, patterns) {
     });
   if (!allowed) return { started: false, reason: 'navigated_away' };
   const overlay = globalThis.NoTrainOverlay;
-  if (!overlay || typeof overlay.start !== 'function') return { started: false, reason: 'injection_failed' };
+  if (!overlay || typeof overlay.start !== 'function') {
+    return { started: false, reason: 'injection_failed', detail: 'overlay script not loaded' };
+  }
   try {
     const pending = overlay.start(cfg);
     if (pending && typeof pending.catch === 'function') pending.catch(() => {});
-  } catch {
-    return { started: false, reason: 'injection_failed' };
+  } catch (err) {
+    return { started: false, reason: 'injection_failed', detail: String((err && err.message) || err) };
   }
   return { started: true };
 }
@@ -199,13 +201,23 @@ async function inject(run, cfg) {
   const scripting = globalThis.chrome.scripting;
   const { tabId } = run;
   try {
-    const injected = await scripting.executeScript({ target: { tabId, frameIds: [0] }, files: [...CONTENT_FILES] });
+    const injected = await scripting.executeScript({
+      target: { tabId, frameIds: [0] },
+      files: [...CONTENT_FILES],
+    });
     // Pin the start call to the same document where supported (Chrome), so a
     // navigation in between cannot receive it.
     const documentId = injected?.[0]?.documentId;
     const target = documentId ? { tabId, documentIds: [documentId] } : { tabId, frameIds: [0] };
-    const [res] = await scripting.executeScript({ target, func: startOverlayInPage, args: [cfg, run.patterns] });
-    if (!res?.result?.started) return { injected: false, reason: res?.result?.reason ?? NOT_INJECTED.injectionFailed };
+    const [res] = await scripting.executeScript({
+      target,
+      func: startOverlayInPage,
+      args: [cfg, run.patterns],
+    });
+    if (!res?.result?.started) {
+      if (res?.result?.detail) console.warn('NoTrain: overlay did not start:', res.result.detail);
+      return { injected: false, reason: res?.result?.reason ?? NOT_INJECTED.injectionFailed };
+    }
     return { injected: true };
   } catch (err) {
     if (!(await tabExists(tabId))) return { injected: false, reason: NOT_INJECTED.tabClosed };
@@ -217,7 +229,8 @@ async function inject(run, cfg) {
 async function prepareAndInject(run, service, optOut, loadTimeoutMs) {
   if (!optOut.automation) return { injected: false, reason: NOT_INJECTED.noAutomation };
   if (run.patterns.length === 0) return { injected: false, reason: NOT_INJECTED.notAllowed };
-  if (!(await hasPermissions({ origins: run.patterns }))) return { injected: false, reason: NOT_INJECTED.noPermission };
+  if (!(await hasPermissions({ origins: run.patterns })))
+    return { injected: false, reason: NOT_INJECTED.noPermission };
   try {
     await waitForTabComplete(run.tabId, loadTimeoutMs);
   } catch (err) {
@@ -229,7 +242,8 @@ async function prepareAndInject(run, service, optOut, loadTimeoutMs) {
   } catch {
     return { injected: false, reason: NOT_INJECTED.tabClosed };
   }
-  if (!tab.url || !urlMatchesAny(tab.url, run.patterns)) return { injected: false, reason: NOT_INJECTED.navigatedAway };
+  if (!tab.url || !urlMatchesAny(tab.url, run.patterns))
+    return { injected: false, reason: NOT_INJECTED.navigatedAway };
   await patchRun(run.runId, (r) => ({ ...r, phase: 'injecting' }));
   return inject(run, overlayConfig(run.runId, run.mode, service, optOut));
 }
@@ -288,13 +302,15 @@ export async function runForSender(runId, sender) {
   if (typeof runId !== 'string' || runId.length > 100) throw new UserError('Unknown run');
   const run = await getRun(runId);
   if (!run || !ACCEPTING.has(run.phase)) throw new UserError('Unknown run');
-  if (sender?.tab?.id !== run.tabId || (sender.frameId ?? 0) !== 0) throw new UserError('Run belongs to another tab');
+  if (sender?.tab?.id !== run.tabId || (sender.frameId ?? 0) !== 0)
+    throw new UserError('Run belongs to another tab');
   if (!urlMatchesAny(sender.url, run.patterns)) throw new UserError('Run belongs to another site');
   return run;
 }
 
 function checkIds(msg, run) {
-  if (msg.serviceId !== undefined && msg.serviceId !== run.serviceId) throw new UserError('serviceId mismatch');
+  if (msg.serviceId !== undefined && msg.serviceId !== run.serviceId)
+    throw new UserError('serviceId mismatch');
   if (msg.optOutId !== undefined && msg.optOutId !== run.optOutId) throw new UserError('optOutId mismatch');
 }
 
@@ -302,7 +318,8 @@ function checkIds(msg, run) {
 export async function handleRunProgress(msg, sender) {
   const run = await runForSender(msg.runId, sender);
   const { stepIndex, total } = msg;
-  if (!Number.isInteger(stepIndex) || stepIndex < 0 || stepIndex > 1000) throw new UserError('Invalid stepIndex');
+  if (!Number.isInteger(stepIndex) || stepIndex < 0 || stepIndex > 1000)
+    throw new UserError('Invalid stepIndex');
   if (!Number.isInteger(total) || total < 0 || total > 1000) throw new UserError('Invalid total');
   const description = typeof msg.description === 'string' ? msg.description.slice(0, 200) : '';
   await patchRun(run.runId, (r) => ({ ...r, progress: { stepIndex, total, description } }));
@@ -320,7 +337,13 @@ export async function handleRunResult(msg, sender, { now = new Date() } = {}) {
     [K.registry, K.userState, K.history, K.alerts, K.settings],
     (v) => {
       const { service, optOut } = requireServiceOptOut(v[K.registry], run.serviceId, run.optOutId);
-      const r = applyRunOutcome(v[K.userState], service, optOut, { mode: run.mode, outcome: msg.outcome }, now);
+      const r = applyRunOutcome(
+        v[K.userState],
+        service,
+        optOut,
+        { mode: run.mode, outcome: msg.outcome },
+        now,
+      );
       const entry = makeHistoryEntry(
         { serviceId: service.id, optOutId: optOut.id, action: run.mode, outcome: msg.outcome, detail },
         now,
@@ -337,7 +360,12 @@ export async function handleRunResult(msg, sender, { now = new Date() } = {}) {
   );
   await patchRun(run.runId, (r) => ({ ...r, phase: 'finished', outcome: msg.outcome }));
   if (flipAlert && notifyFlips) {
-    await notify({ kind: flipAlert.kind, serviceId: flipAlert.serviceId, title: flipAlert.title, message: flipAlert.body });
+    await notify({
+      kind: flipAlert.kind,
+      serviceId: flipAlert.serviceId,
+      title: flipAlert.title,
+      message: flipAlert.body,
+    });
   }
   return { recorded: true };
 }

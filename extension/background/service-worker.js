@@ -68,6 +68,4 @@ chrome.notifications?.onClicked?.addListener((id) => {
 });
 
 // Any worker start (including after being stopped while idle) refreshes the badge.
-ensureReady()
-  .then(scheduleBadgeUpdate)
-  .catch(logError('initialisation'));
+ensureReady().then(scheduleBadgeUpdate).catch(logError('initialisation'));

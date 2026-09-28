@@ -6,8 +6,25 @@ import { monogram } from '../../shared/monogram.js';
 import { relativeTime, plural } from '../../shared/format.js';
 import { EFFORT_LABELS, CONFIDENCE_LABELS, ALERT_KIND_LABELS } from '../../shared/labels.js';
 import { serviceStatus, summarize, compareByUrgency } from '../../lib/status.js';
-import { progressRing, summaryCopy, attentionReason, pendingOptOuts, primaryAction } from '../../shared/ui.js';
-import { pageHeader, section, emptyState, serviceHash, startOptOut, linkButton, button, runLiveRegion, setRunMessage } from '../common.js';
+import {
+  progressRing,
+  summaryCopy,
+  summarySegments,
+  attentionReason,
+  pendingOptOuts,
+  primaryAction,
+} from '../../shared/ui.js';
+import {
+  pageHeader,
+  section,
+  emptyState,
+  serviceHash,
+  startOptOut,
+  linkButton,
+  button,
+  runLiveRegion,
+  setRunMessage,
+} from '../common.js';
 
 export function title() {
   return 'Overview';
@@ -32,7 +49,7 @@ function hero(sum) {
       total: sum.tracked,
       size: 112,
       stroke: 10,
-      tone: sum.attention > 0 ? 'bad' : 'good',
+      segments: summarySegments(sum),
       label: `${sum.protected} of ${sum.tracked} tracked services opted out or not training`,
     }),
     h(
@@ -44,7 +61,7 @@ function hero(sum) {
         'div',
         { class: 'd-stats' },
         statTile('Tracked', sum.tracked, null, 'stat-tracked'),
-        statTile('Opted out', sum.protected, 'good', 'stat-protected'),
+        statTile('Done', sum.protected, 'good', 'stat-protected'),
         statTile('To do', sum.actionNeeded, sum.actionNeeded ? 'warn' : null, 'stat-todo'),
         statTile('Attention', sum.attention, sum.attention ? 'bad' : null, 'stat-attention'),
       ),
@@ -70,13 +87,16 @@ function attentionList(items, state) {
           h('a', { class: 'd-task__title', href: serviceHash(service.id) }, service.name),
           h('span', { class: 'd-task__meta' }, h('span', { class: 'nt-pill nt-pill--bad' }, reason)),
         ),
-        linkButton(action.status.pendingPolicyChange ? 'Review change' : 'Fix it', serviceHash(service.id), { variant: 'primary', size: 'sm' }),
+        linkButton(action.status.pendingPolicyChange ? 'Review change' : 'Fix it', serviceHash(service.id), {
+          variant: 'primary',
+          size: 'sm',
+        }),
       );
     }),
   );
 }
 
-function taskRow(service, optOut, { auto }) {
+function taskRow(service, optOut, { auto, more = 0 }) {
   const effort = EFFORT_LABELS[optOut.effort]?.label;
   const conf = optOut.automation ? CONFIDENCE_LABELS[optOut.automation.confidence] : null;
   const live = runLiveRegion(service.id, optOut.id, 'd-task__live');
@@ -98,9 +118,13 @@ function taskRow(service, optOut, { auto }) {
           });
         },
       })
-    : linkButton(optOut.type === 'email' ? 'Write letter' : 'Show me how', optOut.type === 'email'
-        ? `#/letters?service=${encodeURIComponent(service.id)}&optOut=${encodeURIComponent(optOut.id)}`
-        : serviceHash(service.id, `guide=${encodeURIComponent(optOut.id)}`), { variant: 'secondary', size: 'sm' });
+    : linkButton(
+        optOut.type === 'email' ? 'Write letter' : 'Show me how',
+        optOut.type === 'email'
+          ? `#/letters?service=${encodeURIComponent(service.id)}&optOut=${encodeURIComponent(optOut.id)}`
+          : serviceHash(service.id, `guide=${encodeURIComponent(optOut.id)}`),
+        { variant: 'secondary', size: 'sm' },
+      );
   return h(
     'li',
     { class: 'd-task', 'data-key': `task-${service.id}-${optOut.id}` },
@@ -115,6 +139,12 @@ function taskRow(service, optOut, { auto }) {
         { class: 'd-task__meta' },
         effort && h('span', { class: 'nt-chip d-chip-sm' }, icon('clock'), effort),
         conf && h('span', { class: ['nt-pill', `nt-pill--${conf.tone}`] }, conf.label),
+        more > 0 &&
+          h(
+            'a',
+            { class: 'd-task__more', href: serviceHash(service.id) },
+            more === 1 ? '+1 more way' : `+${more} more ways`,
+          ),
       ),
       live,
     ),
@@ -138,7 +168,11 @@ function alertsPreview(alerts, services) {
           'div',
           { class: 'd-alert-mini__main' },
           h('a', { class: 'd-alert-mini__title', href: svc ? serviceHash(svc.id) : '#/alerts' }, a.title),
-          h('span', { class: 'd-alert-mini__meta' }, [svc?.name, relativeTime(a.createdAt)].filter(Boolean).join(' · ')),
+          h(
+            'span',
+            { class: 'd-alert-mini__meta' },
+            [svc?.name, relativeTime(a.createdAt)].filter(Boolean).join(' · '),
+          ),
         ),
         !a.read && h('span', { class: 'd-unread-dot', 'aria-label': 'Unread' }),
       );
@@ -150,7 +184,9 @@ export function render({ state }) {
   const { registry, userState, settings, alerts } = state;
   const region = settings.region;
   const services = registry.services;
-  const tracked = services.filter((s) => userState.services?.[s.id]?.tracked).sort((a, b) => compareByUrgency(a, b, userState, region));
+  const tracked = services
+    .filter((s) => userState.services?.[s.id]?.tracked)
+    .sort((a, b) => compareByUrgency(a, b, userState, region));
   const sum = summarize(services, userState, region);
 
   const header = pageHeader({
@@ -169,7 +205,10 @@ export function render({ state }) {
           iconName: 'shield',
           title: 'You’re not tracking any services yet',
           text: 'Choose the services you use. NoTrain will show which ones train AI on your data and how to opt out.',
-          actions: [linkButton('Choose services', '#/services', { variant: 'primary' }), linkButton('Run setup again', '#/welcome')],
+          actions: [
+            linkButton('Choose services', '#/services', { variant: 'primary' }),
+            linkButton('Run setup again', '#/welcome'),
+          ],
           testid: 'overview-empty',
         }),
       ),
@@ -186,10 +225,10 @@ export function render({ state }) {
       continue;
     }
     if (st.code !== 'action_needed') continue;
-    for (const o of pendingOptOuts(service, userState, st)) {
-      if (o.automation) quickWins.push([service, o]);
-      else todo.push([service, o]);
-    }
+    // One row per service: its main pending opt-out (registry order).
+    const [first, ...rest] = pendingOptOuts(service, userState, st);
+    if (!first) continue;
+    (first.automation ? quickWins : todo).push([service, first, rest.length]);
   }
 
   const recent = alerts.filter((a) => !a.dismissed).slice(0, 4);
@@ -198,7 +237,11 @@ export function render({ state }) {
   if (attention.length) {
     blocks.push(
       section(
-        { title: 'Needs your attention', id: 'attention', description: 'A policy changed or a setting was switched back on.' },
+        {
+          title: 'Needs your attention',
+          id: 'attention',
+          description: 'A policy changed or a setting was switched back on.',
+        },
         attentionList(attention, state),
       ),
     );
@@ -210,9 +253,14 @@ export function render({ state }) {
         {
           title: 'Quick wins',
           id: 'quick-wins',
-          description: 'NoTrain can switch these off for you. It opens the page, flips the setting and checks it worked.',
+          description:
+            'NoTrain can switch these off for you. It opens the page, flips the setting and checks it worked.',
         },
-        h('ul', { class: 'nt-card nt-list', role: 'list', 'data-testid': 'quick-wins' }, quickWins.map(([s, o]) => taskRow(s, o, { auto: true }))),
+        h(
+          'ul',
+          { class: 'nt-card nt-list', role: 'list', 'data-testid': 'quick-wins' },
+          quickWins.map(([s, o, more]) => taskRow(s, o, { auto: true, more })),
+        ),
       ),
     );
   }
@@ -220,8 +268,16 @@ export function render({ state }) {
   if (todo.length) {
     blocks.push(
       section(
-        { title: 'Still to do', id: 'todo', description: 'These take a few steps on the company’s site. NoTrain walks you through them.' },
-        h('ul', { class: 'nt-card nt-list', role: 'list', 'data-testid': 'todo-list' }, todo.map(([s, o]) => taskRow(s, o, { auto: false }))),
+        {
+          title: 'Still to do',
+          id: 'todo',
+          description: 'These take a few steps on the company’s site. NoTrain walks you through them.',
+        },
+        h(
+          'ul',
+          { class: 'nt-card nt-list', role: 'list', 'data-testid': 'todo-list' },
+          todo.map(([s, o, more]) => taskRow(s, o, { auto: false, more })),
+        ),
       ),
     );
   }
@@ -251,7 +307,9 @@ export function render({ state }) {
       {
         title: 'Recent alerts',
         id: 'recent-alerts',
-        actions: recent.length ? [h('a', { class: 'nt-link', href: '#/alerts' }, 'See all', icon('arrowRight', { size: 14 }))] : null,
+        actions: recent.length
+          ? [h('a', { class: 'nt-link', href: '#/alerts' }, 'See all', icon('arrowRight', { size: 14 }))]
+          : null,
       },
       recent.length
         ? alertsPreview(recent, services)

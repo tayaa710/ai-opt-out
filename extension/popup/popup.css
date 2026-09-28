@@ -30,7 +30,7 @@ html.is-tab body.popup {
 
 html.is-tab .popup-app {
   width: 380px;
-  height: 580px;
+  max-height: 580px;
   border-radius: 14px;
   overflow: hidden;
   background: var(--nt-bg);

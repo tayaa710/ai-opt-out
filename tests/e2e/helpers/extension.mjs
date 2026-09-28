@@ -5,6 +5,7 @@
 import { test as base, chromium, expect } from '@playwright/test';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { startFakeSites } from './fake-sites.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(here, '../../..');
@@ -13,12 +14,27 @@ export const EXTENSION_DIR = process.env.NOTRAIN_EXTENSION_DIR
   : path.join(ROOT, 'extension');
 
 export const test = base.extend({
-  // eslint-disable-next-line no-empty-pattern
-  context: async ({}, use) => {
+  // Local HTTPS stand-ins for real service hosts; see fake-sites.mjs.
+  fakeSites: [
+    // eslint-disable-next-line no-empty-pattern
+    async ({}, use) => {
+      const sites = await startFakeSites();
+      await use(sites);
+      await sites.close();
+    },
+    { scope: 'worker' },
+  ],
+  extensionDir: [EXTENSION_DIR, { option: true, scope: 'worker' }],
+  context: async ({ fakeSites, extensionDir }, use) => {
+    fakeSites.reset();
     const context = await chromium.launchPersistentContext('', {
       channel: 'chromium',
       headless: true,
-      args: [`--disable-extensions-except=${EXTENSION_DIR}`, `--load-extension=${EXTENSION_DIR}`],
+      args: [
+        `--disable-extensions-except=${extensionDir}`,
+        `--load-extension=${extensionDir}`,
+        ...fakeSites.args,
+      ],
     });
     await use(context);
     await context.close();

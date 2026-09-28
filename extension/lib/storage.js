@@ -349,7 +349,12 @@ export function updateLocal(keys, mutator) {
   });
 }
 
-const MIGRATED_KEYS = [STORAGE_KEYS.settings, STORAGE_KEYS.userState, STORAGE_KEYS.alerts, STORAGE_KEYS.history];
+const MIGRATED_KEYS = [
+  STORAGE_KEYS.settings,
+  STORAGE_KEYS.userState,
+  STORAGE_KEYS.alerts,
+  STORAGE_KEYS.history,
+];
 
 /**
  * Runs migrations on the stored data and writes back whatever changed

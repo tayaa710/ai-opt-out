@@ -31,9 +31,7 @@
     }
   ],
   "detection": {
-    "cookies": [
-      { "url": "https://www.notion.so", "name": "token_v2" }
-    ]
+    "cookies": [{ "url": "https://www.notion.so", "name": "token_v2" }]
   },
   "contacts": {
     "privacyEmail": "team@makenotion.com"

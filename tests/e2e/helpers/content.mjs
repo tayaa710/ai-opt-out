@@ -21,7 +21,11 @@ export async function serveFixtures(page) {
     const url = new URL(route.request().url());
     const rel = decodeURIComponent(url.pathname).replace(/^\/+/, '');
     const file = path.resolve(FIXTURES_DIR, rel);
-    if (!file.startsWith(FIXTURES_DIR + path.sep) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+    if (
+      !file.startsWith(FIXTURES_DIR + path.sep) ||
+      !fs.existsSync(file) ||
+      fs.statSync(file).isDirectory()
+    ) {
       await route.fulfill({ status: 404, body: 'not found' });
       return;
     }

@@ -13,7 +13,13 @@ const tracked = (ids, known = {}) => ({
   services: Object.fromEntries(
     ids.map((id) => [
       id,
-      { tracked: true, source: 'manual', addedAt: '2026-01-01T00:00:00Z', knownPolicyVersion: known[id] ?? 1, optOuts: {} },
+      {
+        tracked: true,
+        source: 'manual',
+        addedAt: '2026-01-01T00:00:00Z',
+        knownPolicyVersion: known[id] ?? 1,
+        optOuts: {},
+      },
     ]),
   ),
 });
@@ -55,7 +61,12 @@ describe('policyChange', () => {
     let s = makeService();
     s = bumpPolicy(s, 'info', 'Minor wording change in help docs.');
     s = bumpPolicy(s, 'warning', 'New opt-out form available.');
-    s.changelog.push({ version: 9, date: '2026-09-21', summary: 'Future entry not yet live.', severity: 'critical' });
+    s.changelog.push({
+      version: 9,
+      date: '2026-09-21',
+      summary: 'Future entry not yet live.',
+      severity: 'critical',
+    });
     const c = policyChange(s, 1);
     assert.deepEqual(
       c.entries.map((e) => e.version),

@@ -4,7 +4,16 @@
 
 import { h } from './dom.js';
 
-const FALLBACK_COLORS = ['#4f46e5', '#0f766e', '#b45309', '#be185d', '#1d4ed8', '#7c3aed', '#15803d', '#475569'];
+const FALLBACK_COLORS = [
+  '#4f46e5',
+  '#0f766e',
+  '#b45309',
+  '#be185d',
+  '#1d4ed8',
+  '#7c3aed',
+  '#15803d',
+  '#475569',
+];
 const DARK_TEXT = '#111827';
 const LIGHT_TEXT = '#ffffff';
 
@@ -79,7 +88,11 @@ export function monogram(service, { size = 'md' } = {}) {
     'span',
     {
       class: ['nt-tile', size !== 'md' && `nt-tile--${size}`],
-      style: { background: bg, color: readableTextColor(bg), fontSize: text.length > 1 ? 'calc(var(--tile-size) * 0.34)' : null },
+      style: {
+        background: bg,
+        color: readableTextColor(bg),
+        fontSize: text.length > 1 ? 'calc(var(--tile-size) * 0.34)' : null,
+      },
       'aria-hidden': 'true',
     },
     text,

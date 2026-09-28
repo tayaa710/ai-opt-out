@@ -134,12 +134,13 @@ function groupByOperator(list) {
 }
 
 function describeCrawler(c) {
-  if (c.purpose === 'search-engine') {
+  if (c.purpose === 'search-engine' || SEARCH_ENGINE_SET.has(c.token.toLowerCase())) {
     return `${c.token}: a regular search-engine crawler. Blocking it removes your site from that search engine.`;
   }
   if (c.purpose === 'custom') return `${c.token}: added by you.`;
   const parts = [`${c.token}: ${PURPOSE_TEXT[c.purpose] ?? 'AI crawler'}.`];
-  if (c.notes) parts.push(commentText(c.notes));
+  const notes = commentText(c.notes);
+  if (notes) parts.push(/[.!?]$/.test(notes) ? notes : `${notes}.`);
   if (c.respectsRobotsTxt === false) {
     parts.push('Reported not to respect robots.txt; consider blocking it at your server or CDN as well.');
   }

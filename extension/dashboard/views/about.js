@@ -20,7 +20,11 @@ function block(iconName, heading, ...body) {
 }
 
 function list(items) {
-  return h('ul', { class: 'ab-list' }, items.map((i) => h('li', null, i)));
+  return h(
+    'ul',
+    { class: 'ab-list' },
+    items.map((i) => h('li', null, i)),
+  );
 }
 
 export function render({ state }) {
@@ -28,7 +32,10 @@ export function render({ state }) {
   const meta = state.registryMeta ?? {};
   const count = state.registry.services.length;
   return [
-    pageHeader({ title: 'About NoTrain', subtitle: 'A free, open-source tool that helps you keep your data out of AI training.' }),
+    pageHeader({
+      title: 'About NoTrain',
+      subtitle: 'A free, open-source tool that helps you keep your data out of AI training.',
+    }),
     h(
       'div',
       { class: 'nt-card ab-hero' },
@@ -36,7 +43,12 @@ export function render({ state }) {
       h(
         'div',
         null,
-        h('p', { class: 'ab-hero__name' }, 'NoTrain', version && h('span', { class: 'ab-hero__version' }, `Version ${version}`)),
+        h(
+          'p',
+          { class: 'ab-hero__name' },
+          'NoTrain',
+          version && h('span', { class: 'ab-hero__version' }, `Version ${version}`),
+        ),
         h(
           'p',
           { class: 'nt-muted' },
@@ -53,7 +65,11 @@ export function render({ state }) {
       block(
         'lock',
         'Your privacy',
-        h('p', null, 'NoTrain has no account, no analytics and no servers. Your settings, the services you track and your progress stay in this browser.'),
+        h(
+          'p',
+          null,
+          'NoTrain has no account, no analytics and no servers. Your settings, the services you track and your progress stay in this browser.',
+        ),
         list([
           'The only thing NoTrain downloads by itself is the public list of services, once a week. Nothing about you is sent with it.',
           'Your name and email are only used to fill in letters on your screen. You send letters yourself.',
@@ -100,17 +116,29 @@ export function render({ state }) {
           h('code', { class: 'nt-mono ab-code' }, '/.well-known/ai-training-opt-out'),
           ' saying whether it trains on user content and where to opt out. When a site publishes one, the NoTrain popup shows it.',
         ),
-        h('p', null, extLink(`${REPO_URL}/blob/main/spec/well-known-ai-training-opt-out.md`, 'Read the specification', { class: 'nt-link' })),
+        h(
+          'p',
+          null,
+          extLink(`${REPO_URL}/blob/main/spec/well-known-ai-training-opt-out.md`, 'Read the specification', {
+            class: 'nt-link',
+          }),
+        ),
       ),
       block(
         'heart',
         'Open source',
-        h('p', null, 'NoTrain is free and MIT licensed. Corrections to the service list are welcome from anyone.'),
+        h(
+          'p',
+          null,
+          'NoTrain is free and MIT licensed. Corrections to the service list are welcome from anyone.',
+        ),
         h(
           'p',
           { class: 'ab-links' },
           extLink(REPO_URL, 'GitHub repository', { class: 'nt-link' }),
-          extLink(`${REPO_URL}/issues/new?template=registry-correction.yml`, 'Report a correction', { class: 'nt-link' }),
+          extLink(`${REPO_URL}/issues/new?template=registry-correction.yml`, 'Report a correction', {
+            class: 'nt-link',
+          }),
           extLink(`${REPO_URL}/blob/main/PRIVACY.md`, 'Privacy policy', { class: 'nt-link' }),
         ),
       ),

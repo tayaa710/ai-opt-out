@@ -163,9 +163,9 @@
     --nt-surface-3: #222736;
     --nt-surface-raised: #1d2130;
     --nt-overlay: rgba(0, 0, 0, 0.6);
-  --nt-toast-bg: #eceef5;
-  --nt-toast-text: #11131c;
-  --nt-tile-ring: rgba(255, 255, 255, 0.14);
+    --nt-toast-bg: #eceef5;
+    --nt-toast-text: #11131c;
+    --nt-tile-ring: rgba(255, 255, 255, 0.14);
     --nt-toast-bg: #eceef5;
     --nt-toast-text: #11131c;
     --nt-tile-ring: rgba(255, 255, 255, 0.14);

@@ -18,6 +18,7 @@ import {
   progressRing,
   statusPill,
   summaryCopy,
+  summarySegments,
   attentionReason,
   withBusy,
 } from '../shared/ui.js';
@@ -74,7 +75,7 @@ async function runAction(service, action, button) {
   const { kind, optOut } = action;
   if (kind === 'auto' && optOut?.automation) {
     const origins = optOut.automation.hostPermissions ?? [];
-    let granted = false;
+    let granted;
     try {
       granted = await hasPermissions(origins);
     } catch {
@@ -128,7 +129,8 @@ function header(state) {
           onClick: () => go('#/alerts'),
         },
         icon('bell'),
-        unread > 0 && h('span', { class: 'nt-count', 'aria-hidden': 'true' }, unread > 9 ? '9+' : String(unread)),
+        unread > 0 &&
+          h('span', { class: 'nt-count', 'aria-hidden': 'true' }, unread > 9 ? '9+' : String(unread)),
       ),
       h(
         'button',
@@ -170,7 +172,6 @@ function footer() {
 function summaryCard(services, userState, region) {
   const sum = summarize(services, userState, region);
   const copy = summaryCopy(sum);
-  const ringTone = sum.attention > 0 ? 'bad' : 'good';
   return h(
     'section',
     { class: 'nt-card p-summary', 'aria-labelledby': 'p-summary-title', 'data-testid': 'popup-summary' },
@@ -179,7 +180,7 @@ function summaryCard(services, userState, region) {
       total: sum.tracked,
       size: 60,
       stroke: 6,
-      tone: ringTone,
+      segments: summarySegments(sum),
       label: `${sum.protected} of ${sum.tracked} tracked services opted out or not training`,
     }),
     h(
@@ -203,9 +204,13 @@ function sameSite(a, b) {
 }
 
 function wellKnownBlock(doc, pageUrl) {
-  const trains = { yes: 'Yes', no: 'No', conditional: 'In some cases' }[doc.trains_on_user_content] ?? 'Not stated';
+  const trains =
+    { yes: 'Yes', no: 'No', conditional: 'In some cases' }[doc.trains_on_user_content] ?? 'Not stated';
   const optOutOk =
-    typeof doc.opt_out_url === 'string' && isSafeExternalUrl(doc.opt_out_url) && doc.opt_out_url.startsWith('https://') && sameSite(doc.opt_out_url, pageUrl);
+    typeof doc.opt_out_url === 'string' &&
+    isSafeExternalUrl(doc.opt_out_url) &&
+    doc.opt_out_url.startsWith('https://') &&
+    sameSite(doc.opt_out_url, pageUrl);
   return h(
     'div',
     { class: 'p-site__wellknown', 'data-testid': 'popup-wellknown' },
@@ -230,7 +235,12 @@ function currentSiteCard(state) {
       h(
         'div',
         { class: 'p-site__head' },
-        h('div', { class: 'p-site__title' }, h('span', { class: 'p-site__eyebrow' }, 'You’re on'), h('span', { class: 'p-site__name' }, wk.name || hostOf(url))),
+        h(
+          'div',
+          { class: 'p-site__title' },
+          h('span', { class: 'p-site__eyebrow' }, 'You’re on'),
+          h('span', { class: 'p-site__name' }, wk.name || hostOf(url)),
+        ),
       ),
       wellKnownBlock(wk, url),
     );
@@ -265,23 +275,75 @@ function currentSiteCard(state) {
         icon('plus'),
         `Track ${service.name}`,
       ),
-      h('button', { type: 'button', class: 'nt-btn nt-btn--secondary nt-btn--sm', onClick: () => go(`#/service/${encodeURIComponent(service.id)}`) }, 'Details'),
+      h(
+        'button',
+        {
+          type: 'button',
+          class: 'nt-btn nt-btn--secondary nt-btn--sm',
+          onClick: () => go(`#/service/${encodeURIComponent(service.id)}`),
+        },
+        'Details',
+      ),
     ];
   } else if (action.kind === 'details') {
-    actions = [h('button', { type: 'button', class: 'nt-btn nt-btn--secondary nt-btn--sm', onClick: () => go(`#/service/${encodeURIComponent(service.id)}`) }, 'View details')];
+    actions = [
+      h(
+        'button',
+        {
+          type: 'button',
+          class: 'nt-btn nt-btn--secondary nt-btn--sm',
+          onClick: () => go(`#/service/${encodeURIComponent(service.id)}`),
+        },
+        'View details',
+      ),
+    ];
   } else {
     actions = [
       h(
         'button',
-        { type: 'button', class: 'nt-btn nt-btn--primary nt-btn--sm', 'data-testid': 'popup-site-action', onClick: (e) => runAction(service, action, e.currentTarget) },
+        {
+          type: 'button',
+          class: 'nt-btn nt-btn--primary nt-btn--sm',
+          'data-testid': 'popup-site-action',
+          onClick: (e) => runAction(service, action, e.currentTarget),
+        },
         action.kind === 'auto' ? icon('zap') : null,
-        action.kind === 'auto' ? 'Opt out for me' : action.label,
+        action.kind === 'auto'
+          ? status.code === 'needs_attention'
+            ? 'Fix it for me'
+            : 'Opt out for me'
+          : action.label,
       ),
-      h('button', { type: 'button', class: 'nt-btn nt-btn--secondary nt-btn--sm', onClick: () => go(`#/service/${encodeURIComponent(service.id)}`) }, 'Details'),
+      h(
+        'button',
+        {
+          type: 'button',
+          class: 'nt-btn nt-btn--secondary nt-btn--sm',
+          onClick: () => go(`#/service/${encodeURIComponent(service.id)}`),
+        },
+        'Details',
+      ),
     ];
   }
 
-  const factText = def ? `${trains.long}. ${def.label}.` : `${trains.long}.`;
+  let factText = def ? `${trains.long}. ${def.label}.` : `${trains.long}.`;
+  let factIcon = trains.tone === 'good' ? 'shieldCheck' : 'info';
+  let factTone = trains.tone;
+  if (status.code === 'protected') {
+    factText = 'You’ve opted out here. NoTrain will let you know if that changes.';
+    factIcon = 'shieldCheck';
+    factTone = 'good';
+  } else if (status.code === 'safe_by_default') {
+    factText = 'Doesn’t train on your data by default. Nothing to do.';
+    factIcon = 'shieldCheck';
+    factTone = 'good';
+  } else if (status.code === 'needs_attention') {
+    factText = status.pendingPolicyChange
+      ? 'Its AI training policy changed. Take a look.'
+      : 'A setting you turned off was switched back on.';
+    factIcon = 'alert';
+    factTone = 'bad';
+  }
   return h(
     'section',
     { class: 'nt-card p-site', 'aria-labelledby': 'p-site-name', 'data-testid': 'popup-site' },
@@ -297,7 +359,7 @@ function currentSiteCard(state) {
       ),
       statusPill(status),
     ),
-    h('p', { class: 'p-site__fact' }, icon(trains.tone === 'good' ? 'shieldCheck' : 'info', { class: `nt-tone-${trains.tone}` }), factText),
+    h('p', { class: 'p-site__fact' }, icon(factIcon, { class: `nt-tone-${factTone}` }), factText),
     h('div', { class: 'p-site__actions' }, actions),
     wk && wellKnownBlock(wk, tabInfo.tab.url),
   );
@@ -310,7 +372,11 @@ function serviceRow(service, state) {
   const hash = `#/service/${encodeURIComponent(service.id)}`;
   let aside;
   if (status.code === 'protected' || status.code === 'safe_by_default') {
-    aside = h('span', { class: 'p-row__check', title: status.label }, icon('checkCircle', { label: status.label }));
+    aside = h(
+      'span',
+      { class: 'p-row__check', title: status.label },
+      icon('checkCircle', { label: status.label }),
+    );
   } else if (action.kind === 'details') {
     aside = h('span', { class: 'p-row__check nt-muted' }, icon('chevronRight'));
   } else {
@@ -318,7 +384,11 @@ function serviceRow(service, state) {
       'button',
       {
         type: 'button',
-        class: ['nt-btn', 'nt-btn--sm', status.code === 'needs_attention' || action.kind === 'auto' ? 'nt-btn--primary' : 'nt-btn--secondary'],
+        class: [
+          'nt-btn',
+          'nt-btn--sm',
+          status.code === 'needs_attention' ? 'nt-btn--primary' : 'nt-btn--soft',
+        ],
         'aria-label': `${action.kind === 'auto' && status.code !== 'needs_attention' ? 'Opt out of' : action.label} ${service.name}`,
         'data-testid': 'popup-row-action',
         onClick: (e) => runAction(service, action, e.currentTarget),
@@ -378,7 +448,11 @@ function servicesSection(state) {
         'Manage',
       ),
     ),
-    h('ul', { class: 'nt-card nt-list p-list', role: 'list', style: { marginTop: '8px' } }, tracked.map((s) => serviceRow(s, state))),
+    h(
+      'ul',
+      { class: 'nt-card nt-list p-list', role: 'list', style: { marginTop: '8px' } },
+      tracked.map((s) => serviceRow(s, state)),
+    ),
   );
 }
 
@@ -388,7 +462,11 @@ function welcome(state) {
     'section',
     { class: 'nt-card p-welcome', 'data-testid': 'popup-welcome' },
     logoMark({ size: 44 }),
-    h('h1', { class: 'p-welcome__title' }, onboarded ? 'Pick your services' : 'See who trains AI on your data'),
+    h(
+      'h1',
+      { class: 'p-welcome__title' },
+      onboarded ? 'Pick your services' : 'See who trains AI on your data',
+    ),
     h(
       'p',
       { class: 'p-welcome__text' },
@@ -457,12 +535,21 @@ function errorView(error) {
       { class: 'nt-empty' },
       h('div', { class: 'nt-empty__icon' }, icon('alertCircle')),
       h('p', { class: 'nt-empty__title' }, 'NoTrain couldn’t load'),
-      h('p', { class: 'nt-empty__text' }, 'The extension is restarting or something went wrong. Your settings are safe.'),
+      h(
+        'p',
+        { class: 'nt-empty__text' },
+        'The extension is restarting or something went wrong. Your settings are safe.',
+      ),
       h('p', { class: 'nt-subtle' }, String(error?.message ?? '')),
       h(
         'div',
         { class: 'nt-btn-row' },
-        h('button', { type: 'button', class: 'nt-btn nt-btn--primary nt-btn--sm', onClick: () => store.reload() }, icon('refresh'), 'Try again'),
+        h(
+          'button',
+          { type: 'button', class: 'nt-btn nt-btn--primary nt-btn--sm', onClick: () => store.reload() },
+          icon('refresh'),
+          'Try again',
+        ),
       ),
     ),
   );
@@ -496,7 +583,11 @@ function render(snap) {
     mount(
       app,
       header(state),
-      h('main', { class: 'p-main', id: 'main', 'aria-busy': snap.status === 'loading' ? 'true' : 'false' }, body),
+      h(
+        'main',
+        { class: 'p-main', id: 'main', 'aria-busy': snap.status === 'loading' ? 'true' : 'false' },
+        body,
+      ),
       footer(),
     ),
   );

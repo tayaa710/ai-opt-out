@@ -17,7 +17,12 @@ import {
   writeLocal,
   clearAll,
 } from '../../extension/lib/storage.js';
-import { ALERTS_LIMIT, DEFAULT_SETTINGS, HISTORY_LIMIT, STORAGE_SCHEMA_VERSION } from '../../extension/lib/constants.js';
+import {
+  ALERTS_LIMIT,
+  DEFAULT_SETTINGS,
+  HISTORY_LIMIT,
+  STORAGE_SCHEMA_VERSION,
+} from '../../extension/lib/constants.js';
 
 describe('settings normalisation', () => {
   test('defaults are a mutable deep copy of DEFAULT_SETTINGS', () => {
@@ -100,7 +105,10 @@ describe('applySettingsPatch', () => {
   ];
   for (const [patch, re] of invalid) {
     test(`rejects ${JSON.stringify(patch).slice(0, 60)}`, () => {
-      assert.throws(() => applySettingsPatch(defaultSettings(), patch), (err) => err instanceof UserError && re.test(err.message));
+      assert.throws(
+        () => applySettingsPatch(defaultSettings(), patch),
+        (err) => err instanceof UserError && re.test(err.message),
+      );
     });
   }
 
@@ -110,7 +118,10 @@ describe('applySettingsPatch', () => {
   });
 
   test('an empty email is allowed (clears the field)', () => {
-    const s = applySettingsPatch({ ...defaultSettings(), profile: { fullName: '', email: 'a@b.co' } }, { profile: { email: '' } });
+    const s = applySettingsPatch(
+      { ...defaultSettings(), profile: { fullName: '', email: 'a@b.co' } },
+      { profile: { email: '' } },
+    );
     assert.equal(s.profile.email, '');
   });
 });
@@ -125,7 +136,12 @@ describe('userState normalisation', () => {
           addedAt: 'nope',
           knownPolicyVersion: 2,
           optOuts: {
-            'improve-model-toggle': { status: 'done', method: 'auto', updatedAt: '2026-01-01T00:00:00.000Z', verifiedAt: 5 },
+            'improve-model-toggle': {
+              status: 'done',
+              method: 'auto',
+              updatedAt: '2026-01-01T00:00:00.000Z',
+              verifiedAt: 5,
+            },
             'bad status': { status: 'done' },
             other: { status: 'exploded' },
           },
@@ -162,7 +178,9 @@ describe('migrate', () => {
   test('unversioned (pre-release) data is treated as version 0 and upgraded', () => {
     const { data, fromVersion } = migrate({
       settings: { region: 'EU' },
-      userState: { services: { x: { tracked: true, source: 'manual', addedAt: '2026-01-01T00:00:00Z', optOuts: {} } } },
+      userState: {
+        services: { x: { tracked: true, source: 'manual', addedAt: '2026-01-01T00:00:00Z', optOuts: {} } },
+      },
     });
     assert.equal(fromVersion, 0);
     assert.equal(data.settings.schemaVersion, STORAGE_SCHEMA_VERSION);
@@ -239,7 +257,10 @@ describe('storage with chrome.storage', () => {
       /nope/,
     );
     assert.equal(mock.storage.local.writes, 0);
-    const r = await updateLocal(['settings'], (v) => ({ set: { settings: { ...v.settings, region: 'EU' } }, result: 1 }));
+    const r = await updateLocal(['settings'], (v) => ({
+      set: { settings: { ...v.settings, region: 'EU' } },
+      result: 1,
+    }));
     assert.equal(r, 1);
     assert.equal(mock.storage.local.dump().settings.region, 'EU');
   });

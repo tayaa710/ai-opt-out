@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "name": "Example Notes",
+  "trains_on_user_content": "no",
+  "policy_url": "https://notes.example.org/privacy#ai",
+  "last_updated": "2026-07-15",
+  "contact": "https://notes.example.org/privacy/contact"
+}

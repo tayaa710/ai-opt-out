@@ -38,7 +38,12 @@ export function classifySender(sender) {
   const url = typeof sender.url === 'string' ? sender.url : '';
   const base = runtime.getURL('');
   if (url.startsWith(base)) return 'ui';
-  if (sender.tab && Number.isInteger(sender.tab.id) && url.startsWith('https://') && (sender.frameId ?? 0) === 0) {
+  if (
+    sender.tab &&
+    Number.isInteger(sender.tab.id) &&
+    url.startsWith('https://') &&
+    (sender.frameId ?? 0) === 0
+  ) {
     return 'content';
   }
   return null;
@@ -77,11 +82,18 @@ export const ROUTES = Object.freeze({
     }),
   ),
   detectAccounts: ui(() => detectAccounts()),
-  syncRegistry: ui((m) => syncRegistry({ force: m.force === undefined ? true : expectBoolean(m.force, 'force') })),
-  markAlert: ui((m) => h.markOneAlert({ id: expectString(m.id, 'id', 100), patch: expectObject(m.patch, 'patch') })),
+  syncRegistry: ui((m) =>
+    syncRegistry({ force: m.force === undefined ? true : expectBoolean(m.force, 'force') }),
+  ),
+  markAlert: ui((m) =>
+    h.markOneAlert({ id: expectString(m.id, 'id', 100), patch: expectObject(m.patch, 'patch') }),
+  ),
   markAllAlertsRead: ui(() => h.markEveryAlertRead()),
   recordLetter: ui((m) =>
-    h.recordLetter({ serviceId: expectId(m.serviceId, 'serviceId'), optOutId: expectId(m.optOutId, 'optOutId') }),
+    h.recordLetter({
+      serviceId: expectId(m.serviceId, 'serviceId'),
+      optOutId: expectId(m.optOutId, 'optOutId'),
+    }),
   ),
   probeWellKnown: ui((m) => probeWellKnown({ tabId: expectInt(m.tabId, 'tabId') })),
   exportData: ui(() => h.exportData()),
@@ -114,7 +126,8 @@ export async function handleMessage(msg, sender) {
     if (!isPlainObject(msg) || typeof msg.type !== 'string') throw new UserError('Invalid message');
     const route = Object.hasOwn(ROUTES, msg.type) ? ROUTES[msg.type] : null;
     if (!route) throw new UserError(`Unknown message type "${msg.type.slice(0, 40)}"`);
-    if (classifySender(sender) !== route.from) throw new UserError(`"${msg.type}" is not allowed from this sender`);
+    if (classifySender(sender) !== route.from)
+      throw new UserError(`"${msg.type}" is not allowed from this sender`);
     await ensureReady();
     const data = await route.handler(msg, sender);
     return { ok: true, data: data === undefined ? null : data };

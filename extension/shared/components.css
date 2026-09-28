@@ -47,6 +47,11 @@ h4 {
   line-height: var(--nt-leading-tight);
   font-weight: var(--nt-weight-semibold);
   letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 ul[role='list'],
@@ -1459,7 +1464,7 @@ button.nt-chip:focus-visible {
 .nt-ring__value {
   stroke: var(--nt-good);
   fill: none;
-  stroke-linecap: round;
+  stroke-linecap: butt;
   transition: stroke-dashoffset var(--nt-duration-slow) var(--nt-ease);
 }
 

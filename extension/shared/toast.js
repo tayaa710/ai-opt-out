@@ -11,8 +11,18 @@ let assertiveRegion = null;
 function ensureRegions() {
   if (toaster && document.body.contains(toaster)) return;
   toaster = h('div', { class: 'nt-toaster', 'data-testid': 'toaster' });
-  politeRegion = h('div', { class: 'nt-visually-hidden', role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' });
-  assertiveRegion = h('div', { class: 'nt-visually-hidden', role: 'alert', 'aria-live': 'assertive', 'aria-atomic': 'true' });
+  politeRegion = h('div', {
+    class: 'nt-visually-hidden',
+    role: 'status',
+    'aria-live': 'polite',
+    'aria-atomic': 'true',
+  });
+  assertiveRegion = h('div', {
+    class: 'nt-visually-hidden',
+    role: 'alert',
+    'aria-live': 'assertive',
+    'aria-atomic': 'true',
+  });
   document.body.append(toaster, politeRegion, assertiveRegion);
 }
 
@@ -67,7 +77,11 @@ export function toast(message, { tone = 'good', duration = 4200, action } = {}) 
         },
         action.label,
       ),
-    h('button', { type: 'button', class: 'nt-toast__close', 'aria-label': 'Dismiss notification', onClick: dismiss }, icon('x', { size: 16 })),
+    h(
+      'button',
+      { type: 'button', class: 'nt-toast__close', 'aria-label': 'Dismiss notification', onClick: dismiss },
+      icon('x', { size: 16 }),
+    ),
   );
   // Keep at most three on screen.
   while (toaster.children.length >= 3) toaster.firstElementChild.remove();

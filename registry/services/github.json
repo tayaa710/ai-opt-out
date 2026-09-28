@@ -38,10 +38,7 @@
       "automation": {
         "confidence": "experimental",
         "hostPermissions": ["https://github.com/*"],
-        "loginIndicators": [
-          { "selector": "input#login_field" },
-          { "text": ["Sign in to GitHub"] }
-        ],
+        "loginIndicators": [{ "selector": "input#login_field" }, { "text": ["Sign in to GitHub"] }],
         "steps": [
           {
             "action": "waitFor",

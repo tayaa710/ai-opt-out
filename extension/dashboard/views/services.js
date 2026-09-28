@@ -10,7 +10,14 @@ import { toast, announce } from '../../shared/toast.js';
 import { plural } from '../../shared/format.js';
 import { CATEGORY_ORDER, categoryLabel, TRAINS_LABELS, DEFAULT_LABELS } from '../../shared/labels.js';
 import { statusPill } from '../../shared/ui.js';
-import { pageHeader, emptyState, serviceHash, button, suggestServiceUrl, detectAccountsFlow } from '../common.js';
+import {
+  pageHeader,
+  emptyState,
+  serviceHash,
+  button,
+  suggestServiceUrl,
+  detectAccountsFlow,
+} from '../common.js';
 
 const ui = { q: '', category: 'all', status: 'all' };
 
@@ -36,7 +43,9 @@ function normalise(str) {
 export function matchesQuery(service, q) {
   if (!q) return true;
   const needle = normalise(q.trim());
-  const hay = normalise([service.name, service.company, categoryLabel(service.category), ...(service.domains ?? [])].join(' '));
+  const hay = normalise(
+    [service.name, service.company, categoryLabel(service.category), ...(service.domains ?? [])].join(' '),
+  );
   return needle.split(/\s+/).every((part) => hay.includes(part));
 }
 
@@ -63,7 +72,10 @@ async function setTracked(service, tracked, input) {
     if (!tracked) {
       toast(`Stopped tracking ${service.name}`, {
         tone: 'info',
-        action: { label: 'Undo', onClick: () => api.trackServices([service.id], true, 'manual').catch(() => {}) },
+        action: {
+          label: 'Undo',
+          onClick: () => api.trackServices([service.id], true, 'manual').catch(() => {}),
+        },
       });
     }
   } catch (err) {
@@ -79,11 +91,26 @@ function factChips(service) {
   const trains = TRAINS_LABELS[t.trainsOnUserData] ?? TRAINS_LABELS.unknown;
   const def = DEFAULT_LABELS[t.defaultState];
   const chips = [];
-  if (t.trainsOnUserData === 'no') chips.push(h('span', { class: 'nt-pill nt-pill--good nt-pill--plain' }, 'Doesn’t train on your data'));
-  else if (t.trainsOnUserData === 'unknown') chips.push(h('span', { class: 'nt-pill nt-pill--neutral nt-pill--plain' }, 'Training unclear'));
+  if (t.trainsOnUserData === 'no')
+    chips.push(h('span', { class: 'nt-pill nt-pill--good nt-pill--plain' }, 'Doesn’t train on your data'));
+  else if (t.trainsOnUserData === 'unknown')
+    chips.push(h('span', { class: 'nt-pill nt-pill--neutral nt-pill--plain' }, 'Training unclear'));
   else {
-    chips.push(h('span', { class: `nt-pill nt-pill--${trains.tone} nt-pill--plain` }, t.trainsOnUserData === 'yes' ? 'Trains on your data' : 'Trains in some cases'));
-    if (def && t.defaultState !== 'not_applicable') chips.push(h('span', { class: `nt-pill nt-pill--${def.tone === 'bad' ? 'warn' : def.tone} nt-pill--plain` }, def.label));
+    chips.push(
+      h(
+        'span',
+        { class: `nt-pill nt-pill--${trains.tone} nt-pill--plain` },
+        t.trainsOnUserData === 'yes' ? 'Trains on your data' : 'Trains in some cases',
+      ),
+    );
+    if (def && t.defaultState !== 'not_applicable')
+      chips.push(
+        h(
+          'span',
+          { class: `nt-pill nt-pill--${def.tone === 'bad' ? 'warn' : def.tone} nt-pill--plain` },
+          def.label,
+        ),
+      );
   }
   return chips;
 }
@@ -145,8 +172,13 @@ function filtered(state) {
 function results(state) {
   const list = filtered(state);
   const total = state.registry.services.length;
-  const countText = list.length === total ? plural(total, 'service') : `${list.length} of ${plural(total, 'service')}`;
-  const count = h('p', { class: 'd-results-count', role: 'status', 'aria-live': 'polite', 'data-testid': 'results-count' }, countText);
+  const countText =
+    list.length === total ? plural(total, 'service') : `${list.length} of ${plural(total, 'service')}`;
+  const count = h(
+    'p',
+    { class: 'd-results-count', role: 'status', 'aria-live': 'polite', 'data-testid': 'results-count' },
+    countText,
+  );
   if (list.length === 0) {
     const hasFilters = ui.q || ui.category !== 'all' || ui.status !== 'all';
     return [
@@ -177,7 +209,37 @@ function results(state) {
       ),
     ];
   }
-  return [count, h('ul', { class: 'nt-card nt-list d-svc-list', role: 'list', 'data-testid': 'services-list' }, list.map((s) => serviceRow(s, state)))];
+  const isTracked = (s) => Boolean(state.userState.services?.[s.id]?.tracked);
+  const tracked = list.filter(isTracked);
+  const rest = list.filter((s) => !isTracked(s));
+  if (tracked.length && rest.length) {
+    // Two groups: what you track (by urgency), then everything else (A–Z).
+    const group = (id, label, items) =>
+      h(
+        'section',
+        { class: 'd-svc-group', 'aria-labelledby': id },
+        h(
+          'h2',
+          { class: 'd-svc-group__title', id },
+          label,
+          h('span', { class: 'd-svc-group__count' }, String(items.length)),
+        ),
+        h(
+          'ul',
+          { class: 'nt-card nt-list d-svc-list', role: 'list', 'data-testid': 'services-list' },
+          items.map((s) => serviceRow(s, state)),
+        ),
+      );
+    return [count, group('grp-tracked', 'Tracking', tracked), group('grp-more', 'More services', rest)];
+  }
+  return [
+    count,
+    h(
+      'ul',
+      { class: 'nt-card nt-list d-svc-list', role: 'list', 'data-testid': 'services-list' },
+      list.map((s) => serviceRow(s, state)),
+    ),
+  ];
 }
 
 let rerenderSelf = () => {};
@@ -268,7 +330,11 @@ function detectButton(state) {
             null,
             `NoTrain can check ${plural(detectable.length, 'service')} for a sign-in cookie. It only checks whether the cookie exists. It never reads it, and nothing leaves your device.`,
           ),
-          h('p', null, 'Your browser will ask for permission first. NoTrain gives the permission back as soon as it’s done.'),
+          h(
+            'p',
+            null,
+            'Your browser will ask for permission first. NoTrain gives the permission back as soon as it’s done.',
+          ),
         ),
         confirmLabel: 'Continue',
         iconName: 'scan',
@@ -287,7 +353,9 @@ export function render(ctx) {
     const toolbarEl = document.querySelector('.d-toolbar');
     if (toolbarEl) {
       // Update pressed state in place (keeps focus on the button pressed).
-      toolbarEl.querySelectorAll('.nt-segmented__btn').forEach((b, i) => b.setAttribute('aria-pressed', String(STATUS_FILTERS[i].id === ui.status)));
+      toolbarEl
+        .querySelectorAll('.nt-segmented__btn')
+        .forEach((b, i) => b.setAttribute('aria-pressed', String(STATUS_FILTERS[i].id === ui.status)));
       const sel = toolbarEl.querySelector('#svc-category');
       if (sel && sel.value !== ui.category) sel.value = ui.category;
       const q = toolbarEl.querySelector('#svc-search');
@@ -296,7 +364,9 @@ export function render(ctx) {
     mount(container, results(ctx.store.state ?? state));
   };
   mount(container, results(state));
-  const trackedCount = state.registry.services.filter((s) => state.userState.services?.[s.id]?.tracked).length;
+  const trackedCount = state.registry.services.filter(
+    (s) => state.userState.services?.[s.id]?.tracked,
+  ).length;
   return [
     pageHeader({
       title: 'Services',

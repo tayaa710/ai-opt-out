@@ -23,7 +23,9 @@ export async function openDashboard(hash = '#/overview') {
   try {
     if (chrome.runtime.getContexts) {
       const contexts = await chrome.runtime.getContexts({ contextTypes: ['TAB'] });
-      const existing = contexts.find((c) => c.tabId >= 0 && typeof c.documentUrl === 'string' && c.documentUrl.startsWith(base));
+      const existing = contexts.find(
+        (c) => c.tabId >= 0 && typeof c.documentUrl === 'string' && c.documentUrl.startsWith(base),
+      );
       if (existing) {
         const tab = await chrome.tabs.update(existing.tabId, { url, active: true });
         if (tab?.windowId !== undefined) await chrome.windows.update(tab.windowId, { focused: true });
@@ -39,8 +41,6 @@ export async function openDashboard(hash = '#/overview') {
 /* ---------- Status ---------- */
 
 const PENDING = new Set([OPT_OUT_STATUS.notStarted, OPT_OUT_STATUS.needsAttention]);
-const EFFORT_RANK = { quick: 0, moderate: 1, involved: 2 };
-const TYPE_RANK = { toggle: 0, form: 1, email: 2 };
 
 /** Status pill for a derived service status. */
 export function statusPill(status, attrs = {}) {
@@ -56,16 +56,12 @@ export function attentionReason(service, userState, status) {
   return flipped ? 'Setting was turned back on' : 'Needs a look';
 }
 
-/** Applicable opt-outs still to do, easiest first (automated, then quick, then toggles). */
+/**
+ * Applicable opt-outs still to do, in registry order (the registry lists the
+ * main control first, so it stays the recommended one).
+ */
 export function pendingOptOuts(service, userState, status) {
-  return status.applicable
-    .filter((o) => PENDING.has(optOutStatus(userState, service.id, o.id)))
-    .sort(
-      (a, b) =>
-        Number(Boolean(b.automation)) - Number(Boolean(a.automation)) ||
-        (EFFORT_RANK[a.effort] ?? 3) - (EFFORT_RANK[b.effort] ?? 3) ||
-        (TYPE_RANK[a.type] ?? 3) - (TYPE_RANK[b.type] ?? 3),
-    );
+  return status.applicable.filter((o) => PENDING.has(optOutStatus(userState, service.id, o.id)));
 }
 
 /**
@@ -96,26 +92,39 @@ export function primaryAction(service, userState, region) {
 /* ---------- Progress ring ---------- */
 
 /**
- * @param {{ value: number, total: number, size?: number, stroke?: number, tone?: 'good'|'warn'|'bad', label?: string }} opts
+ * Ring meter. The centre shows value/total; the arc is split into coloured
+ * segments (e.g. done / to do / attention) so the state reads at a glance.
+ * @param {{ value: number, total: number, size?: number, stroke?: number, label?: string,
+ *   segments?: { value: number, tone: 'good'|'warn'|'bad' }[] }} opts
  */
-export function progressRing({ value, total, size = 64, stroke = 7, tone = 'good', label }) {
+export function progressRing({ value, total, size = 64, stroke = 7, label, segments }) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const frac = total > 0 ? Math.min(1, Math.max(0, value / total)) : 0;
-  const ring = s(
-    'svg',
-    { width: size, height: size, viewBox: `0 0 ${size} ${size}`, 'aria-hidden': 'true', focusable: 'false' },
-    s('circle', { class: 'nt-ring__track', cx: size / 2, cy: size / 2, r, 'stroke-width': stroke }),
-    frac > 0 &&
+  const segs = (segments ?? [{ value, tone: 'good' }]).filter((sg) => sg.value > 0);
+  const gap = segs.length > 1 ? Math.min(3, c * 0.012) : 0;
+  let start = 0;
+  const arcs = [];
+  for (const sg of segs) {
+    const frac = total > 0 ? Math.min(1, sg.value / total) : 0;
+    const len = Math.max(0, frac * c - gap);
+    arcs.push(
       s('circle', {
-        class: ['nt-ring__value', tone !== 'good' && `nt-ring__value--${tone}`],
+        class: ['nt-ring__value', sg.tone !== 'good' && `nt-ring__value--${sg.tone}`],
         cx: size / 2,
         cy: size / 2,
         r,
         'stroke-width': stroke,
-        'stroke-dasharray': `${c} ${c}`,
-        'stroke-dashoffset': String(c * (1 - frac)),
+        'stroke-dasharray': `${len} ${c}`,
+        'stroke-dashoffset': String(-start * c - gap / 2),
       }),
+    );
+    start += frac;
+  }
+  const ring = s(
+    'svg',
+    { width: size, height: size, viewBox: `0 0 ${size} ${size}`, 'aria-hidden': 'true', focusable: 'false' },
+    s('circle', { class: 'nt-ring__track', cx: size / 2, cy: size / 2, r, 'stroke-width': stroke }),
+    ...arcs,
   );
   return h(
     'div',
@@ -135,19 +144,33 @@ export function progressRing({ value, total, size = 64, stroke = 7, tone = 'good
   );
 }
 
+/** Ring segments for a summary: done (green), to do (amber), attention (red). */
+export function summarySegments(sum) {
+  return [
+    { value: sum.protected, tone: 'good' },
+    { value: sum.actionNeeded, tone: 'warn' },
+    { value: sum.attention, tone: 'bad' },
+  ];
+}
+
 /**
  * Headline + supporting line for the protection summary.
  * @param {{ tracked: number, protected: number, actionNeeded: number, attention: number, informational: number }} sum
  */
 export function summaryCopy(sum) {
   if (sum.tracked === 0) {
-    return { tone: 'neutral', headline: 'No services yet', detail: 'Pick the services you use to see where you stand.' };
+    return {
+      tone: 'neutral',
+      headline: 'No services yet',
+      detail: 'Pick the services you use to see where you stand.',
+    };
   }
   const covered = `${sum.protected} of ${sum.tracked} opted out or not training by default.`;
   if (sum.attention > 0) {
     return {
       tone: 'bad',
-      headline: sum.attention === 1 ? '1 service needs attention' : `${sum.attention} services need attention`,
+      headline:
+        sum.attention === 1 ? '1 service needs attention' : `${sum.attention} services need attention`,
       detail: covered,
     };
   }

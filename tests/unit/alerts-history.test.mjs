@@ -103,7 +103,12 @@ describe('dueReminders', () => {
   });
 
   test('one reminder per tracked service with a stale done opt-out', () => {
-    const userState = state({ status: 'done', method: 'auto', updatedAt: daysAgo(40), verifiedAt: daysAgo(31) });
+    const userState = state({
+      status: 'done',
+      method: 'auto',
+      updatedAt: daysAgo(40),
+      verifiedAt: daysAgo(31),
+    });
     const due = dueReminders({ registry, userState, settings, alerts: [] }, NOW);
     assert.equal(due.length, 1);
     assert.equal(due[0].kind, 'reminder');
@@ -125,7 +130,13 @@ describe('dueReminders', () => {
 
   test('deduplicated against recent or still-unread reminders', () => {
     const userState = state({ status: 'done', method: 'auto', updatedAt: daysAgo(40), verifiedAt: null });
-    const recent = { kind: 'reminder', serviceId: 'chatgpt', createdAt: daysAgo(3), read: true, dismissed: true };
+    const recent = {
+      kind: 'reminder',
+      serviceId: 'chatgpt',
+      createdAt: daysAgo(3),
+      read: true,
+      dismissed: true,
+    };
     assert.equal(dueReminders({ registry, userState, settings, alerts: [recent] }, NOW).length, 0);
     const oldUnread = { ...recent, createdAt: daysAgo(60), read: false, dismissed: false };
     assert.equal(dueReminders({ registry, userState, settings, alerts: [oldUnread] }, NOW).length, 0);
@@ -138,7 +149,11 @@ describe('history', () => {
   test('entries are newest first and capped', () => {
     let h = [];
     for (let i = 0; i < 5; i += 1) {
-      h = appendHistory(h, makeHistoryEntry({ serviceId: 's', optOutId: 'o', action: 'auto', outcome: `o${i}` }), 3);
+      h = appendHistory(
+        h,
+        makeHistoryEntry({ serviceId: 's', optOutId: 'o', action: 'auto', outcome: `o${i}` }),
+        3,
+      );
     }
     assert.deepEqual(
       h.map((e) => e.outcome),
@@ -156,9 +171,21 @@ describe('history', () => {
   });
 
   test('detail is trimmed, capped and omitted when empty', () => {
-    const e = makeHistoryEntry({ serviceId: 's', optOutId: 'o', action: 'manual', outcome: 'done', detail: `  ${'x'.repeat(400)}` });
+    const e = makeHistoryEntry({
+      serviceId: 's',
+      optOutId: 'o',
+      action: 'manual',
+      outcome: 'done',
+      detail: `  ${'x'.repeat(400)}`,
+    });
     assert.equal(e.detail.length, 300);
-    const f = makeHistoryEntry({ serviceId: 's', optOutId: 'o', action: 'manual', outcome: 'done', detail: '   ' });
+    const f = makeHistoryEntry({
+      serviceId: 's',
+      optOutId: 'o',
+      action: 'manual',
+      outcome: 'done',
+      detail: '   ',
+    });
     assert.equal('detail' in f, false);
   });
 });

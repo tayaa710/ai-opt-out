@@ -21,7 +21,12 @@ const empty = () => ({ services: {} });
 describe('trackServices', () => {
   test('tracking sets knownPolicyVersion to the current version', () => {
     const reg = makeRegistry([bumpPolicy(makeService())]);
-    const u = trackServices(empty(), reg, { serviceIds: ['chatgpt'], tracked: true, source: 'detected' }, NOW);
+    const u = trackServices(
+      empty(),
+      reg,
+      { serviceIds: ['chatgpt'], tracked: true, source: 'detected' },
+      NOW,
+    );
     assert.deepEqual(u.services.chatgpt, {
       tracked: true,
       source: 'detected',
@@ -33,7 +38,12 @@ describe('trackServices', () => {
 
   test('re-tracking an already tracked service changes nothing', () => {
     const u1 = trackServices(empty(), registry, { serviceIds: ['chatgpt'], tracked: true }, NOW);
-    const u2 = trackServices(u1, registry, { serviceIds: ['chatgpt'], tracked: true, source: 'detected' }, LATER);
+    const u2 = trackServices(
+      u1,
+      registry,
+      { serviceIds: ['chatgpt'], tracked: true, source: 'detected' },
+      LATER,
+    );
     assert.deepEqual(u2, u1);
   });
 
@@ -50,15 +60,27 @@ describe('trackServices', () => {
 
   test('unknown ids and sources are rejected, input is not mutated', () => {
     const before = empty();
-    assert.throws(() => trackServices(before, registry, { serviceIds: ['nope'], tracked: true }), /Unknown service/);
-    assert.throws(() => trackServices(before, registry, { serviceIds: ['chatgpt'], tracked: true, source: 'x' }), UserError);
+    assert.throws(
+      () => trackServices(before, registry, { serviceIds: ['nope'], tracked: true }),
+      /Unknown service/,
+    );
+    assert.throws(
+      () => trackServices(before, registry, { serviceIds: ['chatgpt'], tracked: true, source: 'x' }),
+      UserError,
+    );
     assert.deepEqual(before, empty());
   });
 });
 
 describe('setOptOutStatus', () => {
   test('marking done on an untracked service starts tracking it', () => {
-    const u = setOptOutStatus(empty(), svc, toggle, { status: 'done', method: 'manual', note: ' did it ' }, NOW);
+    const u = setOptOutStatus(
+      empty(),
+      svc,
+      toggle,
+      { status: 'done', method: 'manual', note: ' did it ' },
+      NOW,
+    );
     assert.equal(u.services.chatgpt.tracked, true);
     assert.equal(u.services.chatgpt.knownPolicyVersion, 1);
     assert.deepEqual(u.services.chatgpt.optOuts[toggle.id], {
@@ -85,8 +107,14 @@ describe('setOptOutStatus', () => {
   });
 
   test('rejects unknown statuses and methods', () => {
-    assert.throws(() => setOptOutStatus(empty(), svc, toggle, { status: 'finished', method: 'manual' }), UserError);
-    assert.throws(() => setOptOutStatus(empty(), svc, toggle, { status: 'done', method: 'magic' }), UserError);
+    assert.throws(
+      () => setOptOutStatus(empty(), svc, toggle, { status: 'finished', method: 'manual' }),
+      UserError,
+    );
+    assert.throws(
+      () => setOptOutStatus(empty(), svc, toggle, { status: 'done', method: 'magic' }),
+      UserError,
+    );
   });
 });
 
@@ -156,7 +184,10 @@ describe('acknowledgePolicy / touchVerified / lookups', () => {
 
   test('touchVerified only touches done opt-outs', () => {
     const u = setOptOutStatus(empty(), svc, toggle, { status: 'done', method: 'auto' }, NOW);
-    assert.equal(touchVerified(u, 'chatgpt', toggle.id, LATER).services.chatgpt.optOuts[toggle.id].verifiedAt, LATER.toISOString());
+    assert.equal(
+      touchVerified(u, 'chatgpt', toggle.id, LATER).services.chatgpt.optOuts[toggle.id].verifiedAt,
+      LATER.toISOString(),
+    );
     const s = setOptOutStatus(empty(), svc, toggle, { status: 'skipped', method: 'manual' }, NOW);
     assert.equal(touchVerified(s, 'chatgpt', toggle.id, LATER), s);
   });

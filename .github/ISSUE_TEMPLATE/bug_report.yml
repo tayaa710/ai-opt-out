@@ -1,0 +1,54 @@
+name: Bug report
+description: Something in the extension does not work.
+title: '[Bug] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If a one-click opt-out failed on a specific site, the **Registry correction** template is usually a better fit.
+        Please never paste cookies, tokens or personal data. NoTrain keeps no logs outside your browser.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the dashboard
+        2. ...
+  - type: input
+    id: version
+    attributes:
+      label: NoTrain version
+      description: Shown in the dashboard under About, or in chrome://extensions.
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Edge
+        - Brave
+        - Other Chromium-based browser
+        - Firefox
+    validations:
+      required: true
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser version and operating system
+      placeholder: Chrome 141 on macOS 26
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots (with personal data removed) or messages from the dashboard's History.

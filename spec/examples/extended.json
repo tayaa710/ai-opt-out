@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "Example Assistant",
+  "trains_on_user_content": "yes",
+  "default": "opted_in",
+  "opt_out_url": "https://assistant.example.com/settings#data-controls",
+  "policy_url": "https://assistant.example.com/policies/model-training",
+  "data_types": ["chats", "files", "voice"],
+  "regions": ["ALL"],
+  "last_updated": "2026-09-10",
+  "contact": "privacy@example.com",
+  "x-example-retention-days": 30,
+  "x-example-notes": "Fields starting with x- are extensions; consumers that do not understand them ignore them."
+}

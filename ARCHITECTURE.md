@@ -15,7 +15,7 @@ open standard, `/.well-known/ai-training-opt-out`.
 - **Privacy first.** Nothing about the user leaves the device. No analytics, no accounts, no servers.
   The only network request the extension makes on its own is fetching the public registry JSON.
 - **Least privilege.** Zero host permissions at install. Site access is requested per service,
-  at the moment the user clicks "Opt out for me", as an *optional* host permission.
+  at the moment the user clicks "Opt out for me", as an _optional_ host permission.
   Cookie-based account detection is opt-in and drops the extra permissions afterwards.
 - **No remote code.** The registry is data. Automation recipes are a small declarative DSL
   interpreted by the bundled engine (Chrome Web Store policy compliant).
@@ -30,26 +30,26 @@ open standard, `/.well-known/ai-training-opt-out`.
 
 ## Repository layout and ownership
 
-| Path | What | Owner |
-| --- | --- | --- |
-| `registry/schema/service.schema.json` | JSON Schema for one service (source of truth) | lead |
-| `registry/schema/crawlers.schema.json` | JSON Schema for `crawlers.json` | tooling |
-| `registry/services/<id>.json` | One file per service | research |
-| `registry/crawlers.json` | AI crawler user agents for the creator tool | research |
-| `registry/dist/registry.json` | Compiled registry (generated, committed; fetched by installed extensions) | tooling (script) |
-| `extension/manifest.json` | Chrome MV3 manifest (`optional_host_permissions` is synced by the build script) | core |
-| `extension/_locales/**` | i18n messages | core |
-| `extension/background/**` | Service worker (module) | core |
-| `extension/lib/constants.js`, `region.js`, `status.js`, `api.js` | Shared contracts | lead (others may extend, never break) |
-| `extension/lib/{storage,registry,registry-diff,registry-validate,detection,alerts,permissions,runner,wellknown}.js` | Background logic | core |
-| `extension/lib/letters.js`, `extension/lib/robots.js` | Pure generators (letters, robots.txt etc.) | tooling |
-| `extension/content/**` | In-page engine + overlay + passive check (classic scripts) | content |
-| `extension/popup/**`, `extension/dashboard/**`, `extension/shared/**`, `extension/icons/**` | UI + design system | ui |
-| `extension/data/registry.json` | Bundled copy of the compiled registry (generated) | tooling (script) |
-| `scripts/**`, `package.json`, lint/format config, `.github/**` | Build, validate, package, policy watch, CI | tooling |
-| `tests/unit/**` | `node --test` unit tests | whoever owns the module under test |
-| `tests/e2e/**`, `tests/fixtures/**` | Playwright tests + mock settings pages | content (engine/overlay/fixtures), ui (pages), core (flows) |
-| `spec/**`, `site/**`, `README.md`, `PRIVACY.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE`, `CHANGELOG.md`, `store/**` | Docs, landing page, store listing | tooling |
+| Path                                                                                                                     | What                                                                            | Owner                                                       |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `registry/schema/service.schema.json`                                                                                    | JSON Schema for one service (source of truth)                                   | lead                                                        |
+| `registry/schema/crawlers.schema.json`                                                                                   | JSON Schema for `crawlers.json`                                                 | tooling                                                     |
+| `registry/services/<id>.json`                                                                                            | One file per service                                                            | research                                                    |
+| `registry/crawlers.json`                                                                                                 | AI crawler user agents for the creator tool                                     | research                                                    |
+| `registry/dist/registry.json`                                                                                            | Compiled registry (generated, committed; fetched by installed extensions)       | tooling (script)                                            |
+| `extension/manifest.json`                                                                                                | Chrome MV3 manifest (`optional_host_permissions` is synced by the build script) | core                                                        |
+| `extension/_locales/**`                                                                                                  | i18n messages                                                                   | core                                                        |
+| `extension/background/**`                                                                                                | Service worker (module)                                                         | core                                                        |
+| `extension/lib/constants.js`, `region.js`, `status.js`, `api.js`                                                         | Shared contracts                                                                | lead (others may extend, never break)                       |
+| `extension/lib/{storage,registry,registry-diff,registry-validate,detection,alerts,permissions,runner,wellknown}.js`      | Background logic                                                                | core                                                        |
+| `extension/lib/letters.js`, `extension/lib/robots.js`                                                                    | Pure generators (letters, robots.txt etc.)                                      | tooling                                                     |
+| `extension/content/**`                                                                                                   | In-page engine + overlay + passive check (classic scripts)                      | content                                                     |
+| `extension/popup/**`, `extension/dashboard/**`, `extension/shared/**`, `extension/icons/**`                              | UI + design system                                                              | ui                                                          |
+| `extension/data/registry.json`                                                                                           | Bundled copy of the compiled registry (generated)                               | tooling (script)                                            |
+| `scripts/**`, `package.json`, lint/format config, `.github/**`                                                           | Build, validate, package, policy watch, CI                                      | tooling                                                     |
+| `tests/unit/**`                                                                                                          | `node --test` unit tests                                                        | whoever owns the module under test                          |
+| `tests/e2e/**`, `tests/fixtures/**`                                                                                      | Playwright tests + mock settings pages                                          | content (engine/overlay/fixtures), ui (pages), core (flows) |
+| `spec/**`, `site/**`, `README.md`, `PRIVACY.md`, `CONTRIBUTING.md`, `SECURITY.md`, `LICENSE`, `CHANGELOG.md`, `store/**` | Docs, landing page, store listing                                               | tooling                                                     |
 
 ## Registry
 
@@ -60,7 +60,7 @@ Read that schema: it documents every field. Key ideas:
   deep link, human steps, a plain statement of the `effect`, and optionally an `automation` recipe.
 - `policyVersion` + `changelog[]` drive user alerts. Bump `policyVersion` and add a changelog entry
   (with `severity`) whenever training behaviour or opt-out options materially change.
-- `detection.cookies[]` lists cookies whose *presence* indicates a signed-in user.
+- `detection.cookies[]` lists cookies whose _presence_ indicates a signed-in user.
 - `sources[]` must cite first-party documentation wherever possible; `lastVerified` is the date a human
   (or research agent) last checked the entry against those sources.
 
@@ -70,8 +70,8 @@ Read that schema: it documents every field. Key ideas:
 {
   "formatVersion": 1,
   "generatedAt": "2026-09-28T00:00:00.000Z",
-  "services": [ /* service entries, sorted by name, exactly as in the source files */ ],
-  "crawlers": [ /* entries from registry/crawlers.json */ ]
+  "services": [/* service entries, sorted by name, exactly as in the source files */],
+  "crawlers": [/* entries from registry/crawlers.json */]
 }
 ```
 
@@ -88,20 +88,20 @@ registry; `--check` mode only verifies); `changelog` contains an entry whose `ve
 
 Interpreted by `extension/content/engine.js`. Steps (see `$defs/step` in the schema):
 
-| action | meaning |
-| --- | --- |
-| `waitFor` | wait (MutationObserver + polling, default 10 s) until `target` exists and is visible |
-| `click` | click `target` (scroll into view first). `optional: true` → skip silently if absent |
-| `setToggle` | find switch/checkbox `target`; if its state ≠ `state`, click it (or its label) and wait until the state flips (default 5 s) |
-| `assertToggle` | read-only: pass if the toggle is in `state`, else outcome `mismatch` |
-| `wait` | sleep `ms` |
+| action         | meaning                                                                                                                     |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `waitFor`      | wait (MutationObserver + polling, default 10 s) until `target` exists and is visible                                        |
+| `click`        | click `target` (scroll into view first). `optional: true` → skip silently if absent                                         |
+| `setToggle`    | find switch/checkbox `target`; if its state ≠ `state`, click it (or its label) and wait until the state flips (default 5 s) |
+| `assertToggle` | read-only: pass if the toggle is in `state`, else outcome `mismatch`                                                        |
+| `wait`         | sleep `ms`                                                                                                                  |
 
 **Target resolution** (`{ selector?, role?, text?, within? }`): start from `within`'s match (or the
 document), collect candidates by `selector` if given, else by `role` (native elements and ARIA roles,
 e.g. role `switch` = `[role=switch]`, and `checkbox` = `input[type=checkbox]`, `[role=checkbox]`), else
 all interactive elements. Traverse open shadow roots. If `text` is given, keep candidates whose
 accessible name (aria-label, aria-labelledby, `<label for>`, wrapping `<label>`, textContent) or whose
-*row text* (nearest ancestor, up to 5 levels, whose text is ≤ 300 chars) contains any candidate string
+_row text_ (nearest ancestor, up to 5 levels, whose text is ≤ 300 chars) contains any candidate string
 (case-insensitive, whitespace-normalised). With no `role`/`selector` and only `text`, match the
 smallest visible element whose own text contains the string. Prefer visible, then exact over
 substring, then the shortest text. Never match hidden elements.
@@ -145,7 +145,7 @@ history = [{ id, at, serviceId, optOutId, action: 'auto'|'guided'|'manual'|'lett
 ```
 
 When a service becomes tracked, `knownPolicyVersion` is set to its current `policyVersion` (so the user
-is only alerted about *future* changes).
+is only alerted about _future_ changes).
 
 ### Messaging (UI → background)
 
@@ -153,23 +153,23 @@ Request: `{ type, ...payload }` via `chrome.runtime.sendMessage`. Response: `{ o
 `{ ok: false, error: string }`. Client wrapper: `extension/lib/api.js`. UI pages re-render on
 `chrome.storage.onChanged` (`onStateChange` in api.js) rather than on bespoke broadcasts.
 
-| type | payload | data |
-| --- | --- | --- |
-| `getState` | – | `{ registry, registryMeta, settings, userState, alerts, history }` (history: latest 100) |
-| `updateSettings` | `{ patch }` (deep-merged; `profile`/`notifications` merged one level) | `settings` |
-| `trackServices` | `{ serviceIds, tracked, source }` | `userState` |
-| `setOptOutStatus` | `{ serviceId, optOutId, status, method, note? }` | `userState` (+ history entry) |
-| `acknowledgePolicy` | `{ serviceId }` | `userState` (and marks related policy alerts read) |
-| `runOptOut` | `{ serviceId, optOutId, mode: 'auto'|'guided'|'verify' }` | `{ runId, tabId, injected: boolean, reason? }` |
-| `detectAccounts` | – | `{ detected: serviceId[], checked: number }` |
-| `syncRegistry` | `{ force }` | `registryMeta` |
-| `markAlert` | `{ id, patch: { read?, dismissed? } }` | `alerts` |
-| `markAllAlertsRead` | – | `alerts` |
-| `recordLetter` | `{ serviceId, optOutId }` | `userState` (status `sent`, method `letter`) |
-| `probeWellKnown` | `{ tabId }` | `{ found: boolean, url, document?: object, error? }` |
-| `exportData` | – | JSON-serialisable backup `{ app: 'NoTrain', exportedAt, settings, userState, alerts, history }` |
-| `importData` | `{ data }` | `{ settings, userState }` (validates before writing) |
-| `resetAll` | – | `true` (clears storage, restores defaults, keeps bundled registry) |
+| type                | payload                                                               | data                                                                                            |
+| ------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `getState`          | –                                                                     | `{ registry, registryMeta, settings, userState, alerts, history }` (history: latest 100)        |
+| `updateSettings`    | `{ patch }` (deep-merged; `profile`/`notifications` merged one level) | `settings`                                                                                      |
+| `trackServices`     | `{ serviceIds, tracked, source }`                                     | `userState`                                                                                     |
+| `setOptOutStatus`   | `{ serviceId, optOutId, status, method, note? }`                      | `userState` (+ history entry)                                                                   |
+| `acknowledgePolicy` | `{ serviceId }`                                                       | `userState` (and marks related policy alerts read)                                              |
+| `runOptOut`         | `{ serviceId, optOutId, mode: 'auto'                                  | 'guided'                                                                                        | 'verify' }` | `{ runId, tabId, injected: boolean, reason? }` |
+| `detectAccounts`    | –                                                                     | `{ detected: serviceId[], checked: number }`                                                    |
+| `syncRegistry`      | `{ force }`                                                           | `registryMeta`                                                                                  |
+| `markAlert`         | `{ id, patch: { read?, dismissed? } }`                                | `alerts`                                                                                        |
+| `markAllAlertsRead` | –                                                                     | `alerts`                                                                                        |
+| `recordLetter`      | `{ serviceId, optOutId }`                                             | `userState` (status `sent`, method `letter`)                                                    |
+| `probeWellKnown`    | `{ tabId }`                                                           | `{ found: boolean, url, document?: object, error? }`                                            |
+| `exportData`        | –                                                                     | JSON-serialisable backup `{ app: 'NoTrain', exportedAt, settings, userState, alerts, history }` |
+| `importData`        | `{ data }`                                                            | `{ settings, userState }` (validates before writing)                                            |
+| `resetAll`          | –                                                                     | `true` (clears storage, restores defaults, keeps bundled registry)                              |
 
 Permissions: `chrome.permissions.request` must run in a click handler of an extension page. The UI
 requests the opt-out's `automation.hostPermissions` (and for detection `cookies` + all detection
@@ -207,7 +207,7 @@ unless the permission is already granted.
   (CORS-enabled; no host permission needed), validate (`lib/registry-validate.js`: structural checks,
   drop invalid services, reject if `formatVersion` unsupported), and replace the cache only if
   `generatedAt` is newer. Diff (`lib/registry-diff.js`) against the previous registry: for each
-  *tracked* service whose `policyVersion` increased, create a `policy_change` alert from the new
+  _tracked_ service whose `policyVersion` increased, create a `policy_change` alert from the new
   changelog entries (max severity); for `warning`/`critical`, show a system notification if enabled.
   New services → one grouped `new_service` info alert.
 - `ALARMS.reminders` daily: for opt-outs with status `done` whose `verifiedAt` (or `updatedAt`) is older

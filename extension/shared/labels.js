@@ -54,7 +54,11 @@ export const DEFAULT_LABELS = Object.freeze({
   opted_in: { label: 'On by default', tone: 'bad', long: 'Training is on unless you opt out' },
   opted_out: { label: 'Off by default', tone: 'good', long: 'Training is off unless you opt in' },
   no_choice: { label: 'No choice offered', tone: 'warn', long: 'There’s no setting to turn it off' },
-  varies_by_region: { label: 'Depends on region', tone: 'warn', long: 'The default depends on where you live' },
+  varies_by_region: {
+    label: 'Depends on region',
+    tone: 'warn',
+    long: 'The default depends on where you live',
+  },
   not_applicable: { label: 'Not applicable', tone: 'neutral', long: 'There’s nothing to switch off' },
 });
 
@@ -66,8 +70,16 @@ export const EFFORT_LABELS = Object.freeze({
 
 export const CONFIDENCE_LABELS = Object.freeze({
   high: { label: 'Reliable', tone: 'good', hint: 'Tested and usually works first time.' },
-  medium: { label: 'Usually works', tone: 'info', hint: 'Works most of the time. If the site has changed, NoTrain switches to step-by-step guidance.' },
-  experimental: { label: 'Experimental', tone: 'warn', hint: 'New or fragile. Watch it run and check the result.' },
+  medium: {
+    label: 'Usually works',
+    tone: 'info',
+    hint: 'Works most of the time. If the site has changed, NoTrain switches to step-by-step guidance.',
+  },
+  experimental: {
+    label: 'Experimental',
+    tone: 'warn',
+    hint: 'New or fragile. Watch it run and check the result.',
+  },
 });
 
 export const OPT_OUT_TYPE_LABELS = Object.freeze({

@@ -64,7 +64,14 @@ export function policyChangeAlert(change, now = new Date()) {
       ? summaries.join(' ')
       : `${service.name}'s entry in the NoTrain registry was updated. Review your opt-outs.`;
   return makeAlert(
-    { kind: ALERT_KINDS.policyChange, serviceId: service.id, severity, title, body, policyVersion: toVersion },
+    {
+      kind: ALERT_KINDS.policyChange,
+      serviceId: service.id,
+      severity,
+      title,
+      body,
+      policyVersion: toVersion,
+    },
     now,
   );
 }
@@ -80,7 +87,8 @@ export function newServicesAlert(services, now = new Date()) {
       serviceId: services.length === 1 ? services[0].id : null,
       serviceIds: services.map((s) => s.id),
       severity: 'info',
-      title: services.length === 1 ? `New in NoTrain: ${names[0]}` : `${services.length} new services in NoTrain`,
+      title:
+        services.length === 1 ? `New in NoTrain: ${names[0]}` : `${services.length} new services in NoTrain`,
       body: `Now covered: ${shown}${more}. Track any you use to see how to opt out.`,
     },
     now,

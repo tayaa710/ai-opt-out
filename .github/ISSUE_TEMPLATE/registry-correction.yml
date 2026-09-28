@@ -1,0 +1,78 @@
+name: Registry correction
+description: Something NoTrain says about a service is wrong or out of date.
+title: '[Correction] <service>: '
+labels: ['registry', 'correction']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the registry accurate. Corrections need a **first-party source** (the company's own
+        privacy policy, help centre or settings page) wherever possible. Please do not include personal data.
+  - type: input
+    id: service
+    attributes:
+      label: Service id
+      description: The file name in `registry/services/` without `.json`, e.g. `chatgpt`.
+      placeholder: chatgpt
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: What is wrong?
+      multiple: true
+      options:
+        - Whether or how the service trains AI on user data
+        - Default setting (on/off)
+        - Opt-out steps, link or region
+        - One-click automation fails or does the wrong thing
+        - Contact details for request letters
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: What NoTrain says now
+      description: Quote the field or the text shown in the extension.
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: What it should say
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Links to the company's own documentation, with the date you checked them.
+      placeholder: |
+        https://example.com/privacy#ai (checked 2026-09-28)
+    validations:
+      required: true
+  - type: dropdown
+    id: region
+    attributes:
+      label: Your region (if the difference is regional)
+      options:
+        - Not region-specific
+        - EU / EEA
+        - United Kingdom
+        - Switzerland
+        - 'United States: California'
+        - 'United States: other states'
+        - Canada
+        - Australia
+        - Brazil
+        - India
+        - Japan
+        - Somewhere else
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I removed any personal information (names, emails, account ids) from screenshots and text.
+          required: true

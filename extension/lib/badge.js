@@ -15,7 +15,8 @@ export const BADGE_COLOR = '#B42318';
 export function computeBadgeCount({ registry, userState, settings, alerts }) {
   const attention = new Set();
   for (const service of registry?.services ?? []) {
-    if (serviceStatus(service, userState, settings.region).code === 'needs_attention') attention.add(service.id);
+    if (serviceStatus(service, userState, settings.region).code === 'needs_attention')
+      attention.add(service.id);
   }
   let count = attention.size;
   const counted = new Set();
@@ -52,7 +53,8 @@ export async function updateBadge() {
       await action.setBadgeBackgroundColor?.({ color: BADGE_COLOR });
       await action.setBadgeTextColor?.({ color: '#FFFFFF' });
     }
-    const title = count === 0 ? 'NoTrain' : `NoTrain: ${count} ${count === 1 ? 'item needs' : 'items need'} attention`;
+    const title =
+      count === 0 ? 'NoTrain' : `NoTrain: ${count} ${count === 1 ? 'item needs' : 'items need'} attention`;
     await action.setTitle?.({ title });
   } catch (err) {
     console.warn('NoTrain: could not update badge', err);

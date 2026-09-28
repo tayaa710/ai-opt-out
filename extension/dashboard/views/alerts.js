@@ -33,7 +33,11 @@ function alertCard(alert, service) {
   const sev = alert.severity ?? 'info';
   return h(
     'li',
-    { class: ['a-item', !alert.read && 'is-unread', `a-item--${sev}`], 'data-testid': 'alert-item', 'data-key': `alert-${alert.id}` },
+    {
+      class: ['a-item', !alert.read && 'is-unread', `a-item--${sev}`],
+      'data-testid': 'alert-item',
+      'data-key': `alert-${alert.id}`,
+    },
     h('span', { class: ['a-item__icon', `d-sev--${sev}`] }, icon(kind.icon)),
     h(
       'div',
@@ -42,8 +46,20 @@ function alertCard(alert, service) {
         'div',
         { class: 'a-item__meta' },
         h('span', { class: 'a-item__kind' }, kind.label),
-        sev !== 'info' && h('span', { class: ['nt-pill', 'nt-pill--plain', sev === 'critical' ? 'nt-pill--bad' : 'nt-pill--warn'] }, sev === 'critical' ? 'Important' : 'Heads-up'),
-        h('time', { datetime: alert.createdAt, title: formatDate(alert.createdAt, { dateStyle: 'medium', timeStyle: 'short' }) }, relativeTime(alert.createdAt)),
+        sev !== 'info' &&
+          h(
+            'span',
+            { class: ['nt-pill', 'nt-pill--plain', sev === 'critical' ? 'nt-pill--bad' : 'nt-pill--warn'] },
+            sev === 'critical' ? 'Important' : 'Heads-up',
+          ),
+        h(
+          'time',
+          {
+            datetime: alert.createdAt,
+            title: formatDate(alert.createdAt, { dateStyle: 'medium', timeStyle: 'short' }),
+          },
+          relativeTime(alert.createdAt),
+        ),
         !alert.read && h('span', { class: 'a-item__new' }, 'New'),
       ),
       h('h2', { class: 'a-item__title' }, alert.title),
@@ -62,7 +78,10 @@ function alertCard(alert, service) {
             size: 'sm',
             iconName: 'check',
             testid: 'alert-read',
-            onClick: (e) => act(e.currentTarget, () => api.markAlert(alert.id, { read: true }), { failure: 'Couldn’t update' }),
+            onClick: (e) =>
+              act(e.currentTarget, () => api.markAlert(alert.id, { read: true }), {
+                failure: 'Couldn’t update',
+              }),
           }),
         button('Dismiss', {
           variant: 'ghost',
@@ -70,7 +89,11 @@ function alertCard(alert, service) {
           iconName: 'x',
           testid: 'alert-dismiss',
           ariaLabel: `Dismiss: ${alert.title}`,
-          onClick: (e) => act(e.currentTarget, () => api.markAlert(alert.id, { dismissed: true, read: true }), { success: 'Alert dismissed', failure: 'Couldn’t update' }),
+          onClick: (e) =>
+            act(e.currentTarget, () => api.markAlert(alert.id, { dismissed: true, read: true }), {
+              success: 'Alert dismissed',
+              failure: 'Couldn’t update',
+            }),
         }),
       ),
     ),
@@ -87,14 +110,19 @@ export function render(ctx) {
 
   const header = pageHeader({
     title: 'Alerts',
-    subtitle: 'NoTrain checks for policy changes every week, watches settings you’ve switched off, and reminds you to re-check them.',
+    subtitle:
+      'NoTrain checks for policy changes every week, watches settings you’ve switched off, and reminds you to re-check them.',
     actions: [
       button('Mark all as read', {
         variant: 'secondary',
         iconName: 'check',
         testid: 'alerts-read-all',
         disabled: unread === 0,
-        onClick: (e) => act(e.currentTarget, () => api.markAllAlertsRead(), { success: 'All alerts marked as read', failure: 'Couldn’t update' }),
+        onClick: (e) =>
+          act(e.currentTarget, () => api.markAllAlertsRead(), {
+            success: 'All alerts marked as read',
+            failure: 'Couldn’t update',
+          }),
       }),
     ],
   });
@@ -103,7 +131,12 @@ export function render(ctx) {
     'div',
     { class: 'nt-segmented a-filters', role: 'group', 'aria-label': 'Filter alerts' },
     FILTERS.map((f) => {
-      const n = f.id === 'all' ? visible.length : f.id === 'unread' ? unread : visible.filter((a) => a.kind === f.id).length;
+      const n =
+        f.id === 'all'
+          ? visible.length
+          : f.id === 'unread'
+            ? unread
+            : visible.filter((a) => a.kind === f.id).length;
       return h(
         'button',
         {
@@ -155,7 +188,11 @@ export function render(ctx) {
       }),
     );
   } else {
-    body = h('ul', { class: 'a-list', role: 'list', 'data-testid': 'alerts-list' }, list.map((a) => alertCard(a, byId.get(a.serviceId))));
+    body = h(
+      'ul',
+      { class: 'a-list', role: 'list', 'data-testid': 'alerts-list' },
+      list.map((a) => alertCard(a, byId.get(a.serviceId))),
+    );
   }
 
   return [header, visible.length > 0 && filters, body];

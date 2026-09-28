@@ -31,7 +31,9 @@ function init(state) {
   wz.guessed = guessRegion();
   const stored = state.settings.region;
   wz.region = state.settings.onboarded || (stored && stored !== 'OTHER') ? stored : wz.guessed;
-  wz.selected = new Set(state.registry.services.filter((s) => state.userState.services?.[s.id]?.tracked).map((s) => s.id));
+  wz.selected = new Set(
+    state.registry.services.filter((s) => state.userState.services?.[s.id]?.tracked).map((s) => s.id),
+  );
 }
 
 function goStep(ctx, n) {
@@ -47,7 +49,12 @@ function progress() {
   return h(
     'div',
     { class: 'w-progress' },
-    h('p', { class: 'w-progress__label' }, `Step ${wz.step + 1} of ${STEPS.length}`, h('span', { class: 'nt-visually-hidden' }, `: ${STEPS[wz.step]}`)),
+    h(
+      'p',
+      { class: 'w-progress__label' },
+      `Step ${wz.step + 1} of ${STEPS.length}`,
+      h('span', { class: 'nt-visually-hidden' }, `: ${STEPS[wz.step]}`),
+    ),
     h(
       'div',
       { class: 'w-progress__bars', 'aria-hidden': 'true' },
@@ -68,14 +75,23 @@ function stepIntro(ctx) {
       'li',
       { class: 'w-feature' },
       h('span', { class: 'w-feature__icon' }, icon(iconName)),
-      h('div', null, h('p', { class: 'w-feature__title' }, heading), h('p', { class: 'w-feature__text' }, text)),
+      h(
+        'div',
+        null,
+        h('p', { class: 'w-feature__title' }, heading),
+        h('p', { class: 'w-feature__text' }, text),
+      ),
     );
   return [
     h(
       'div',
       { class: 'w-hero' },
       logoMark({ size: 56 }),
-      h('h1', { class: 'w-title', tabindex: '-1', 'data-page-title': '' }, 'Decide who trains AI on your data'),
+      h(
+        'h1',
+        { class: 'w-title', tabindex: '-1', 'data-page-title': '' },
+        'Decide who trains AI on your data',
+      ),
       h(
         'p',
         { class: 'w-lede' },
@@ -85,9 +101,21 @@ function stepIntro(ctx) {
     h(
       'ul',
       { class: 'w-features', role: 'list' },
-      feature('search', 'See who trains on your data', 'Plain-language facts for each service, checked against the company’s own documentation.'),
-      feature('zap', 'Opt out in a click or two', 'NoTrain can switch settings off for you, or walk you through each step.'),
-      feature('bell', 'Hear about changes', 'Get a heads-up if a company changes its policy or a setting gets switched back on.'),
+      feature(
+        'search',
+        'See who trains on your data',
+        'Plain-language facts for each service, checked against the company’s own documentation.',
+      ),
+      feature(
+        'zap',
+        'Opt out in a click or two',
+        'NoTrain can switch settings off for you, or walk you through each step.',
+      ),
+      feature(
+        'bell',
+        'Hear about changes',
+        'Get a heads-up if a company changes its policy or a setting gets switched back on.',
+      ),
     ),
     h(
       'div',
@@ -122,7 +150,12 @@ function stepIntro(ctx) {
         },
         'Skip setup',
       ),
-      button('Get started', { variant: 'primary', size: 'lg', testid: 'welcome-next', onClick: () => goStep(ctx, 1) }),
+      button('Get started', {
+        variant: 'primary',
+        size: 'lg',
+        testid: 'welcome-next',
+        onClick: () => goStep(ctx, 1),
+      }),
     ),
   ];
 }
@@ -147,7 +180,14 @@ function stepRegion(ctx) {
       h(
         'span',
         { class: 'nt-choice__body' },
-        h('span', { class: 'nt-choice__title' }, r.label, r.code === wz.guessed && h('span', { class: 'nt-pill nt-pill--primary nt-pill--plain w-suggested' }, 'Suggested')),
+        h(
+          'span',
+          { class: 'nt-choice__title' },
+          r.label,
+          r.code === wz.guessed &&
+            r.code !== 'OTHER' &&
+            h('span', { class: 'nt-pill nt-pill--primary nt-pill--plain w-suggested' }, 'Suggested'),
+        ),
         h('span', { class: 'nt-choice__desc' }, r.law ?? 'No specific privacy law assumed'),
       ),
     ),
@@ -169,7 +209,14 @@ function stepRegion(ctx) {
       h('legend', { class: 'nt-visually-hidden' }, 'Your region'),
       h('div', { class: 'w-region-grid' }, options),
     ),
-    wz.guessed && wz.guessed !== 'OTHER' && h('p', { class: 'nt-subtle w-note' }, icon('info', { size: 14 }), 'Suggested from your computer’s time zone. Change it if it’s wrong.'),
+    wz.guessed &&
+      wz.guessed !== 'OTHER' &&
+      h(
+        'p',
+        { class: 'nt-subtle w-note' },
+        icon('info', { size: 14 }),
+        'Suggested from your computer’s time zone. Change it if it’s wrong.',
+      ),
     footer(
       button('Back', { variant: 'ghost', iconName: 'arrowLeft', onClick: () => goStep(ctx, 0) }),
       button('Continue', {
@@ -199,7 +246,14 @@ function stepRegion(ctx) {
 function pickCard(service, onToggle) {
   const id = `pick-${service.id}`;
   const trains = service.training?.trainsOnUserData;
-  const hint = trains === 'no' ? 'Doesn’t train on your data' : trains === 'yes' ? 'Trains on your data' : trains === 'conditional' ? 'Trains in some cases' : 'Training unclear';
+  const hint =
+    trains === 'no'
+      ? 'Doesn’t train on your data'
+      : trains === 'yes'
+        ? 'Trains on your data'
+        : trains === 'conditional'
+          ? 'Trains in some cases'
+          : 'Training unclear';
   return h(
     'label',
     { class: 'nt-choice w-pick', for: id, 'data-service': service.id },
@@ -215,7 +269,12 @@ function pickCard(service, onToggle) {
       },
     }),
     monogram(service, { size: 'md' }),
-    h('span', { class: 'nt-choice__body' }, h('span', { class: 'nt-choice__title w-pick__name' }, service.name), h('span', { class: 'nt-choice__desc' }, hint)),
+    h(
+      'span',
+      { class: 'nt-choice__body' },
+      h('span', { class: 'nt-choice__title w-pick__name' }, service.name),
+      h('span', { class: 'nt-choice__desc' }, hint),
+    ),
   );
 }
 
@@ -223,7 +282,12 @@ function stepServices(ctx) {
   const { state } = ctx;
   const services = state.registry.services;
   const listEl = h('div', { class: 'w-groups', 'data-key': 'welcome-groups' });
-  const countEl = h('p', { class: 'w-count', role: 'status', 'aria-live': 'polite', 'data-testid': 'pick-count' });
+  const countEl = h('p', {
+    class: 'w-count',
+    role: 'status',
+    'aria-live': 'polite',
+    'data-testid': 'pick-count',
+  });
   const nextBtn = button('', { variant: 'primary', size: 'lg', testid: 'welcome-next' });
 
   const updateCount = () => {
@@ -234,7 +298,9 @@ function stepServices(ctx) {
 
   const drawList = () => {
     const matches = services.filter((s) => matchesQuery(s, wz.q));
-    const groups = CATEGORY_ORDER.map((c) => [c, matches.filter((s) => s.category === c)]).filter(([, list]) => list.length);
+    const groups = CATEGORY_ORDER.map((c) => [c, matches.filter((s) => s.category === c)]).filter(
+      ([, list]) => list.length,
+    );
     mount(
       listEl,
       groups.length
@@ -243,7 +309,11 @@ function stepServices(ctx) {
               'section',
               { class: 'w-group', 'aria-labelledby': `grp-${c}` },
               h('h2', { class: 'w-group__title', id: `grp-${c}` }, categoryLabel(c)),
-              h('div', { class: 'w-pick-grid' }, list.map((s) => pickCard(s, updateCount))),
+              h(
+                'div',
+                { class: 'w-pick-grid' },
+                list.map((s) => pickCard(s, updateCount)),
+              ),
             ),
           )
         : h('p', { class: 'w-none' }, `No services match “${wz.q}”.`),
@@ -343,7 +413,10 @@ function stepServices(ctx) {
       countEl,
     ),
     listEl,
-    footer(button('Back', { variant: 'ghost', iconName: 'arrowLeft', onClick: () => goStep(ctx, 1) }), nextBtn),
+    footer(
+      button('Back', { variant: 'ghost', iconName: 'arrowLeft', onClick: () => goStep(ctx, 1) }),
+      nextBtn,
+    ),
   ];
 }
 
@@ -356,17 +429,35 @@ function stepDone(ctx) {
   let auto = 0;
   let manual = 0;
   let safe = 0;
+  let none = 0;
   for (const s of tracked) {
     const st = serviceStatus(s, userState, settings.region);
     if (st.code === 'safe_by_default' || st.code === 'protected') safe += 1;
-    else if (st.code === 'action_needed') {
+    else if (st.code === 'action_needed' || st.code === 'needs_attention') {
       if (applicableOptOuts(s, settings.region).some((o) => o.automation)) auto += 1;
       else manual += 1;
-    }
+    } else none += 1;
   }
-  const stat = (n, label, tone) => h('div', { class: ['w-stat', tone && `w-stat--${tone}`] }, h('span', { class: 'w-stat__n' }, String(n)), h('span', { class: 'w-stat__label' }, label));
+  const stats = [
+    [auto, auto === 1 ? 'can be switched off for you' : 'can be switched off for you', 'primary'],
+    [manual, 'take a few steps', 'warn'],
+    [safe, safe === 1 ? 'is already fine' : 'are already fine', 'good'],
+    [none, none === 1 ? 'has no opt-out yet' : 'have no opt-out yet', null],
+  ].filter(([n]) => n > 0);
+  const stat = (n, label, tone) =>
+    h(
+      'div',
+      { class: ['w-stat', tone && `w-stat--${tone}`] },
+      h('span', { class: 'w-stat__n' }, String(n)),
+      h('span', { class: 'w-stat__label' }, label),
+    );
   const next = (n, heading, text) =>
-    h('li', { class: 'w-next' }, h('span', { class: 'w-next__n', 'aria-hidden': 'true' }, String(n)), h('div', null, h('p', { class: 'w-next__title' }, heading), h('p', { class: 'w-next__text' }, text)));
+    h(
+      'li',
+      { class: 'w-next' },
+      h('span', { class: 'w-next__n', 'aria-hidden': 'true' }, String(n)),
+      h('div', null, h('p', { class: 'w-next__title' }, heading), h('p', { class: 'w-next__text' }, text)),
+    );
   return [
     h(
       'div',
@@ -384,17 +475,27 @@ function stepDone(ctx) {
     tracked.length > 0 &&
       h(
         'div',
-        { class: 'w-stats', 'data-testid': 'welcome-summary' },
-        stat(auto, 'can be switched off for you', auto ? 'primary' : null),
-        stat(manual, 'take a few steps', manual ? 'warn' : null),
-        stat(safe, 'don’t train by default', safe ? 'good' : null),
+        {
+          class: 'w-stats',
+          'data-testid': 'welcome-summary',
+          style: { '--cols': String(Math.max(1, stats.length)) },
+        },
+        stats.map(([n, label, tone]) => stat(n, label, tone)),
       ),
     h(
       'ol',
       { class: 'w-nexts', role: 'list' },
       next(1, 'Start with the quick wins', 'Your overview lists what to do first. Most take under a minute.'),
-      next(2, 'Pin NoTrain to your toolbar', 'Click the puzzle icon next to the address bar, then the pin next to NoTrain. It shows where you stand on the site you’re visiting.'),
-      next(3, 'Leave the rest to NoTrain', 'It checks for policy changes every week and tells you if something needs your attention.'),
+      next(
+        2,
+        'Pin NoTrain to your toolbar',
+        'Click the puzzle icon next to the address bar, then the pin next to NoTrain. It shows where you stand on the site you’re visiting.',
+      ),
+      next(
+        3,
+        'Leave the rest to NoTrain',
+        'It checks for policy changes every week and tells you if something needs your attention.',
+      ),
     ),
     footer(
       h('span'),
@@ -422,5 +523,10 @@ export function render(ctx) {
   }
   init(ctx.state);
   const steps = [stepIntro, stepRegion, stepServices, stepDone];
-  return h('div', { class: ['w-wrap', `w-wrap--step${wz.step}`], 'data-testid': `welcome-step-${wz.step + 1}` }, progress(), h('div', { class: 'nt-card w-card' }, steps[wz.step](ctx)));
+  return h(
+    'div',
+    { class: ['w-wrap', `w-wrap--step${wz.step}`], 'data-testid': `welcome-step-${wz.step + 1}` },
+    progress(),
+    h('div', { class: 'nt-card w-card' }, steps[wz.step](ctx)),
+  );
 }

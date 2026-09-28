@@ -8,7 +8,16 @@ import { h, mount, extLink } from '../../shared/dom.js';
 import { icon } from '../../shared/icons.js';
 import { toast } from '../../shared/toast.js';
 import { fileStamp, hostOf } from '../../shared/format.js';
-import { pageHeader, emptyState, button, copyText, downloadText, act, selectField, textField } from '../common.js';
+import {
+  pageHeader,
+  emptyState,
+  button,
+  copyText,
+  downloadText,
+  act,
+  selectField,
+  textField,
+} from '../common.js';
 
 let lettersLib = null;
 let lettersError = null;
@@ -47,7 +56,9 @@ function initFromRoute(ctx) {
   const services = state.registry.services;
   const qService = route.query.get('service');
   const trackedFirst = services.find((s) => state.userState.services?.[s.id]?.tracked) ?? services[0];
-  lt.serviceId = services.some((s) => s.id === qService) ? qService : lt.serviceId ?? trackedFirst?.id ?? null;
+  lt.serviceId = services.some((s) => s.id === qService)
+    ? qService
+    : (lt.serviceId ?? trackedFirst?.id ?? null);
   lt.optOutId = route.query.get('optOut') ?? null;
   lt.region = lt.region ?? state.settings.region ?? 'OTHER';
   if (route.query.get('kind')) lt.kind = route.query.get('kind');
@@ -129,8 +140,21 @@ function formPanel(ctx, service, onChange) {
             onChange();
           },
         },
-        tracked.length > 0 && h('optgroup', { label: 'Your services' }, tracked.map((s) => h('option', { value: s.id, selected: s.id === lt.serviceId }, `${s.name} (${s.company})`))),
-        h('optgroup', { label: tracked.length ? 'Other services' : 'All services' }, others.map((s) => h('option', { value: s.id, selected: s.id === lt.serviceId }, `${s.name} (${s.company})`))),
+        tracked.length > 0 &&
+          h(
+            'optgroup',
+            { label: 'Your services' },
+            tracked.map((s) =>
+              h('option', { value: s.id, selected: s.id === lt.serviceId }, `${s.name} (${s.company})`),
+            ),
+          ),
+        h(
+          'optgroup',
+          { label: tracked.length ? 'Other services' : 'All services' },
+          others.map((s) =>
+            h('option', { value: s.id, selected: s.id === lt.serviceId }, `${s.name} (${s.company})`),
+          ),
+        ),
       ),
     ),
   );
@@ -157,7 +181,12 @@ function formPanel(ctx, service, onChange) {
         h(
           'span',
           { class: 'nt-choice__body' },
-          h('span', { class: 'nt-choice__title' }, k.label, i === 0 && h('span', { class: 'nt-pill nt-pill--primary nt-pill--plain l-rec' }, 'Recommended')),
+          h(
+            'span',
+            { class: 'nt-choice__title' },
+            k.label,
+            i === 0 && h('span', { class: 'nt-pill nt-pill--primary nt-pill--plain l-rec' }, 'Recommended'),
+          ),
           h('span', { class: 'nt-choice__desc' }, k.description),
         ),
       ),
@@ -219,24 +248,40 @@ function formPanel(ctx, service, onChange) {
         },
         onChange: saveProfile('email'),
       }),
-      h('p', { class: 'nt-hint l-profile__hint' }, icon('lock', { size: 12 }), 'Saved on this device only, to fill in letters.'),
+      h(
+        'p',
+        { class: 'nt-hint l-profile__hint' },
+        icon('lock', { size: 12 }),
+        'Saved on this device only, to fill in letters.',
+      ),
     ),
   );
 }
 
 function previewPanel(ctx, service) {
-  const { state } = ctx;
   const letter = lt.letter;
   if (!letter) {
-    return h('section', { class: 'nt-card l-preview' }, emptyState({ iconName: 'letter', title: 'Pick a company to start', text: 'Your letter appears here.' }));
+    return h(
+      'section',
+      { class: 'nt-card l-preview' },
+      emptyState({ iconName: 'letter', title: 'Pick a company to start', text: 'Your letter appears here.' }),
+    );
   }
   const target = recordTarget(service, lt.region);
   const mailto = currentMailto();
   const recipient = letter.to
     ? h('span', { class: 'l-to__value' }, letter.to)
     : letter.formUrl
-      ? h('span', { class: 'l-to__value' }, extLink(letter.formUrl, `${hostOf(letter.formUrl)} request form`, { class: 'nt-link' }))
-      : h('span', { class: 'l-to__value nt-muted' }, 'No public contact found. Use the company’s help or privacy page.');
+      ? h(
+          'span',
+          { class: 'l-to__value' },
+          extLink(letter.formUrl, `${hostOf(letter.formUrl)} request form`, { class: 'nt-link' }),
+        )
+      : h(
+          'span',
+          { class: 'l-to__value nt-muted' },
+          'No public contact found. Use the company’s help or privacy page.',
+        );
 
   const bodyArea = h('textarea', {
     class: 'nt-textarea l-body',
@@ -263,9 +308,17 @@ function previewPanel(ctx, service) {
     },
   });
   const mailBtn = mailto
-    ? h('a', { class: 'nt-btn nt-btn--primary', href: mailto, 'data-testid': 'letter-mailto' }, icon('mail'), 'Open in email app')
+    ? h(
+        'a',
+        { class: 'nt-btn nt-btn--primary', href: mailto, 'data-testid': 'letter-mailto' },
+        icon('mail'),
+        'Open in email app',
+      )
     : letter.formUrl
-      ? extLink(letter.formUrl, 'Open request form', { class: 'nt-btn nt-btn--primary', 'data-testid': 'letter-form' })
+      ? extLink(letter.formUrl, 'Open request form', {
+          class: 'nt-btn nt-btn--primary',
+          'data-testid': 'letter-form',
+        })
       : null;
 
   function syncMailto() {
@@ -277,7 +330,9 @@ function previewPanel(ctx, service) {
         'li',
         null,
         'No reply? You can complain to ',
-        letter.authority.url ? extLink(letter.authority.url, letter.authority.name, { class: 'nt-link' }) : letter.authority.name,
+        letter.authority.url
+          ? extLink(letter.authority.url, letter.authority.name, { class: 'nt-link' })
+          : letter.authority.name,
         '.',
       )
     : null;
@@ -291,9 +346,24 @@ function previewPanel(ctx, service) {
       h('h2', { class: 'd-aside-title', id: 'l-preview-title' }, 'Your letter'),
       h('span', { class: 'nt-subtle' }, 'You can edit it before sending.'),
     ),
-    h('div', { class: 'l-to' }, h('span', { class: 'l-to__label' }, letter.to ? 'To' : 'Send via'), recipient),
-    h('div', { class: 'nt-field' }, h('label', { class: 'nt-label', for: 'letter-subject' }, 'Subject'), subjectInput),
-    h('div', { class: 'nt-field' }, h('label', { class: 'nt-label', for: 'letter-body' }, 'Letter'), bodyArea),
+    h(
+      'div',
+      { class: 'l-to' },
+      h('span', { class: 'l-to__label' }, letter.to ? 'To' : 'Send via'),
+      recipient,
+    ),
+    h(
+      'div',
+      { class: 'nt-field' },
+      h('label', { class: 'nt-label', for: 'letter-subject' }, 'Subject'),
+      subjectInput,
+    ),
+    h(
+      'div',
+      { class: 'nt-field' },
+      h('label', { class: 'nt-label', for: 'letter-body' }, 'Letter'),
+      bodyArea,
+    ),
     h(
       'ul',
       { class: 'l-facts' },
@@ -319,7 +389,11 @@ function previewPanel(ctx, service) {
           iconName: 'download',
           testid: 'letter-download',
           ariaLabel: 'Download as a text file',
-          onClick: () => downloadText(`notrain-letter-${service.id}-${lt.kind}-${fileStamp()}.txt`, `Subject: ${lt.subject}\n${letter.to ? `To: ${letter.to}\n` : ''}\n${lt.body}`),
+          onClick: () =>
+            downloadText(
+              `notrain-letter-${service.id}-${lt.kind}-${fileStamp()}.txt`,
+              `Subject: ${lt.subject}\n${letter.to ? `To: ${letter.to}\n` : ''}\n${lt.body}`,
+            ),
         }),
       ),
       target
@@ -344,19 +418,49 @@ export function render(ctx) {
   const root = h('div', { class: 'l-wrap' });
   const header = pageHeader({
     title: 'Request letters',
-    subtitle: 'Where there’s no setting to switch off, a written request uses your legal rights. NoTrain fills in the details; you send it from your own email.',
+    subtitle:
+      'Where there’s no setting to switch off, a written request uses your legal rights. NoTrain fills in the details; you send it from your own email.',
   });
 
   if (!state.registry.services.length) {
-    return [header, h('div', { class: 'nt-card' }, emptyState({ iconName: 'letter', title: 'No services available', text: 'The service list hasn’t loaded yet.' }))];
+    return [
+      header,
+      h(
+        'div',
+        { class: 'nt-card' },
+        emptyState({
+          iconName: 'letter',
+          title: 'No services available',
+          text: 'The service list hasn’t loaded yet.',
+        }),
+      ),
+    ];
   }
 
   if (!lettersLib) {
     if (lettersError) {
-      return [header, h('div', { class: 'nt-card' }, emptyState({ iconName: 'alertCircle', title: 'Letters aren’t available', text: 'The letter templates couldn’t be loaded in this build.' }))];
+      return [
+        header,
+        h(
+          'div',
+          { class: 'nt-card' },
+          emptyState({
+            iconName: 'alertCircle',
+            title: 'Letters aren’t available',
+            text: 'The letter templates couldn’t be loaded in this build.',
+          }),
+        ),
+      ];
     }
     lettersReady.then(() => ctx.rerender());
-    return [header, h('div', { class: 'nt-card', style: { padding: '24px' } }, h('span', { class: 'nt-skeleton nt-skeleton--title' }))];
+    return [
+      header,
+      h(
+        'div',
+        { class: 'nt-card', style: { padding: '24px' } },
+        h('span', { class: 'nt-skeleton nt-skeleton--title' }),
+      ),
+    ];
   }
 
   initFromRoute(ctx);

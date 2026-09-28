@@ -11,7 +11,7 @@ import {
   validateService,
 } from '../../extension/lib/registry-validate.js';
 import { ROOT } from './helpers/chrome-mock.mjs';
-import { makeRegistry, makeService, toggleOptOut } from './helpers/fixtures.mjs';
+import { SCRIPT_URL, makeRegistry, makeService, toggleOptOut } from './helpers/fixtures.mjs';
 
 const NOW = new Date('2026-09-28T12:00:00Z');
 
@@ -36,7 +36,10 @@ describe('validateRegistry', () => {
     const future = validateRegistry({ ...makeRegistry(), generatedAt: '2027-01-01T00:00:00Z' }, { now: NOW });
     assert.equal(future.ok, false);
     assert.match(future.error, /future/);
-    const slightSkew = validateRegistry({ ...makeRegistry(), generatedAt: '2026-09-29T00:00:00Z' }, { now: NOW });
+    const slightSkew = validateRegistry(
+      { ...makeRegistry(), generatedAt: '2026-09-29T00:00:00Z' },
+      { now: NOW },
+    );
     assert.equal(slightSkew.ok, true);
   });
 
@@ -66,15 +69,27 @@ describe('validateRegistry', () => {
       {
         ...makeRegistry(),
         crawlers: [
-          { token: 'GPTBot', operator: 'OpenAI', purpose: 'training', respectsRobotsTxt: true, docsUrl: 'https://x.test/' },
-          { token: 'Evil', operator: 'X', docsUrl: 'javascript:alert(1)', extra: 1 },
+          {
+            token: 'GPTBot',
+            operator: 'OpenAI',
+            purpose: 'training',
+            respectsRobotsTxt: true,
+            docsUrl: 'https://x.test/',
+          },
+          { token: 'Evil', operator: 'X', docsUrl: SCRIPT_URL, extra: 1 },
           { operator: 'no token' },
         ],
       },
       { now: NOW },
     );
     assert.deepEqual(r.registry.crawlers, [
-      { token: 'GPTBot', operator: 'OpenAI', purpose: 'training', respectsRobotsTxt: true, docsUrl: 'https://x.test/' },
+      {
+        token: 'GPTBot',
+        operator: 'OpenAI',
+        purpose: 'training',
+        respectsRobotsTxt: true,
+        docsUrl: 'https://x.test/',
+      },
       { token: 'Evil', operator: 'X' },
     ]);
   });
@@ -89,7 +104,7 @@ describe('validateRegistry', () => {
 describe('validateService', () => {
   test('rejects services whose links are not https (e.g. javascript: URLs)', () => {
     const s = makeService();
-    s.optOuts[0].url = 'javascript:alert(1)';
+    s.optOuts[0].url = SCRIPT_URL;
     const r = validateService(s);
     assert.equal(r.service, null);
     assert.match(r.errors.join(), /optOuts\[0\]\.url/);
@@ -102,12 +117,19 @@ describe('validateService', () => {
         { title: 'Bad source', url: 'http://insecure.test/' },
       ],
       policyUrls: ['https://ok.test/privacy', 'data:text/html,hi'],
-      contacts: { privacyEmail: 'not-email', privacyRequestUrl: 'https://privacy.test/', dpoEmail: 'dpo@x.test' },
+      contacts: {
+        privacyEmail: 'not-email',
+        privacyRequestUrl: 'https://privacy.test/',
+        dpoEmail: 'dpo@x.test',
+      },
     });
     const r = validateService(s);
     assert.deepEqual(r.service.sources, [{ title: 'Good source', url: 'https://ok.test/' }]);
     assert.deepEqual(r.service.policyUrls, ['https://ok.test/privacy']);
-    assert.deepEqual(r.service.contacts, { privacyRequestUrl: 'https://privacy.test/', dpoEmail: 'dpo@x.test' });
+    assert.deepEqual(r.service.contacts, {
+      privacyRequestUrl: 'https://privacy.test/',
+      dpoEmail: 'dpo@x.test',
+    });
   });
 
   test('an invalid automation recipe is removed, the opt-out is kept for guided mode', () => {
@@ -144,7 +166,12 @@ describe('validateService', () => {
       [{ action: 'click', target: { role: 'slider' } }],
       [{ action: 'click', target: {} }],
       [{ action: 'click', target: { text: ['x'] } }],
-      [{ action: 'click', target: { within: { within: { within: { within: { within: { role: 'dialog' } } } } } } }],
+      [
+        {
+          action: 'click',
+          target: { within: { within: { within: { within: { within: { role: 'dialog' } } } } } },
+        },
+      ],
       [],
     ];
     for (const steps of bad) {
@@ -154,7 +181,11 @@ describe('validateService', () => {
       ...base,
       steps: [
         { action: 'wait', ms: 500 },
-        { action: 'click', target: { role: 'button', text: ['Done'], within: { role: 'dialog' } }, optional: true },
+        {
+          action: 'click',
+          target: { role: 'button', text: ['Done'], within: { role: 'dialog' } },
+          optional: true,
+        },
       ],
     });
     assert.ok(ok.automation);
@@ -202,7 +233,7 @@ describe('helpers', () => {
     assert.equal(isHttpsUrl('https://example.org/x'), true);
     assert.equal(isHttpsUrl('http://example.org/'), false);
     assert.equal(isHttpsUrl('https://user:pw@example.org/'), false);
-    assert.equal(isHttpsUrl('javascript:alert(1)'), false);
+    assert.equal(isHttpsUrl(SCRIPT_URL), false);
     assert.equal(isHttpsUrl('https://'), false);
     assert.equal(isHttpsUrl(42), false);
   });

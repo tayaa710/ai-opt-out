@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "name": "Example Service",
+  "trains_on_user_content": "yes",
+  "default": "opted_in",
+  "opt_out_url": "https://example.com/settings/privacy/ai",
+  "policy_url": "https://example.com/privacy#ai-training",
+  "data_types": ["posts", "messages"],
+  "regions": ["ALL"],
+  "last_updated": "2026-09-01",
+  "contact": "privacy@example.com"
+}

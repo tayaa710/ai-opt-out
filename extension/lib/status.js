@@ -92,7 +92,15 @@ export function summarize(services, userState, region) {
 }
 
 /** Sort order used by lists: most urgent first, then by name. */
-const ORDER = ['needs_attention', 'action_needed', 'not_in_region', 'no_opt_out', 'protected', 'safe_by_default', 'not_tracked'];
+const ORDER = [
+  'needs_attention',
+  'action_needed',
+  'not_in_region',
+  'no_opt_out',
+  'protected',
+  'safe_by_default',
+  'not_tracked',
+];
 export function compareByUrgency(a, b, userState, region) {
   const da = ORDER.indexOf(serviceStatus(a, userState, region).code);
   const db = ORDER.indexOf(serviceStatus(b, userState, region).code);

@@ -13,7 +13,9 @@ export async function send(type, payload = {}) {
   try {
     res = await chrome.runtime.sendMessage({ type, ...payload });
   } catch (err) {
-    throw new Error(`NoTrain background did not respond to "${type}": ${err?.message ?? err}`);
+    throw new Error(`NoTrain background did not respond to "${type}": ${err?.message ?? err}`, {
+      cause: err,
+    });
   }
   if (!res) throw new Error(`No response to "${type}"`);
   if (res.ok === false) throw new Error(res.error || `"${type}" failed`);

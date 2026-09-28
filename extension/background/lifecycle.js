@@ -71,18 +71,21 @@ export async function syncIfDue(now = new Date()) {
 
 /** Creates due reminder alerts (and one notification if enabled). */
 export async function checkReminders(now = new Date()) {
-  const { added, wantsNotification } = await updateLocal([K.registry, K.userState, K.settings, K.alerts], (v) => {
-    const due = dueReminders(
-      { registry: v[K.registry], userState: v[K.userState], settings: v[K.settings], alerts: v[K.alerts] },
-      now,
-    );
-    if (due.length === 0) return { result: { added: [], wantsNotification: false } };
-    const merged = mergeAlerts(v[K.alerts], due);
-    return {
-      set: { [K.alerts]: merged.alerts },
-      result: { added: merged.added, wantsNotification: v[K.settings].notifications.reminders },
-    };
-  });
+  const { added, wantsNotification } = await updateLocal(
+    [K.registry, K.userState, K.settings, K.alerts],
+    (v) => {
+      const due = dueReminders(
+        { registry: v[K.registry], userState: v[K.userState], settings: v[K.settings], alerts: v[K.alerts] },
+        now,
+      );
+      if (due.length === 0) return { result: { added: [], wantsNotification: false } };
+      const merged = mergeAlerts(v[K.alerts], due);
+      return {
+        set: { [K.alerts]: merged.alerts },
+        result: { added: merged.added, wantsNotification: v[K.settings].notifications.reminders },
+      };
+    },
+  );
   if (added.length > 0 && wantsNotification) {
     const one = added.length === 1 ? added[0] : null;
     await notify({

@@ -26,6 +26,7 @@ import {
 import { statusPill } from '../../shared/ui.js';
 import {
   emptyState,
+  pageHeader,
   serviceHash,
   button,
   linkButton,
@@ -37,7 +38,13 @@ import {
 } from '../common.js';
 
 const ACTIONABLE = new Set(['toggle', 'form', 'email']);
-const TYPE_ICONS = { toggle: 'sliders', form: 'letter', email: 'mail', 'account-deletion': 'trash', none: 'minusCircle' };
+const TYPE_ICONS = {
+  toggle: 'sliders',
+  form: 'letter',
+  email: 'mail',
+  'account-deletion': 'trash',
+  none: 'minusCircle',
+};
 
 /** Opt-outs whose steps are expanded (per service id). */
 const openGuides = new Map();
@@ -77,12 +84,17 @@ function letterHash(service, optOut) {
 
 /* ---------- Header + facts ---------- */
 
-function header(service, status, state, ctx) {
+function header(service, status, _state, _ctx) {
   const tracked = status.code !== 'not_tracked';
   return h(
     'header',
     { class: 'd-detail-head' },
-    h('a', { class: 'nt-link nt-link--muted d-back', href: '#/services' }, icon('arrowLeft', { size: 16 }), 'All services'),
+    h(
+      'a',
+      { class: 'nt-link nt-link--muted d-back', href: '#/services' },
+      icon('arrowLeft', { size: 16 }),
+      'All services',
+    ),
     h(
       'div',
       { class: 'd-detail-head__row' },
@@ -118,7 +130,9 @@ function header(service, status, state, ctx) {
               input.disabled = true;
               try {
                 await api.trackServices([service.id], next, 'manual');
-                toast(next ? `Tracking ${service.name}` : `Stopped tracking ${service.name}`, { tone: next ? 'good' : 'info' });
+                toast(next ? `Tracking ${service.name}` : `Stopped tracking ${service.name}`, {
+                  tone: next ? 'good' : 'info',
+                });
               } catch (err) {
                 input.checked = !next;
                 toast(`Couldn’t update: ${err.message}`, { tone: 'bad' });
@@ -150,7 +164,13 @@ function facts(service) {
   return h(
     'dl',
     { class: 'nt-facts d-facts', 'aria-label': 'Key facts' },
-    fact('Trains AI on your data?', trains.label, trains.tone, trains.tone === 'good' ? 'checkCircle' : trains.tone === 'bad' ? 'alertCircle' : 'info', 'fact-trains'),
+    fact(
+      'Trains AI on your data?',
+      trains.label,
+      trains.tone,
+      trains.tone === 'good' ? 'checkCircle' : trains.tone === 'bad' ? 'alertCircle' : 'info',
+      'fact-trains',
+    ),
     fact('If you do nothing', def.label, def.tone, null, 'fact-default'),
     fact('Since', t.since ? formatPartialDate(t.since) : 'Not stated', 'neutral', null, 'fact-since'),
     fact(
@@ -173,7 +193,12 @@ function notes(service, region) {
         'div',
         { class: 'nt-callout', 'data-testid': 'region-note' },
         icon('globe'),
-        h('div', { class: 'nt-callout__body' }, h('p', { class: 'nt-callout__title' }, `For ${regionLabel(region)}`), h('p', null, note)),
+        h(
+          'div',
+          { class: 'nt-callout__body' },
+          h('p', { class: 'nt-callout__title' }, `For ${regionLabel(region)}`),
+          h('p', null, note),
+        ),
       ),
     );
   }
@@ -187,7 +212,11 @@ function notes(service, region) {
           'div',
           { class: 'nt-callout__body' },
           h('p', { class: 'nt-callout__title' }, 'Opting out only affects the future'),
-          h('p', null, 'Anything already used to train a model can’t be taken back out of it. Opting out stops new data being used from now on.'),
+          h(
+            'p',
+            null,
+            'Anything already used to train a model can’t be taken back out of it. Opting out stops new data being used from now on.',
+          ),
         ),
       ),
     );
@@ -198,11 +227,18 @@ function notes(service, region) {
 function policyBanner(service, userState) {
   const st = userState.services?.[service.id];
   const known = st?.knownPolicyVersion ?? service.policyVersion;
-  const changes = (service.changelog ?? []).filter((c) => c.version > known).sort((a, b) => b.version - a.version);
+  const changes = (service.changelog ?? [])
+    .filter((c) => c.version > known)
+    .sort((a, b) => b.version - a.version);
   const critical = changes.some((c) => c.severity === 'critical');
   return h(
     'div',
-    { class: ['nt-callout', critical ? 'nt-callout--bad' : 'nt-callout--warn', 'd-policy-banner'], role: 'region', 'aria-label': 'Policy change', 'data-testid': 'policy-banner' },
+    {
+      class: ['nt-callout', critical ? 'nt-callout--bad' : 'nt-callout--warn', 'd-policy-banner'],
+      role: 'region',
+      'aria-label': 'Policy change',
+      'data-testid': 'policy-banner',
+    },
     icon('alert'),
     h(
       'div',
@@ -222,7 +258,11 @@ function policyBanner(service, userState) {
           size: 'sm',
           iconName: 'check',
           testid: 'ack-policy',
-          onClick: (e) => act(e.currentTarget, () => api.acknowledgePolicy(service.id), { success: 'Marked as reviewed', failure: 'Couldn’t save' }),
+          onClick: (e) =>
+            act(e.currentTarget, () => api.acknowledgePolicy(service.id), {
+              success: 'Marked as reviewed',
+              failure: 'Couldn’t save',
+            }),
         }),
       ),
     ),
@@ -237,7 +277,7 @@ function statusLine(service, optOut, userState) {
   const meta = OPT_OUT_STATUS_LABELS[status] ?? OPT_OUT_STATUS_LABELS.not_started;
   if (status === OPT_OUT_STATUS.notStarted) return null;
   const when = rec?.verifiedAt ?? rec?.updatedAt;
-  const how = rec?.method ? METHOD_LABELS[rec.method] : null;
+  const how = status === OPT_OUT_STATUS.done && rec?.method ? METHOD_LABELS[rec.method] : null;
   const detail = [how, when && relativeTime(when)].filter(Boolean).join(', ');
   return h(
     'span',
@@ -276,11 +316,13 @@ function optOutCard(service, optOut, ctx, { applicable }) {
     }
   };
 
-  const actions = [];
+  const primary = [];
+  const secondary = [];
+  const letterFirst = optOut.type === 'email' && !optOut.url;
   if (applicable) {
     if (!isDone) {
       if (auto) {
-        actions.push(
+        primary.push(
           button(attention ? 'Fix it for me' : 'Opt out for me', {
             variant: 'primary',
             iconName: 'zap',
@@ -291,7 +333,7 @@ function optOutCard(service, optOut, ctx, { applicable }) {
         );
       }
       if (optOut.url) {
-        actions.push(
+        primary.push(
           button('Guide me', {
             variant: auto ? 'secondary' : 'primary',
             iconName: 'listChecks',
@@ -301,24 +343,31 @@ function optOutCard(service, optOut, ctx, { applicable }) {
               guides.add(optOut.id);
               startOptOut(service, optOut, 'guided', { button: e.currentTarget, onStatus }).then(() => {
                 rerender();
-                document.querySelector(`[data-optout="${CSS.escape(optOut.id)}"] .d-steps`)?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                document
+                  .querySelector(`[data-optout="${CSS.escape(optOut.id)}"] .d-steps`)
+                  ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
               });
             },
           }),
         );
       }
       if (optOut.type === 'email' || optOut.type === 'form' || hasObjectionRight(region)) {
-        actions.push(
-          linkButton(optOut.type === 'email' ? 'Write the letter' : 'Write a letter', letterHash(service, optOut), {
-            variant: optOut.type === 'email' && !optOut.url ? 'primary' : 'ghost',
+        const letter = linkButton(
+          optOut.type === 'email' ? 'Write the letter' : 'Write a letter',
+          letterHash(service, optOut),
+          {
+            variant: letterFirst ? 'primary' : 'ghost',
+            size: letterFirst ? undefined : 'sm',
             iconName: 'letter',
             testid: 'write-letter',
-          }),
+          },
         );
+        (letterFirst ? primary : secondary).push(letter);
       }
-      actions.push(
+      secondary.push(
         button(markDoneLabel(optOut), {
           variant: 'ghost',
+          size: 'sm',
           iconName: 'check',
           testid: 'mark-done',
           key: `done-${optOut.id}`,
@@ -335,7 +384,7 @@ function optOutCard(service, optOut, ctx, { applicable }) {
       );
     } else {
       if (auto && status === OPT_OUT_STATUS.done) {
-        actions.push(
+        primary.push(
           button('Check again', {
             variant: 'secondary',
             iconName: 'refresh',
@@ -345,23 +394,32 @@ function optOutCard(service, optOut, ctx, { applicable }) {
           }),
         );
       }
-      actions.push(
+      secondary.push(
         button('Undo', {
           variant: 'ghost',
+          size: 'sm',
           iconName: 'undo',
           testid: 'mark-undo',
           key: `undo-${optOut.id}`,
+          ariaLabel: `Mark “${optOut.title}” as not done`,
           onClick: (e) =>
-            act(e.currentTarget, () => api.setOptOutStatus(service.id, optOut.id, OPT_OUT_STATUS.notStarted, 'manual'), {
-              success: 'Marked as not done',
-              failure: 'Couldn’t save',
-            }),
+            act(
+              e.currentTarget,
+              () => api.setOptOutStatus(service.id, optOut.id, OPT_OUT_STATUS.notStarted, 'manual'),
+              {
+                success: 'Marked as not done',
+                failure: 'Couldn’t save',
+              },
+            ),
         }),
       );
     }
   }
 
-  const outcome = rec?.lastOutcome && !isDone && rec.lastOutcome !== 'success' && rec.lastOutcome !== 'already' ? OUTCOME_MESSAGES[rec.lastOutcome] : null;
+  const outcome =
+    rec?.lastOutcome && !isDone && rec.lastOutcome !== 'success' && rec.lastOutcome !== 'already'
+      ? OUTCOME_MESSAGES[rec.lastOutcome]
+      : null;
 
   const steps = h(
     'details',
@@ -378,8 +436,18 @@ function optOutCard(service, optOut, ctx, { applicable }) {
     h(
       'div',
       { class: 'd-steps__body' },
-      h('ol', { class: 'nt-steps' }, (optOut.steps ?? []).map((step) => h('li', null, h('span', null, step)))),
-      optOut.url && h('p', { class: 'd-steps__link' }, extLink(optOut.url, `Open ${hostOf(optOut.url)}`, { class: 'nt-link' }), icon('external', { size: 13 })),
+      h(
+        'ol',
+        { class: 'nt-steps' },
+        (optOut.steps ?? []).map((step) => h('li', null, h('span', null, step))),
+      ),
+      optOut.url &&
+        h(
+          'p',
+          { class: 'd-steps__link' },
+          extLink(optOut.url, `Open ${hostOf(optOut.url)}`, { class: 'nt-link' }),
+          icon('external', { size: 13 }),
+        ),
       applicable &&
         !isDone &&
         h(
@@ -396,7 +464,12 @@ function optOutCard(service, optOut, ctx, { applicable }) {
                 () =>
                   optOut.type === 'email'
                     ? api.recordLetter(service.id, optOut.id)
-                    : api.setOptOutStatus(service.id, optOut.id, doneStatusFor(optOut), guideOpen ? 'guided' : 'manual'),
+                    : api.setOptOutStatus(
+                        service.id,
+                        optOut.id,
+                        doneStatusFor(optOut),
+                        guideOpen ? 'guided' : 'manual',
+                      ),
                 { success: 'Nice. Marked as done.', failure: 'Couldn’t save' },
               ),
           }),
@@ -407,7 +480,13 @@ function optOutCard(service, optOut, ctx, { applicable }) {
   return h(
     'article',
     {
-      class: ['nt-card', 'd-optout', isDone && 'is-done', attention && 'is-attention', !applicable && 'is-other'],
+      class: [
+        'nt-card',
+        'd-optout',
+        isDone && 'is-done',
+        attention && 'is-attention',
+        !applicable && 'is-other',
+      ],
       'data-optout': optOut.id,
       'data-testid': 'optout-card',
       'aria-labelledby': `oo-${optOut.id}-title`,
@@ -429,33 +508,62 @@ function optOutCard(service, optOut, ctx, { applicable }) {
     ),
     h('h3', { class: 'd-optout__title', id: `oo-${optOut.id}-title` }, optOut.title),
     optOut.description && h('p', { class: 'd-optout__desc' }, optOut.description),
-    h('div', { class: 'd-optout__effect' }, h('span', { class: 'd-optout__effect-label' }, 'What this does'), h('p', null, optOut.effect)),
+    h(
+      'div',
+      { class: 'd-optout__effect' },
+      h('span', { class: 'd-optout__effect-label' }, 'What this does'),
+      h('p', null, optOut.effect),
+    ),
     optOut.perDevice &&
-      h('p', { class: 'd-optout__note' }, icon('info', { size: 14 }), 'This setting is per device or app. Repeat it everywhere you use the service.'),
+      h(
+        'p',
+        { class: 'd-optout__note' },
+        icon('info', { size: 14 }),
+        'This setting is per device or app. Repeat it everywhere you use the service.',
+      ),
     attention &&
       h(
         'div',
         { class: 'nt-callout nt-callout--bad' },
         icon('refresh'),
-        h('div', { class: 'nt-callout__body' }, h('p', { class: 'nt-callout__title' }, 'This setting was turned back on'), h('p', null, 'It may have been reset by an update or a new device. Switch it off again.')),
+        h(
+          'div',
+          { class: 'nt-callout__body' },
+          h('p', { class: 'nt-callout__title' }, 'This setting was turned back on'),
+          h('p', null, 'It may have been reset by an update or a new device. Switch it off again.'),
+        ),
       ),
-    outcome && h('p', { class: 'd-optout__outcome', 'data-testid': 'last-outcome' }, icon('info', { size: 14 }), `Last try: ${outcome}`),
-    actions.length > 0 &&
+    outcome &&
+      h(
+        'p',
+        { class: 'd-optout__outcome', 'data-testid': 'last-outcome' },
+        icon('info', { size: 14 }),
+        `Last try: ${outcome}`,
+      ),
+    (primary.length > 0 || secondary.length > 0) &&
       h(
         'div',
         { class: 'd-optout__actions' },
-        h('div', { class: 'nt-btn-row' }, actions),
-        conf &&
-          !isDone &&
+        primary.length > 0 &&
           h(
-            'span',
-            { class: 'd-optout__conf', title: conf.hint },
-            h('span', { class: ['nt-pill', `nt-pill--${conf.tone}`] }, conf.label),
-            h('span', { class: 'nt-visually-hidden' }, conf.hint),
+            'div',
+            { class: 'nt-btn-row' },
+            primary,
+            conf &&
+              !isDone &&
+              h(
+                'span',
+                { class: 'd-optout__conf', title: conf.hint },
+                h('span', { class: ['nt-pill', `nt-pill--${conf.tone}`] }, conf.label),
+                h('span', { class: 'nt-visually-hidden' }, `Automation: ${conf.hint}`),
+              ),
           ),
+        secondary.length > 0 && h('div', { class: 'd-optout__links' }, secondary),
       ),
     liveMsg,
-    auto && applicable && !isDone &&
+    auto &&
+      applicable &&
+      !isDone &&
       h(
         'p',
         { class: 'd-optout__perm' },
@@ -479,7 +587,11 @@ function runPrompt(service, optOut, ctx) {
     h(
       'div',
       { class: 'd-run-prompt__body' },
-      h('h2', { class: 'd-run-prompt__title', id: 'run-prompt-title' }, `Ready to opt out of ${service.name}?`),
+      h(
+        'h2',
+        { class: 'd-run-prompt__title', id: 'run-prompt-title' },
+        `Ready to opt out of ${service.name}?`,
+      ),
       h(
         'p',
         null,
@@ -519,9 +631,19 @@ function dataTypesCard(service) {
     { class: 'nt-card d-aside-card', 'aria-labelledby': 'dt-title' },
     h('h2', { class: 'd-aside-title', id: 'dt-title' }, 'What may be used'),
     types.length
-      ? h('ul', { class: 'nt-chip-list', role: 'list', 'data-testid': 'data-types' }, types.map((t) => h('li', { class: 'nt-chip' }, dataTypeLabel(t))))
+      ? h(
+          'ul',
+          { class: 'nt-chip-list', role: 'list', 'data-testid': 'data-types' },
+          types.map((t) => h('li', { class: 'nt-chip' }, dataTypeLabel(t))),
+        )
       : h('p', { class: 'nt-subtle' }, 'Not specified.'),
-    service.training?.details && h('p', { class: 'd-aside-text' }, service.training.details),
+    service.training?.details &&
+      h(
+        'details',
+        { class: 'nt-disclosure d-more' },
+        h('summary', null, 'The details'),
+        h('p', { class: 'd-aside-text' }, service.training.details),
+      ),
   );
 }
 
@@ -539,7 +661,12 @@ function sourcesCard(service) {
           'li',
           null,
           extLink(src.url, src.title, { class: 'd-source__link' }),
-          h('span', { class: 'd-source__meta' }, hostOf(src.url), src.accessed ? ` · read ${formatDate(src.accessed)}` : ''),
+          h(
+            'span',
+            { class: 'd-source__meta' },
+            hostOf(src.url),
+            src.accessed ? ` · read ${formatDate(src.accessed)}` : '',
+          ),
         ),
       ),
     ),
@@ -547,13 +674,18 @@ function sourcesCard(service) {
       'p',
       { class: 'd-report' },
       icon('flag', { size: 14 }),
-      extLink(reportErrorUrl(service), 'Report an error', { class: 'nt-link', 'data-testid': 'report-error' }),
+      extLink(reportErrorUrl(service), 'Report an error', {
+        class: 'nt-link',
+        'data-testid': 'report-error',
+      }),
     ),
   );
 }
 
 function changelogCard(service) {
-  const entries = [...(service.changelog ?? [])].sort((a, b) => b.version - a.version || String(b.date).localeCompare(String(a.date)));
+  const entries = [...(service.changelog ?? [])].sort(
+    (a, b) => b.version - a.version || String(b.date).localeCompare(String(a.date)),
+  );
   const sevTone = { info: 'neutral', warning: 'warn', critical: 'bad' };
   const sevLabel = { info: 'Update', warning: 'Change', critical: 'Major change' };
   return h(
@@ -571,7 +703,12 @@ function changelogCard(service) {
             'div',
             { class: 'd-timeline__head' },
             h('time', { datetime: c.date }, formatDate(c.date)),
-            c.severity !== 'info' && h('span', { class: ['nt-pill', 'nt-pill--plain', `nt-pill--${sevTone[c.severity] ?? 'neutral'}`] }, sevLabel[c.severity] ?? c.severity),
+            c.severity !== 'info' &&
+              h(
+                'span',
+                { class: ['nt-pill', 'nt-pill--plain', `nt-pill--${sevTone[c.severity] ?? 'neutral'}`] },
+                sevLabel[c.severity] ?? c.severity,
+              ),
           ),
           h('p', null, c.summary),
         ),
@@ -589,20 +726,29 @@ export function render(ctx) {
   if (!service) {
     return h(
       'div',
-      { class: 'nt-card' },
-      emptyState({
-        iconName: 'search',
-        title: 'Service not found',
-        text: 'It may have been renamed or removed from the registry.',
-        actions: [linkButton('All services', '#/services', { variant: 'primary' })],
-      }),
+      null,
+      pageHeader({ title: 'Service not found' }),
+      h(
+        'div',
+        { class: 'nt-card' },
+        emptyState({
+          iconName: 'search',
+          title: 'We couldn’t find that service',
+          text: 'It may have been renamed or removed from the registry.',
+          actions: [linkButton('All services', '#/services', { variant: 'primary' })],
+        }),
+      ),
     );
   }
   const region = settings.region;
   const status = serviceStatus(service, userState, region);
   const applicable = applicableOptOuts(service, region);
-  const others = (service.optOuts ?? []).filter((o) => ACTIONABLE.has(o.type) && !appliesToRegion(o.regions, region));
-  const lastResort = (service.optOuts ?? []).filter((o) => o.type === 'account-deletion' && appliesToRegion(o.regions, region));
+  const others = (service.optOuts ?? []).filter(
+    (o) => ACTIONABLE.has(o.type) && !appliesToRegion(o.regions, region),
+  );
+  const lastResort = (service.optOuts ?? []).filter(
+    (o) => o.type === 'account-deletion' && appliesToRegion(o.regions, region),
+  );
   const noneEntry = (service.optOuts ?? []).find((o) => o.type === 'none');
 
   // Deep links: ?guide=<id> expands the steps; ?run=<id>&mode=auto shows the permission prompt.
@@ -610,27 +756,47 @@ export function render(ctx) {
   const guideId = route.query.get('guide');
   if (guideId && handledQuery !== queryKey) guidesFor(service.id).add(guideId);
   const runId = route.query.get('run');
-  const runOptOut = runId && route.query.get('mode') === 'auto' ? applicable.find((o) => o.id === runId && o.automation) : null;
+  const runOptOut =
+    runId && route.query.get('mode') === 'auto'
+      ? applicable.find((o) => o.id === runId && o.automation)
+      : null;
 
   const main = [];
-  if (runOptOut && optOutStatus(userState, service.id, runOptOut.id) !== OPT_OUT_STATUS.done) main.push(runPrompt(service, runOptOut, ctx));
+  if (runOptOut && optOutStatus(userState, service.id, runOptOut.id) !== OPT_OUT_STATUS.done)
+    main.push(runPrompt(service, runOptOut, ctx));
 
   main.push(
     h(
       'h2',
       { class: 'd-section-title', id: 'ways-title' },
-      applicable.length ? (applicable.length === 1 ? 'How to opt out' : `${applicable.length} ways to opt out`) : 'How to opt out',
+      applicable.length
+        ? applicable.length === 1
+          ? 'How to opt out'
+          : `${applicable.length} ways to opt out`
+        : 'How to opt out',
     ),
   );
   if (applicable.length) {
-    main.push(h('div', { class: 'd-optouts', role: 'list', 'aria-labelledby': 'ways-title' }, applicable.map((o) => h('div', { role: 'listitem' }, optOutCard(service, o, ctx, { applicable: true })))));
-  } else {
-    const t = service.training ?? {};
-    const safe = t.trainsOnUserData === 'no' || t.defaultState === 'opted_out' || t.defaultState === 'not_applicable';
     main.push(
       h(
         'div',
-        { class: ['nt-callout', safe ? 'nt-callout--good' : 'nt-callout--neutral'], 'data-testid': 'no-optout' },
+        { class: 'd-optouts', role: 'list', 'aria-labelledby': 'ways-title' },
+        applicable.map((o) =>
+          h('div', { role: 'listitem' }, optOutCard(service, o, ctx, { applicable: true })),
+        ),
+      ),
+    );
+  } else {
+    const t = service.training ?? {};
+    const safe =
+      t.trainsOnUserData === 'no' || t.defaultState === 'opted_out' || t.defaultState === 'not_applicable';
+    main.push(
+      h(
+        'div',
+        {
+          class: ['nt-callout', safe ? 'nt-callout--good' : 'nt-callout--neutral'],
+          'data-testid': 'no-optout',
+        },
         icon(safe ? 'shieldCheck' : 'minusCircle'),
         h(
           'div',
@@ -638,17 +804,21 @@ export function render(ctx) {
           h(
             'p',
             { class: 'nt-callout__title' },
-            safe ? 'Nothing to switch off' : others.length ? `No opt-out for ${regionLabel(region)}` : 'There’s no way to opt out',
+            safe
+              ? 'Nothing to switch off'
+              : others.length
+                ? `No opt-out for ${regionLabel(region)}`
+                : 'There’s no way to opt out',
           ),
           h(
             'p',
             null,
             safe
               ? `${service.company} says it doesn’t train on your data by default. NoTrain will tell you if that changes.`
-              : noneEntry?.effect ??
+              : (noneEntry?.effect ??
                   (others.length
                     ? 'The opt-outs below only apply in other regions.'
-                    : `${service.company} doesn’t offer a setting to stop training.`),
+                    : `${service.company} doesn’t offer a setting to stop training.`)),
           ),
           !safe &&
             h(
@@ -658,7 +828,16 @@ export function render(ctx) {
                 ? 'You still have a legal right to object. A request letter is the way to use it.'
                 : 'You can still send a polite request. Companies sometimes honour it.',
             ),
-          !safe && h('div', { class: 'nt-btn-row', style: { marginTop: '6px' } }, linkButton('Write a letter', letterHash(service, null), { variant: 'secondary', size: 'sm', iconName: 'letter' })),
+          !safe &&
+            h(
+              'div',
+              { class: 'nt-btn-row', style: { marginTop: '6px' } },
+              linkButton('Write a letter', letterHash(service, null), {
+                variant: 'secondary',
+                size: 'sm',
+                iconName: 'letter',
+              }),
+            ),
         ),
       ),
     );
@@ -670,7 +849,11 @@ export function render(ctx) {
         'details',
         { class: 'nt-disclosure d-other' },
         h('summary', null, 'Last resort: delete your account'),
-        h('div', { class: 'd-optouts' }, lastResort.map((o) => optOutCard(service, o, ctx, { applicable: false }))),
+        h(
+          'div',
+          { class: 'd-optouts' },
+          lastResort.map((o) => optOutCard(service, o, ctx, { applicable: false })),
+        ),
       ),
     );
   }
@@ -684,8 +867,16 @@ export function render(ctx) {
         h(
           'div',
           { class: 'd-other__body' },
-          h('p', { class: 'nt-subtle' }, `These don’t apply in ${regionLabel(region)}. Change your region in Settings if that’s wrong.`),
-          h('div', { class: 'd-optouts' }, others.map((o) => optOutCard(service, o, ctx, { applicable: false }))),
+          h(
+            'p',
+            { class: 'nt-subtle' },
+            `These don’t apply in ${regionLabel(region)}. Change your region in Settings if that’s wrong.`,
+          ),
+          h(
+            'div',
+            { class: 'd-optouts' },
+            others.map((o) => optOutCard(service, o, ctx, { applicable: false })),
+          ),
         ),
       ),
     );
@@ -700,18 +891,25 @@ export function render(ctx) {
       'div',
       { class: 'd-detail-grid' },
       h('div', { class: 'd-detail-main' }, main),
-      h('div', { class: 'd-detail-aside' }, dataTypesCard(service), sourcesCard(service), changelogCard(service)),
+      h(
+        'div',
+        { class: 'd-detail-aside' },
+        dataTypesCard(service),
+        sourcesCard(service),
+        changelogCard(service),
+      ),
     ),
   ];
 }
 
 export function afterRender({ route, state }, root) {
   if (route.name !== 'service') return;
+  const target = route.query.get('run') ?? route.query.get('guide');
+  // Wait for the first render with data; handling the query while loading would skip it for good.
+  if (!target || !state) return;
   const queryKey = `${route.param}?${route.query}`;
   if (handledQuery === queryKey) return;
   handledQuery = queryKey;
-  const target = route.query.get('run') ?? route.query.get('guide');
-  if (!target || !state) return;
   requestAnimationFrame(() => {
     const prompt = root.querySelector('[data-testid="run-prompt"]');
     const card = root.querySelector(`[data-optout="${CSS.escape(target)}"]`);

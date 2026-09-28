@@ -68,7 +68,10 @@ export async function readTextCapped(response, maxBytes) {
  * @param {string} url
  * @param {{ timeoutMs?: number, maxBytes?: number, fetchImpl?: typeof fetch }} [options]
  */
-export async function fetchJson(url, { timeoutMs = REMOTE_TIMEOUT_MS, maxBytes = REMOTE_MAX_BYTES, fetchImpl } = {}) {
+export async function fetchJson(
+  url,
+  { timeoutMs = REMOTE_TIMEOUT_MS, maxBytes = REMOTE_MAX_BYTES, fetchImpl } = {},
+) {
   const doFetch = fetchImpl ?? globalThis.fetch;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -84,11 +87,11 @@ export async function fetchJson(url, { timeoutMs = REMOTE_TIMEOUT_MS, maxBytes =
     const text = await readTextCapped(res, maxBytes);
     try {
       return JSON.parse(text);
-    } catch {
-      throw new Error('Response is not valid JSON');
+    } catch (err) {
+      throw new Error('Response is not valid JSON', { cause: err });
     }
   } catch (err) {
-    if (controller.signal.aborted) throw new Error('Request timed out');
+    if (controller.signal.aborted) throw new Error('Request timed out', { cause: err });
     throw err;
   } finally {
     clearTimeout(timer);
@@ -265,40 +268,43 @@ async function doSync({ force = false, fetchImpl, now = new Date() }) {
     error = err;
   }
   const attemptAt = now.toISOString();
-  const { meta: newMeta, added } = await updateLocal([K.registry, K.registryMeta, K.userState, K.alerts], (v) => {
-    const current = isUsableRegistry(v[K.registry]) ? v[K.registry] : null;
-    const base = baseMeta(v[K.registryMeta], v[K.registry]);
-    if (error) {
+  const { meta: newMeta, added } = await updateLocal(
+    [K.registry, K.registryMeta, K.userState, K.alerts],
+    (v) => {
+      const current = isUsableRegistry(v[K.registry]) ? v[K.registry] : null;
+      const base = baseMeta(v[K.registryMeta], v[K.registry]);
+      if (error) {
+        const m = {
+          ...base,
+          lastSyncAt: attemptAt,
+          lastSyncStatus: 'error',
+          lastError: String(error?.message ?? error).slice(0, 200),
+        };
+        return { set: { [K.registryMeta]: m }, result: { meta: m, added: [] } };
+      }
+      if (current && Date.parse(next.generatedAt) <= Date.parse(current.generatedAt)) {
+        const m = { ...base, lastSyncAt: attemptAt, lastSuccessAt: attemptAt, lastSyncStatus: 'unchanged' };
+        delete m.lastError;
+        return { set: { [K.registryMeta]: m }, result: { meta: m, added: [] } };
+      }
+      const diff = diffRegistries(current, next);
+      const newAlerts = alertsForDiff(diff, v[K.userState], { newServices: Boolean(current) }, now);
+      const merged = mergeAlerts(v[K.alerts], newAlerts);
       const m = {
         ...base,
+        source: 'remote',
+        generatedAt: next.generatedAt,
         lastSyncAt: attemptAt,
-        lastSyncStatus: 'error',
-        lastError: String(error?.message ?? error).slice(0, 200),
+        lastSuccessAt: attemptAt,
+        lastSyncStatus: 'ok',
       };
-      return { set: { [K.registryMeta]: m }, result: { meta: m, added: [] } };
-    }
-    if (current && Date.parse(next.generatedAt) <= Date.parse(current.generatedAt)) {
-      const m = { ...base, lastSyncAt: attemptAt, lastSuccessAt: attemptAt, lastSyncStatus: 'unchanged' };
       delete m.lastError;
-      return { set: { [K.registryMeta]: m }, result: { meta: m, added: [] } };
-    }
-    const diff = diffRegistries(current, next);
-    const newAlerts = alertsForDiff(diff, v[K.userState], { newServices: Boolean(current) }, now);
-    const merged = mergeAlerts(v[K.alerts], newAlerts);
-    const m = {
-      ...base,
-      source: 'remote',
-      generatedAt: next.generatedAt,
-      lastSyncAt: attemptAt,
-      lastSuccessAt: attemptAt,
-      lastSyncStatus: 'ok',
-    };
-    delete m.lastError;
-    return {
-      set: { [K.registry]: next, [K.registryMeta]: m, [K.alerts]: merged.alerts },
-      result: { meta: m, added: merged.added },
-    };
-  });
+      return {
+        set: { [K.registry]: next, [K.registryMeta]: m, [K.alerts]: merged.alerts },
+        result: { meta: m, added: merged.added },
+      };
+    },
+  );
   await notifyPolicyAlerts(added);
   return newMeta;
 }

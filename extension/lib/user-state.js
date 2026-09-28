@@ -56,7 +56,12 @@ function trackOne(userState, service, source, now) {
  * @param {{ serviceIds: string[], tracked: boolean, source?: string }} payload
  * @param {Date} [now]
  */
-export function trackServices(userState, registry, { serviceIds, tracked, source = 'manual' }, now = new Date()) {
+export function trackServices(
+  userState,
+  registry,
+  { serviceIds, tracked, source = 'manual' },
+  now = new Date(),
+) {
   if (!SOURCES.includes(source)) throw new UserError('source must be "manual" or "detected"');
   const services = serviceIds.map((id) => requireServiceOptOut(registry, id).service);
   const next = clone(userState);

@@ -87,7 +87,10 @@ function syncStatus(meta) {
       h(
         'p',
         { class: 'nt-subtle' },
-        [listDate && `Service list dated ${listDate}`, meta.source === 'remote' ? 'downloaded' : meta.source === 'bundled' ? 'built in' : null]
+        [
+          listDate && `Service list dated ${listDate}`,
+          meta.source === 'remote' ? 'downloaded' : meta.source === 'bundled' ? 'built in' : null,
+        ]
           .filter(Boolean)
           .join(', '),
         meta.lastSyncStatus === 'error' && meta.lastError ? ` · ${meta.lastError}` : '',
@@ -97,7 +100,11 @@ function syncStatus(meta) {
 }
 
 function servicesForOrigin(origin, services) {
-  return services.filter((s) => (s.optOuts ?? []).some((o) => o.automation?.hostPermissions?.includes(origin)) || (s.detection?.cookies ?? []).some((c) => origin.startsWith(`${new URL(c.url).origin}/`)));
+  return services.filter(
+    (s) =>
+      (s.optOuts ?? []).some((o) => o.automation?.hostPermissions?.includes(origin)) ||
+      (s.detection?.cookies ?? []).some((c) => origin.startsWith(`${new URL(c.url).origin}/`)),
+  );
 }
 
 function siteAccess(ctx) {
@@ -113,7 +120,8 @@ function siteAccess(ctx) {
         'div',
         { class: 's-perm__main' },
         h('span', { class: 's-perm__host nt-mono' }, describeOrigin(origin)),
-        users.length > 0 && h('span', { class: 'nt-subtle' }, `Used for ${listJoin(users.map((u) => u.name))}`),
+        users.length > 0 &&
+          h('span', { class: 'nt-subtle' }, `Used for ${listJoin(users.map((u) => u.name))}`),
       ),
       button('Revoke', {
         variant: 'danger-ghost',
@@ -128,7 +136,11 @@ function siteAccess(ctx) {
               await refreshPermissions(ctx);
               return removed;
             },
-            { success: (ok) => (ok ? `Access to ${describeOrigin(origin)} removed` : 'That permission can’t be removed'), failure: 'Couldn’t revoke' },
+            {
+              success: (ok) =>
+                ok ? `Access to ${describeOrigin(origin)} removed` : 'That permission can’t be removed',
+              failure: 'Couldn’t revoke',
+            },
           ),
       }),
     );
@@ -148,7 +160,12 @@ function siteAccess(ctx) {
         'div',
         { class: 's-perm s-perm--extra' },
         h('span', { class: 's-perm__globe' }, icon('key')),
-        h('div', { class: 's-perm__main' }, h('span', { class: 's-perm__host' }, 'Cookie check'), h('span', { class: 'nt-subtle' }, 'Left over from account detection.')),
+        h(
+          'div',
+          { class: 's-perm__main' },
+          h('span', { class: 's-perm__host' }, 'Cookie check'),
+          h('span', { class: 'nt-subtle' }, 'Left over from account detection.'),
+        ),
         button('Revoke', {
           variant: 'danger-ghost',
           size: 'sm',
@@ -166,7 +183,7 @@ function siteAccess(ctx) {
   ];
 }
 
-function importButton(ctx) {
+function importButton(_ctx) {
   const input = h('input', {
     type: 'file',
     accept: 'application/json,.json',
@@ -203,7 +220,15 @@ function importButton(ctx) {
       }
     },
   });
-  return [input, button('Import', { variant: 'secondary', iconName: 'upload', testid: 'import-button', onClick: () => input.click() })];
+  return [
+    input,
+    button('Import', {
+      variant: 'secondary',
+      iconName: 'upload',
+      testid: 'import-button',
+      onClick: () => input.click(),
+    }),
+  ];
 }
 
 export function render(ctx) {
@@ -305,7 +330,8 @@ export function render(ctx) {
             value: String(settings.reminderIntervalDays ?? 90),
             options: REMINDER_OPTIONS.map((o) => ({ value: String(o.days), label: o.label })),
             testid: 'settings-reminder',
-            onChange: (e) => save({ reminderIntervalDays: Number(e.currentTarget.value) }, 'Reminder updated'),
+            onChange: (e) =>
+              save({ reminderIntervalDays: Number(e.currentTarget.value) }, 'Reminder updated'),
           }),
         ),
       ),
@@ -316,7 +342,8 @@ export function render(ctx) {
         switchField({
           id: 'settings-passive',
           label: 'Check settings when I visit',
-          description: 'When you open a service’s settings page, NoTrain quietly confirms the switches you turned off are still off. It never changes anything on its own.',
+          description:
+            'When you open a service’s settings page, NoTrain quietly confirms the switches you turned off are still off. It never changes anything on its own.',
           checked: settings.passiveChecks !== false,
           testid: 'settings-passive',
           onChange: (e) => save({ passiveChecks: e.currentTarget.checked }),
@@ -324,7 +351,8 @@ export function render(ctx) {
         switchField({
           id: 'settings-autosync',
           label: 'Update the service list weekly',
-          description: 'Downloads the public list of services and opt-outs, so you hear about policy changes. Nothing about you is sent.',
+          description:
+            'Downloads the public list of services and opt-outs, so you hear about policy changes. Nothing about you is sent.',
           checked: settings.autoSync !== false,
           testid: 'settings-autosync',
           onChange: (e) => save({ autoSync: e.currentTarget.checked }),
@@ -339,7 +367,12 @@ export function render(ctx) {
             testid: 'sync-now',
             onClick: (e) =>
               act(e.currentTarget, () => api.syncRegistry(true), {
-                success: (meta) => (meta?.lastSyncStatus === 'error' ? 'Couldn’t reach the update server' : meta?.lastSyncStatus === 'unchanged' ? 'You already have the latest list' : 'Service list updated'),
+                success: (meta) =>
+                  meta?.lastSyncStatus === 'error'
+                    ? 'Couldn’t reach the update server'
+                    : meta?.lastSyncStatus === 'unchanged'
+                      ? 'You already have the latest list'
+                      : 'Service list updated',
                 failure: 'Update failed',
               }),
           }),
@@ -358,7 +391,12 @@ export function render(ctx) {
         h(
           'div',
           { class: 's-data-row' },
-          h('div', null, h('p', { class: 's-row-title' }, 'Back up or move to another browser'), h('p', { class: 'nt-subtle' }, 'Saved as a JSON file on your computer.')),
+          h(
+            'div',
+            null,
+            h('p', { class: 's-row-title' }, 'Back up or move to another browser'),
+            h('p', { class: 'nt-subtle' }, 'Saved as a JSON file on your computer.'),
+          ),
           h(
             'div',
             { class: 'nt-btn-row' },
@@ -371,7 +409,11 @@ export function render(ctx) {
                   e.currentTarget,
                   async () => {
                     const data = await api.exportData();
-                    downloadText(`notrain-backup-${fileStamp()}.json`, `${JSON.stringify(data, null, 2)}\n`, 'application/json');
+                    downloadText(
+                      `notrain-backup-${fileStamp()}.json`,
+                      `${JSON.stringify(data, null, 2)}\n`,
+                      'application/json',
+                    );
                   },
                   { success: 'Backup downloaded', failure: 'Export failed' },
                 ),
@@ -382,7 +424,16 @@ export function render(ctx) {
         h(
           'div',
           { class: 's-data-row s-data-row--danger' },
-          h('div', null, h('p', { class: 's-row-title' }, 'Start over'), h('p', { class: 'nt-subtle' }, 'Erases your settings, tracked services, progress and alerts from this browser.')),
+          h(
+            'div',
+            null,
+            h('p', { class: 's-row-title' }, 'Start over'),
+            h(
+              'p',
+              { class: 'nt-subtle' },
+              'Erases your settings, tracked services, progress and alerts from this browser.',
+            ),
+          ),
           button('Reset NoTrain', {
             variant: 'danger-ghost',
             iconName: 'trash',

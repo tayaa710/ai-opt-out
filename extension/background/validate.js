@@ -1,7 +1,13 @@
 // Input validation for messages and backups. Every function throws a
 // UserError with a path-qualified message on invalid input. Pure module.
 
-import { ALERT_KINDS, ALERTS_LIMIT, HISTORY_LIMIT, METHODS, STORAGE_SCHEMA_VERSION } from '../lib/constants.js';
+import {
+  ALERT_KINDS,
+  ALERTS_LIMIT,
+  HISTORY_LIMIT,
+  METHODS,
+  STORAGE_SCHEMA_VERSION,
+} from '../lib/constants.js';
 import {
   ID_PATTERN,
   NOTE_MAX,
@@ -39,7 +45,8 @@ export function expectString(v, name, max = 200) {
 }
 
 export function expectId(v, name) {
-  if (typeof v !== 'string' || v.length > 80 || !ID_PATTERN.test(v)) throw new UserError(`${name} is not a valid id`);
+  if (typeof v !== 'string' || v.length > 80 || !ID_PATTERN.test(v))
+    throw new UserError(`${name} is not a valid id`);
   return v;
 }
 
@@ -92,7 +99,8 @@ function checkOptOutRecord(raw, path) {
     updatedAt: expectIso(raw.updatedAt, `${path}.updatedAt`),
     verifiedAt: expectIso(raw.verifiedAt ?? null, `${path}.verifiedAt`, { nullable: true }),
   };
-  if (raw.lastOutcome !== undefined) rec.lastOutcome = expectEnum(raw.lastOutcome, OUTCOME_VALUES, `${path}.lastOutcome`);
+  if (raw.lastOutcome !== undefined)
+    rec.lastOutcome = expectEnum(raw.lastOutcome, OUTCOME_VALUES, `${path}.lastOutcome`);
   const note = optionalNote(raw.note, `${path}.note`);
   if (note) rec.note = note;
   return rec;
@@ -153,7 +161,10 @@ function checkAlert(raw, path) {
   const a = {
     id: expectString(raw.id, `${path}.id`, 100),
     kind: expectEnum(raw.kind, Object.values(ALERT_KINDS), `${path}.kind`),
-    serviceId: raw.serviceId === null || raw.serviceId === undefined ? null : expectId(raw.serviceId, `${path}.serviceId`),
+    serviceId:
+      raw.serviceId === null || raw.serviceId === undefined
+        ? null
+        : expectId(raw.serviceId, `${path}.serviceId`),
     severity: expectEnum(raw.severity, ALERT_SEVERITIES, `${path}.severity`),
     title: expectString(raw.title, `${path}.title`, 200),
     body: expectString(raw.body, `${path}.body`, 1000),
@@ -162,7 +173,8 @@ function checkAlert(raw, path) {
     dismissed: expectBoolean(raw.dismissed, `${path}.dismissed`),
   };
   if (raw.optOutId !== undefined) a.optOutId = expectId(raw.optOutId, `${path}.optOutId`);
-  if (raw.policyVersion !== undefined) a.policyVersion = expectInt(raw.policyVersion, `${path}.policyVersion`, 1);
+  if (raw.policyVersion !== undefined)
+    a.policyVersion = expectInt(raw.policyVersion, `${path}.policyVersion`, 1);
   if (raw.serviceIds !== undefined) a.serviceIds = expectIdList(raw.serviceIds, `${path}.serviceIds`);
   return a;
 }

@@ -63,7 +63,10 @@ export function setStatus({ serviceId, optOutId, status, method, note }, now = n
   return updateLocal([K.registry, K.userState, K.history], (v) => {
     const { service, optOut } = requireServiceOptOut(v[K.registry], serviceId, optOutId);
     const userState = setOptOutStatus(v[K.userState], service, optOut, { status, method, note }, now);
-    const entry = makeHistoryEntry({ serviceId, optOutId, action: method, outcome: status, detail: note }, now);
+    const entry = makeHistoryEntry(
+      { serviceId, optOutId, action: method, outcome: status, detail: note },
+      now,
+    );
     return {
       set: { [K.userState]: userState, [K.history]: appendHistory(v[K.history], entry) },
       result: userState,

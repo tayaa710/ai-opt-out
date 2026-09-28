@@ -21,7 +21,7 @@ import * as about from './views/about.js';
 
 const ROUTES = {
   welcome: { view: welcome, focus: true },
-  overview: { view: overview, nav: 'Overview', icon: 'overview' },
+  overview: { view: overview, nav: 'Overview', icon: 'home' },
   services: { view: services, nav: 'Services', icon: 'grid' },
   service: { view: service, navParent: 'services' },
   letters: { view: letters, nav: 'Letters', icon: 'letter' },
@@ -104,7 +104,13 @@ function sidebar(route, state) {
               },
               icon(def.icon),
               h('span', { class: 'd-nav__label' }, def.nav),
-              name === 'alerts' && unread > 0 && h('span', { class: 'nt-count', 'aria-label': `${unread} unread` }, unread > 99 ? '99+' : String(unread)),
+              name === 'alerts' &&
+                unread > 0 &&
+                h(
+                  'span',
+                  { class: 'nt-count', 'aria-label': `${unread} unread` },
+                  unread > 99 ? '99+' : String(unread),
+                ),
             ),
           );
         }),
@@ -120,11 +126,7 @@ function sidebar(route, state) {
 }
 
 function focusTopbar() {
-  return h(
-    'header',
-    { class: 'd-focusbar' },
-    brand({ size: 30 }),
-  );
+  return h('header', { class: 'd-focusbar' }, brand({ size: 30 }));
 }
 
 function skipLink() {
@@ -176,7 +178,9 @@ function errorBody(error) {
       iconName: 'alertCircle',
       title: 'NoTrain couldn’t load',
       text: `The extension may be restarting. Your settings and progress are safe. (${error?.message ?? 'Unknown error'})`,
-      actions: [button('Try again', { variant: 'primary', iconName: 'refresh', onClick: () => store.reload() })],
+      actions: [
+        button('Try again', { variant: 'primary', iconName: 'refresh', onClick: () => store.reload() }),
+      ],
     }),
   );
 }
@@ -230,8 +234,20 @@ function renderApp({ navigated }) {
     focusMode ? focusTopbar() : sidebar(route, state),
     h(
       'main',
-      { class: 'd-main', id: 'main', tabindex: '-1', 'aria-busy': snap.status === 'loading' && !state ? 'true' : 'false' },
-      h('div', { class: ['d-content', def?.view.wide && 'd-content--wide', focusMode && 'd-content--focus'], 'data-route': route.name }, body),
+      {
+        class: 'd-main',
+        id: 'main',
+        tabindex: '-1',
+        'aria-busy': snap.status === 'loading' && !state ? 'true' : 'false',
+      },
+      h(
+        'div',
+        {
+          class: ['d-content', def?.view.wide && 'd-content--wide', focusMode && 'd-content--focus'],
+          'data-route': route.name,
+        },
+        body,
+      ),
     ),
   );
 

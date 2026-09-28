@@ -44,7 +44,10 @@
           },
           {
             "action": "setToggle",
-            "target": { "role": "switch", "text": ["Product Improvement and Training", "Data Training Settings"] },
+            "target": {
+              "role": "switch",
+              "text": ["Product Improvement and Training", "Data Training Settings"]
+            },
             "state": "off",
             "timeoutMs": 10000,
             "description": "Turning off “Product Improvement and Training”"
@@ -58,7 +61,10 @@
           },
           {
             "action": "assertToggle",
-            "target": { "role": "switch", "text": ["Product Improvement and Training", "Data Training Settings"] },
+            "target": {
+              "role": "switch",
+              "text": ["Product Improvement and Training", "Data Training Settings"]
+            },
             "state": "off",
             "timeoutMs": 10000
           }

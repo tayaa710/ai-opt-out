@@ -121,7 +121,8 @@ export function installChromeMock(options = {}) {
 
   const alarmsMap = new Map();
   const cookieJar = new Map();
-  for (const c of options.cookies ?? []) cookieJar.set(`${new URL(c.url).origin}|${c.name}`, c.value ?? 'secret');
+  for (const c of options.cookies ?? [])
+    cookieJar.set(`${new URL(c.url).origin}|${c.name}`, c.value ?? 'secret');
 
   const registered = new Map();
   const notifications = new Map();
@@ -218,7 +219,8 @@ export function installChromeMock(options = {}) {
       async remove({ permissions = [], origins = [] } = {}) {
         const removed = { permissions: [], origins: [] };
         for (const p of permissions) {
-          if ((manifest.permissions ?? []).includes(p)) throw new Error('You cannot remove required permissions.');
+          if ((manifest.permissions ?? []).includes(p))
+            throw new Error('You cannot remove required permissions.');
           if (granted.permissions.delete(p)) removed.permissions.push(p);
         }
         for (const o of origins) if (granted.origins.delete(o)) removed.origins.push(o);
@@ -396,7 +398,11 @@ export function tick(ms = 0) {
 
 /** Sender objects as chrome.runtime.onMessage would provide them. */
 export const senders = {
-  popup: () => ({ id: EXTENSION_ID, url: `${EXTENSION_BASE}popup/popup.html`, origin: EXTENSION_BASE.slice(0, -1) }),
+  popup: () => ({
+    id: EXTENSION_ID,
+    url: `${EXTENSION_BASE}popup/popup.html`,
+    origin: EXTENSION_BASE.slice(0, -1),
+  }),
   dashboard: () => ({
     id: EXTENSION_ID,
     url: `${EXTENSION_BASE}dashboard/dashboard.html#/overview`,
@@ -404,5 +410,8 @@ export const senders = {
     frameId: 0,
   }),
   content: (tabId, url, frameId = 0) => ({ id: EXTENSION_ID, url, tab: { id: tabId, url }, frameId }),
-  otherExtension: () => ({ id: 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz', url: 'chrome-extension://zzzz/page.html' }),
+  otherExtension: () => ({
+    id: 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz',
+    url: 'chrome-extension://zzzz/page.html',
+  }),
 };

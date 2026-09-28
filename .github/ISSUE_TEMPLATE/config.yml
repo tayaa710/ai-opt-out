@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/tayaa710/ai-opt-out/security/advisories/new
+    about: Please report security issues privately (see SECURITY.md), not as public issues.
+  - name: Propose a change to the /.well-known/ai-training-opt-out standard
+    url: https://github.com/tayaa710/ai-opt-out/blob/main/spec/well-known-ai-training-opt-out.md
+    about: Read the draft first, then open a discussion or pull request against spec/.

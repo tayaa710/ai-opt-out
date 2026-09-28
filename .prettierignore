@@ -17,3 +17,7 @@ site/privacy.html
 
 # Policy snapshots written by scripts/policy-watch.mjs (normalised page text, not source)
 registry/snapshots/
+
+# Test fixtures mimic third-party pages byte for byte (whitespace and markup are part of the test)
+tests/fixtures/
+tests/unit/fixtures/

@@ -1,6 +1,6 @@
 {
   "formatVersion": 1,
-  "generatedAt": "2026-09-28T17:49:06.144Z",
+  "generatedAt": "2026-09-28T17:58:10.893Z",
   "services": [
     {
       "id": "adobe",
@@ -120,6 +120,182 @@
         {
           "title": "Adobe Privacy Policy",
           "url": "https://www.adobe.com/privacy/policy.html",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "amazon-alexa",
+      "name": "Amazon Alexa",
+      "company": "Amazon.com, Inc.",
+      "category": "ai-assistant",
+      "brandColor": "#00caff",
+      "domains": [
+        "alexa.amazon.com"
+      ],
+      "summary": "Amazon uses your Alexa and Alexa+ interactions, including voice recordings, transcripts and typed requests, to train its models, with a small sample reviewed by people. You can limit the use of voice recordings.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "voice",
+          "chats",
+          "messages",
+          "activity"
+        ],
+        "details": "Amazon says it uses Alexa interactions (voice recordings, text transcripts, typed requests and other interactions) to improve Alexa and to train its machine-learning models, including supervised learning in which people review a very small sample of requests. It may also use Alexa interactions to improve other Amazon services, such as shopping search. The “Help improve Alexa” settings (use of voice recordings, and use of messages to improve transcriptions) are on by default. Turning them off limits how your voice recordings are used to develop features and be reviewed, but Amazon still keeps text transcripts and typed requests to improve its services. In March 2025 Amazon removed the on-device “Do Not Send Voice Recordings” option from the few Echo models that had it, so requests are processed in Amazon's cloud. Amazon says deleting your data does not remove it from systems already trained on it.",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "The same Alexa Privacy settings apply. You can also object to processing under GDPR through the privacy contact listed in your country's Amazon privacy notice.",
+          "UK": "You can object to processing under UK GDPR through Amazon's EU privacy team (eu-privacy@amazon.co.uk)."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "help-improve-alexa",
+          "type": "toggle",
+          "title": "Turn off “Help improve Alexa” (use of voice recordings)",
+          "description": "The Alexa Privacy settings that control whether your voice recordings and messages are used to improve Amazon's services.",
+          "url": "https://www.amazon.com/alexaprivacysettings",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open the Alexa app and go to More, then Alexa Privacy (or open the link on a computer; outside the US use your own country's Amazon site).",
+            "Choose Manage Your Alexa Data.",
+            "Under Help improve Alexa, turn off the use of voice recordings.",
+            "Also turn off “Use messages to improve transcriptions” for each person listed."
+          ],
+          "effect": "Your future voice recordings are no longer used to develop new features or manually reviewed. Amazon may still use text transcripts and other interaction data to improve its services, and past training is not undone."
+        },
+        {
+          "id": "dont-save-recordings",
+          "type": "toggle",
+          "title": "Choose not to save Alexa voice recordings",
+          "description": "Deletes recordings after each request is processed, which limits what can be reused later.",
+          "url": "https://www.amazon.com/alexaprivacysettings",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "In Alexa Privacy, open Manage Your Alexa Data.",
+            "In the voice recordings section, choose not to save recordings.",
+            "Confirm. Existing recordings are deleted."
+          ],
+          "effect": "Voice recordings are deleted after Alexa processes each request, and existing ones are erased. Text transcripts and typed requests are still kept for 30 days and may be used to improve Amazon's services. Voice ID stops working."
+        }
+      ],
+      "policyUrls": [
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=GVP69FUJ48X9DK8V",
+        "https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ"
+      ],
+      "sources": [
+        {
+          "title": "Alexa, Echo Devices, and Your Privacy | Amazon Help",
+          "url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=GVP69FUJ48X9DK8V",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Amazon.com Privacy Notice",
+          "url": "https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Alexa Privacy Settings | Amazon",
+          "url": "https://www.amazon.com/alexaprivacysettings",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "canva",
+      "name": "Canva",
+      "company": "Canva Pty Ltd",
+      "category": "creative",
+      "brandColor": "#00c4cc",
+      "domains": [
+        "canva.com"
+      ],
+      "summary": "Canva only uses your designs and uploads to improve its AI if your privacy settings allow it, and says this is off unless you opt in. Teams, Business, Enterprise and Education content is never used.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_out",
+        "dataTypes": [
+          "images",
+          "creative-works",
+          "activity"
+        ],
+        "details": "Canva's privacy policy says it may analyse your activity, content, media uploads and related data to train its algorithms, models and AI products, subject to the choices in your privacy settings. Canva states it only uses your content (text in your designs and media you upload) to improve AI-powered features, or lets trusted partners do so, when your privacy settings allow it, and its announcements say this is off by default and needs you to opt in. Some third-party guides describe it as on by default for Free and Pro users, so it is worth checking your own settings. Content from Canva Teams, Business, Enterprise and Education accounts is not used, and the setting cannot be turned on for them. Canva Creators (template contributors) are handled separately: they can opt out of their contributed content being used, and those who stay in are paid.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "privacy-settings-ai",
+          "type": "toggle",
+          "title": "Check that Canva's AI training privacy setting is off",
+          "description": "Personal (Free and Pro) accounts have a privacy control for using your content to improve AI-powered features. It should be off unless you opted in.",
+          "url": "https://www.canva.com/settings/privacy-preferences",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Canva.",
+            "Open Settings, then Privacy settings (the link goes straight there).",
+            "Find the controls for using your content to improve AI-powered features and make sure they are turned off.",
+            "Canva Creators: manage AI training for your contributed templates in your Creator settings."
+          ],
+          "effect": "Keeps Canva and its partners from using your designs and uploads to improve AI features from now on. It does not remove content already used."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@canva.com"
+      },
+      "policyUrls": [
+        "https://www.canva.com/policies/privacy-policy/",
+        "https://www.canva.com/help/manage-privacy-settings/"
+      ],
+      "sources": [
+        {
+          "title": "Manage your privacy preferences | Canva Help Center",
+          "url": "https://www.canva.com/help/manage-privacy-settings/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Canva",
+          "url": "https://www.canva.com/policies/privacy-policy/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Canva Shield: Safe, fair and secure AI | Canva Newsroom",
+          "url": "https://www.canva.com/newsroom/news/safe-ai-canva-shield/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "AI Product Terms | Canva",
+          "url": "https://www.canva.com/policies/ai-product-terms/",
           "accessed": "2026-09-28"
         }
       ],
@@ -657,6 +833,76 @@
       ]
     },
     {
+      "id": "dropbox",
+      "name": "Dropbox",
+      "company": "Dropbox, Inc.",
+      "category": "productivity",
+      "brandColor": "#0061fe",
+      "domains": [
+        "dropbox.com"
+      ],
+      "summary": "Dropbox says it doesn't use your files to train AI models, and its third-party AI partners aren't allowed to either. One optional setting stops your content being sent to third-party AI features at all.",
+      "training": {
+        "trainsOnUserData": "no",
+        "defaultState": "not_applicable",
+        "dataTypes": [],
+        "details": "Dropbox states that it does not use customer files to train AI models, and that the third-party AI partners behind some of its features (such as OpenAI) may not train on data sent to them from Dropbox; Dropbox has said that data is deleted from partners' servers within 30 days. A separate “Third-party AI” setting controls whether Dropbox features that rely on outside AI partners can process your content at all. It was switched on by default for eligible accounts in late 2023, which caused confusion; Dropbox said content is only sent when you actively use an AI feature. NoTrain could not re-read Dropbox's AI pages directly when this entry was checked, so see the linked sources for the latest wording.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "no-training",
+          "type": "none",
+          "title": "Nothing to do: Dropbox doesn't train AI on your files",
+          "description": "There is no training to opt out of. You can optionally stop third-party AI features from processing your content.",
+          "url": "https://www.dropbox.com/account",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "No action is needed.",
+            "Optional: sign in on dropbox.com, click your avatar, then Settings.",
+            "Open the Third-party AI tab and turn the toggle off if you don't want partner AI features to process your content."
+          ],
+          "effect": "Dropbox does not train on your files either way. Turning off third-party AI only stops partner-powered AI features from processing your content (those features may then stop working)."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@dropbox.com"
+      },
+      "policyUrls": [
+        "https://www.dropbox.com/privacy"
+      ],
+      "sources": [
+        {
+          "title": "Dropbox Privacy Policy",
+          "url": "https://www.dropbox.com/privacy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Dropbox AI Principles",
+          "url": "https://www.dropbox.com/ai-principles",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How to turn third-party AI on or off | Dropbox Help",
+          "url": "https://help.dropbox.com/account-settings/third-party-ai",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
       "id": "facebook",
       "name": "Facebook",
       "company": "Meta Platforms",
@@ -772,6 +1018,85 @@
         {
           "title": "Seus dados agora podem treinar a IA da Meta — veja como impedir | TechTudo (Brazil)",
           "url": "https://www.techtudo.com.br/noticias/2025/12/seus-dados-agora-podem-treinar-a-ia-da-meta-veja-como-impedir-edapps.ghtml",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "figma",
+      "name": "Figma",
+      "company": "Figma, Inc.",
+      "category": "creative",
+      "brandColor": "#a259ff",
+      "domains": [
+        "figma.com"
+      ],
+      "summary": "Figma may train its AI on file content from teams on Starter and Professional plans, which are opted in by default. Organization and Enterprise plans are opted out by default. Only admins can change it.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "files",
+          "images",
+          "comments",
+          "creative-works"
+        ],
+        "details": "Figma added a team-level “content training” setting that took effect on 15 August 2024. When it is on, Figma may use customer content (file content created in or uploaded to Figma, such as layer names and properties, text and images, comments and annotations) to train its AI models. Starter and Professional plans are opted in by default; Organization and Enterprise plans are opted out by default. Only team or organization admins can change the setting, so members need to ask their admin. Turning it off stops new content and edits being used, but does not undo earlier training. The setting is separate from whether AI features are available. Figma's documentation ties the setting to teams and organizations; how it applies to drafts that are not in a team is not clearly documented.",
+        "since": "2024-08-15",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "content-training-setting",
+          "type": "toggle",
+          "title": "Turn off AI content training for your team (admins)",
+          "description": "A team or organization setting. If you are not an admin, ask whoever manages your Figma team.",
+          "url": "https://www.figma.com/files/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Starter or Professional: in the file browser, open your team, click the menu next to the team name and choose to view its settings.",
+            "Open the Settings tab, scroll to the AI section and select Manage AI settings.",
+            "Turn content training off.",
+            "Organization or Enterprise: click Admin in the sidebar, open the Settings tab and check content training in the AI section (it is off unless someone turned it on).",
+            "Repeat for every team you administer."
+          ],
+          "effect": "Stops new content and edits in that team or organization being used to train Figma's AI models. Content already used is not removed. AI features keep working."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@figma.com"
+      },
+      "policyUrls": [
+        "https://www.figma.com/privacy/",
+        "https://help.figma.com/hc/en-us/articles/17725942479127-Manage-AI-settings-and-content-training-for-your-team-or-organization"
+      ],
+      "sources": [
+        {
+          "title": "Manage AI settings and content training for your team or organization | Figma Learn",
+          "url": "https://help.figma.com/hc/en-us/articles/17725942479127-Manage-AI-settings-and-content-training-for-your-team-or-organization",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Building Figma AI | Figma",
+          "url": "https://www.figma.com/ai/our-approach/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Meet Figma AI: Empowering Designers with Intelligent Tools | Figma Blog",
+          "url": "https://www.figma.com/blog/introducing-figma-ai/",
           "accessed": "2026-09-28"
         }
       ],
@@ -2923,6 +3248,157 @@
       ]
     },
     {
+      "id": "stack-overflow",
+      "name": "Stack Overflow",
+      "company": "Stack Overflow (Stack Exchange, Inc.)",
+      "category": "developer",
+      "brandColor": "#f48024",
+      "domains": [
+        "stackoverflow.com",
+        "stackexchange.com"
+      ],
+      "summary": "Questions, answers and comments you post publicly on Stack Overflow are licensed to AI companies such as OpenAI and Google for model training. There is no opt-out, and deleting posts is restricted.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "no_choice",
+        "dataTypes": [
+          "posts",
+          "comments",
+          "code"
+        ],
+        "details": "Content you contribute publicly to Stack Overflow and other Stack Exchange sites is published under a Creative Commons licence (CC BY-SA). Since 2024 Stack Overflow has also licensed this content to AI developers through its OverflowAPI product, with partners including Google (announced February 2024) and OpenAI (May 2024), who use it to train and improve their models. There is no setting to exclude your posts. Site rules limit deleting or defacing posts that others have answered or voted on, and moderators can restore them. Deleting your account removes your profile, but your public posts generally stay on the site without your name.",
+        "since": "2024-02",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "You can send an objection or erasure request to privacy@stackoverflow.com under GDPR, but public posts are published under CC BY-SA and the outcome for AI licensing is uncertain.",
+          "UK": "You can send an objection or erasure request to privacy@stackoverflow.com under UK GDPR, but public posts are published under CC BY-SA and the outcome for AI licensing is uncertain."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "no-opt-out",
+          "type": "none",
+          "title": "No opt-out: public posts are licensed for AI training",
+          "description": "Stack Overflow offers no setting to keep your public contributions out of AI data licensing.",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "There is no setting to stop your public posts being licensed for AI training.",
+            "Avoid posting content you don't want reused; posts are licensed CC BY-SA.",
+            "In the EU or UK you can still send an objection letter to privacy@stackoverflow.com, though it may not change how public posts are licensed."
+          ],
+          "effect": "Nothing stops licensing of content you have already posted publicly. An objection letter creates a record but may not change the outcome."
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacy@stackoverflow.com"
+      },
+      "policyUrls": [
+        "https://stackoverflow.com/legal/privacy-policy",
+        "https://stackoverflow.com/legal/terms-of-service/public"
+      ],
+      "sources": [
+        {
+          "title": "Our partnership with OpenAI | Meta Stack Exchange",
+          "url": "https://meta.stackexchange.com/questions/399619/our-partnership-with-openai",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "OverflowAPI: API solutions | Stack Overflow",
+          "url": "https://stackoverflow.co/api-solutions/",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Public Network Terms of Service | Stack Overflow",
+          "url": "https://stackoverflow.com/legal/terms-of-service/public",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Stack Overflow",
+          "url": "https://stackoverflow.com/legal/privacy-policy",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "substack",
+      "name": "Substack",
+      "company": "Substack Inc.",
+      "category": "creative",
+      "brandColor": "#ff6719",
+      "domains": [
+        "substack.com"
+      ],
+      "summary": "Public Substack posts are open to AI crawlers unless the writer turns on “Block AI training” for the publication. Only publication owners can change it; readers and commenters can't.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "posts"
+        ],
+        "details": "Each Substack publication has a “Block AI training” setting that is off by default. When it is on, Substack adds rules to the publication's robots.txt asking AI crawlers (for example OpenAI's GPTBot, Anthropic's ClaudeBot, PerplexityBot and Google-Extended) not to collect the publication's content. It is only a request: crawlers that ignore robots.txt are not stopped, and it does not remove content already collected. The setting applies per publication and can only be changed by the publication's owner or admins, so readers, commenters and guest contributors cannot opt out on their own. We did not find a Substack statement about training its own AI models on publications, so this entry focuses on third-party AI training.",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "block-ai-training",
+          "type": "toggle",
+          "title": "Turn on “Block AI training” for your publication",
+          "description": "A publication-level setting for writers. Its settings page lives on your own publication address (yourname.substack.com/publish/settings).",
+          "url": "https://substack.com/home",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to Substack.",
+            "Open your publication's dashboard and go to Settings (address: yourname.substack.com/publish/settings).",
+            "Turn on “Block AI training”.",
+            "Repeat for each publication you run."
+          ],
+          "effect": "Adds robots.txt rules asking AI crawlers not to use your publication for training. Crawlers that ignore robots.txt are not blocked, content already collected is not removed, and your posts may show up less in AI tools."
+        }
+      ],
+      "policyUrls": [
+        "https://substack.com/privacy",
+        "https://substack.com/tos"
+      ],
+      "sources": [
+        {
+          "title": "Substack Privacy Policy",
+          "url": "https://substack.com/privacy",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Substack Terms of Use",
+          "url": "https://substack.com/tos",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
       "id": "threads",
       "name": "Threads",
       "company": "Meta Platforms",
@@ -3263,6 +3739,182 @@
         {
           "title": "Tumblr and WordPress to Sell Users’ Data to Train AI Tools | 404 Media",
           "url": "https://www.404media.co/tumblr-and-wordpress-to-sell-users-data-to-train-ai-tools/",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    },
+    {
+      "id": "wordpress-com",
+      "name": "WordPress.com",
+      "company": "Automattic Inc.",
+      "category": "creative",
+      "brandColor": "#3858e9",
+      "domains": [
+        "wordpress.com"
+      ],
+      "summary": "Automattic may share public WordPress.com site content with licensed partners, including companies that train AI models, unless you tick “Prevent third-party sharing” for each of your sites.",
+      "training": {
+        "trainsOnUserData": "conditional",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "posts",
+          "images",
+          "comments"
+        ],
+        "details": "Automattic, which runs WordPress.com, shares content from public WordPress.com sites with “our licensed network of content and research partners, including those that train AI models”. Each site has a “Prevent third-party sharing” option in its visibility settings; public sites are shared unless the owner ticks it. Sites set to discourage search engines are treated as opted out automatically, and the option only appears for public sites. The setting is per site, so it has to be set on every public site you own. It only covers sharing by Automattic; it cannot stop other AI crawlers that ignore your site's preferences.",
+        "since": "2024-02",
+        "retroactiveRemoval": false
+      },
+      "optOuts": [
+        {
+          "id": "prevent-third-party-sharing",
+          "type": "toggle",
+          "title": "Tick “Prevent third-party sharing” for each site",
+          "description": "A per-site checkbox in the site's visibility (privacy) settings. When ticked, the site is opted out.",
+          "url": "https://wordpress.com/sites/settings/site",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Sign in to WordPress.com.",
+            "Pick your site if asked, then open its site settings and find Site visibility.",
+            "Tick “Prevent third-party sharing for this site” (older screens show your site's address instead of “this site”).",
+            "Click Save.",
+            "Repeat for every public site you own."
+          ],
+          "effect": "Automattic stops sharing that site's content with its licensed content and research partners, including AI companies, from now on. Content shared earlier is not recalled.",
+          "automation": {
+            "confidence": "experimental",
+            "hostPermissions": [
+              "https://wordpress.com/*",
+              "https://my.wordpress.com/*"
+            ],
+            "loginIndicators": [
+              {
+                "selector": "input#usernameOrEmail"
+              },
+              {
+                "selector": ".login__form"
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "timeoutMs": 60000,
+                "description": "Waiting for the site's visibility settings (pick a site if asked)"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "role": "checkbox",
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "state": "on",
+                "timeoutMs": 5000,
+                "description": "Ticking “Prevent third-party sharing”"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Save"
+                  ],
+                  "within": {
+                    "selector": ".settings-site__privacy"
+                  }
+                },
+                "optional": true,
+                "description": "Saving"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Save"
+                  ],
+                  "within": {
+                    "selector": "form",
+                    "text": [
+                      "Prevent third-party sharing"
+                    ]
+                  }
+                },
+                "optional": true,
+                "description": "Saving"
+              },
+              {
+                "action": "wait",
+                "ms": 2000,
+                "description": "Waiting for the change to save"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "timeoutMs": 60000
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "role": "checkbox",
+                  "text": [
+                    "Prevent third-party sharing"
+                  ]
+                },
+                "state": "on",
+                "timeoutMs": 5000
+              }
+            ]
+          }
+        }
+      ],
+      "contacts": {
+        "privacyEmail": "privacypolicyupdates@automattic.com",
+        "postalAddress": "Aut O'Mattic A8C Ireland Ltd., Grand Canal Dock, 25 Herbert Place, Dublin, D02 AY86, Ireland"
+      },
+      "policyUrls": [
+        "https://automattic.com/privacy/",
+        "https://wordpress.com/support/privacy-settings/make-your-website-public/"
+      ],
+      "sources": [
+        {
+          "title": "Make your website public: Prevent third-party sharing | WordPress.com Support",
+          "url": "https://wordpress.com/support/privacy-settings/make-your-website-public/#prevent-third-party-sharing",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "WordPress.com site visibility settings source (Automattic/wp-calypso, privacy-form.tsx)",
+          "url": "https://github.com/Automattic/wp-calypso/blob/trunk/client/dashboard/sites/settings-site-visibility/privacy-form.tsx",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "Privacy Policy | Automattic",
+          "url": "https://automattic.com/privacy/",
           "accessed": "2026-09-28"
         }
       ],
@@ -3641,5 +4293,254 @@
       ]
     }
   ],
-  "crawlers": []
+  "crawlers": [
+    {
+      "token": "AI2Bot",
+      "operator": "Ai2 (Allen Institute for AI)",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://allenai.org/crawler",
+      "notes": "Crawls selected sites to collect data for training Ai2's open language models."
+    },
+    {
+      "token": "Ai2Bot-Dolma",
+      "operator": "Ai2 (Allen Institute for AI)",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://allenai.org/crawler",
+      "notes": "Ai2 token for its open training data (the Dolma dataset). Block it together with AI2Bot."
+    },
+    {
+      "token": "Amazonbot",
+      "operator": "Amazon",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developer.amazon.com/amazonbot",
+      "notes": "Used to improve Amazon products and services, such as Alexa answers. Amazon says the data may also be used to train its AI models."
+    },
+    {
+      "token": "Claude-SearchBot",
+      "operator": "Anthropic",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Indexes pages to improve the quality of Claude's search results. Blocking it may reduce how often your site appears in Claude's answers."
+    },
+    {
+      "token": "Claude-User",
+      "operator": "Anthropic",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Fetches a page when a Claude user asks a question that needs it. Blocking it stops Claude retrieving your pages for users."
+    },
+    {
+      "token": "ClaudeBot",
+      "operator": "Anthropic",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Collects public web content that may be used to train Anthropic's Claude models. Older tokens such as anthropic-ai and Claude-Web are no longer documented by Anthropic."
+    },
+    {
+      "token": "Applebot-Extended",
+      "operator": "Apple",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://support.apple.com/en-us/119829",
+      "notes": "A control token, not a separate crawler. It tells Apple not to use pages crawled by Applebot to train its foundation models (Apple Intelligence). Your site stays in Siri and Spotlight results."
+    },
+    {
+      "token": "Bytespider",
+      "operator": "ByteDance",
+      "purpose": "training",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "notes": "ByteDance (TikTok's owner) publishes no documentation for this crawler, which collects data for its AI models. It has been widely reported to ignore robots.txt, so server-level blocking may be needed."
+    },
+    {
+      "token": "cohere-ai",
+      "operator": "Cohere",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "notes": "Cohere has not published crawler documentation. Community trackers report this agent fetches pages in response to user prompts in Cohere products."
+    },
+    {
+      "token": "cohere-training-data-crawler",
+      "operator": "Cohere",
+      "purpose": "training",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://github.com/ai-robots-txt/ai.robots.txt",
+      "notes": "Reported by community trackers to download web pages as training data for Cohere's language models. Cohere has not published documentation for it."
+    },
+    {
+      "token": "CCBot",
+      "operator": "Common Crawl",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://commoncrawl.org/ccbot",
+      "notes": "Builds Common Crawl's free, public web archive, one of the most widely used sources of AI training data. Blocking it keeps new crawls of your site out of future datasets."
+    },
+    {
+      "token": "Diffbot",
+      "operator": "Diffbot",
+      "purpose": "mixed",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://docs.diffbot.com/docs/does-crawl-respect-robotstxt",
+      "notes": "Extracts structured data for Diffbot's Knowledge Graph and for customers' own crawls, which are used for AI and analytics. Whether robots.txt is honoured can depend on the customer's crawl settings."
+    },
+    {
+      "token": "DuckAssistBot",
+      "operator": "DuckDuckGo",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://duckduckgo.com/duckduckgo-help-pages/results/duckassistbot/",
+      "notes": "Fetches pages to generate DuckAssist AI answers in DuckDuckGo search. DuckDuckGo says the data is not used to train AI models."
+    },
+    {
+      "token": "Google-Extended",
+      "operator": "Google",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers",
+      "notes": "A control token, not a separate crawler. It stops Google using your pages to train Gemini models and for grounding in Gemini apps and Vertex AI. It does not affect Google Search or AI Overviews. Never block Googlebot for this."
+    },
+    {
+      "token": "FacebookBot",
+      "operator": "Meta",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/bot/",
+      "notes": "Meta says it crawls public pages to improve language models for its speech recognition technology. Link previews use facebookexternalhit, which is not listed here."
+    },
+    {
+      "token": "Meta-ExternalAgent",
+      "operator": "Meta",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+      "notes": "Meta says it crawls the web for uses such as training AI models or improving products by indexing content directly."
+    },
+    {
+      "token": "Meta-ExternalFetcher",
+      "operator": "Meta",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+      "notes": "Fetches individual links when Meta AI users ask for them. Meta says that because these fetches are user-initiated they may bypass robots.txt."
+    },
+    {
+      "token": "Meta-WebIndexer",
+      "operator": "Meta",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers/",
+      "notes": "Indexes pages to improve Meta AI search results so Meta AI can cite and link to your content. Blocking it may reduce citations in Meta AI."
+    },
+    {
+      "token": "MistralAI-Index",
+      "operator": "Mistral AI",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.mistral.ai/robots",
+      "notes": "Indexes pages for Mistral's search, which helps answer questions in its assistant. Mistral says this content is not used for generative AI training of any kind."
+    },
+    {
+      "token": "MistralAI-Training",
+      "operator": "Mistral AI",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.mistral.ai/robots",
+      "notes": "Crawls web content to build datasets for training Mistral's generative AI models. Mistral says it is not used for search indexing or live answers."
+    },
+    {
+      "token": "MistralAI-User",
+      "operator": "Mistral AI",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.mistral.ai/robots",
+      "notes": "Visits a page when a user's question in Mistral's assistant needs it and links the source. Mistral says it is not used for automatic crawling or for training."
+    },
+    {
+      "token": "Kimi-SearchBot",
+      "operator": "Moonshot AI",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://www.kimi.ai/policies/kimi-crawlers",
+      "notes": "Indexes pages for search results in Moonshot AI's Kimi assistant."
+    },
+    {
+      "token": "KimiBot",
+      "operator": "Moonshot AI",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://www.kimi.ai/policies/kimi-crawlers",
+      "notes": "Collects web content that may be used to train Moonshot AI's Kimi models."
+    },
+    {
+      "token": "ChatGPT-User",
+      "operator": "OpenAI",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://developers.openai.com/api/docs/bots",
+      "notes": "Visits a page when a ChatGPT user or custom GPT asks for it. OpenAI says robots.txt rules may not apply to these user-initiated requests, and that this agent is not used for training."
+    },
+    {
+      "token": "GPTBot",
+      "operator": "OpenAI",
+      "purpose": "training",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.openai.com/api/docs/bots",
+      "notes": "Collects public web content that may be used to train OpenAI's generative AI models. Blocking it does not remove you from ChatGPT search results (that is OAI-SearchBot)."
+    },
+    {
+      "token": "OAI-SearchBot",
+      "operator": "OpenAI",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://developers.openai.com/api/docs/bots",
+      "notes": "Indexes sites so they can appear and be linked in ChatGPT search results. OpenAI says it is not used to train its models. Blocking it can stop your pages being cited in ChatGPT."
+    },
+    {
+      "token": "Perplexity-User",
+      "operator": "Perplexity",
+      "purpose": "user-triggered",
+      "respectsRobotsTxt": false,
+      "docsUrl": "https://docs.perplexity.ai/guides/bots",
+      "notes": "Fetches pages when a Perplexity user asks a question. Perplexity says it generally ignores robots.txt because the fetch was requested by a user."
+    },
+    {
+      "token": "PerplexityBot",
+      "operator": "Perplexity",
+      "purpose": "search",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://docs.perplexity.ai/guides/bots",
+      "notes": "Indexes sites so Perplexity can surface and link them in its answers; Perplexity says it is not used to crawl content for AI foundation models. Cloudflare reported in 2025 that Perplexity also used undeclared crawlers to get around blocks."
+    },
+    {
+      "token": "Timpibot",
+      "operator": "Timpi",
+      "purpose": "training",
+      "respectsRobotsTxt": "unknown",
+      "docsUrl": "https://timpi.io/",
+      "notes": "Crawler for Timpi's decentralised search index; community trackers report the data is offered for training AI models. No crawler documentation found."
+    },
+    {
+      "token": "omgili",
+      "operator": "Webz.io",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://webz.io/blog/web-data/what-is-the-omgili-bot-and-why-is-it-crawling-your-website/",
+      "notes": "Collects web data that Webz.io sells to other companies, including for AI model training."
+    },
+    {
+      "token": "omgilibot",
+      "operator": "Webz.io",
+      "purpose": "mixed",
+      "respectsRobotsTxt": true,
+      "docsUrl": "https://webz.io/blog/web-data/what-is-the-omgili-bot-and-why-is-it-crawling-your-website/",
+      "notes": "Older Webz.io (Omgili) user agent. Block it together with omgili."
+    }
+  ]
 }

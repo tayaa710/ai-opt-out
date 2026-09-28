@@ -12,7 +12,13 @@
 
 import { STORAGE_KEYS } from './constants.js';
 import { SESSION_KEYS, UserError, readLocal, readSession, updateLocal, updateSession } from './storage.js';
-import { detectionOrigins, hasPermissions, isDeclared, manifestHostPatterns, originPattern } from './permissions.js';
+import {
+  detectionOrigins,
+  hasPermissions,
+  isDeclared,
+  manifestHostPatterns,
+  originPattern,
+} from './permissions.js';
 import { findService, trackServices } from './user-state.js';
 
 /** Grant events this recent count as part of the current detection. */
@@ -30,7 +36,11 @@ const waiters = new Set();
  * @param {{ permissions?: string[], origins?: string[] }} added
  */
 export async function recordPermissionGrant(added, now = Date.now()) {
-  const entry = { at: now, permissions: [...(added?.permissions ?? [])], origins: [...(added?.origins ?? [])] };
+  const entry = {
+    at: now,
+    permissions: [...(added?.permissions ?? [])],
+    origins: [...(added?.origins ?? [])],
+  };
   await updateSession(SESSION_KEYS.grants, [], (log) => ({
     value: [...(Array.isArray(log) ? log : []).filter((e) => now - e.at < GRANT_LOG_TTL_MS), entry],
   }));

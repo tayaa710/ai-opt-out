@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "Example Code Host",
+  "trains_on_user_content": "yes",
+  "default": "opted_out",
+  "opt_out_url": "https://code.example.com/settings/copilot",
+  "policy_url": "https://code.example.com/site/privacy#model-training",
+  "data_types": ["code", "feedback"],
+  "regions": ["ALL"],
+  "last_updated": "2026-08-30"
+}

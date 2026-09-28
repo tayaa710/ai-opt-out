@@ -13,13 +13,23 @@ import {
   urlMatchesPattern,
 } from '../../extension/lib/permissions.js';
 import { installChromeMock } from './helpers/chrome-mock.mjs';
-import { TEST_MANIFEST, exampleService, makeService, rogueService, toggleOptOut } from './helpers/fixtures.mjs';
+import {
+  TEST_MANIFEST,
+  exampleService,
+  makeService,
+  rogueService,
+  toggleOptOut,
+} from './helpers/fixtures.mjs';
 
 const DECLARED = TEST_MANIFEST.optional_host_permissions;
 
 describe('match patterns', () => {
   test('parseMatchPattern', () => {
-    assert.deepEqual(parseMatchPattern('https://*.example.org/*'), { scheme: 'https', host: '*.example.org', path: '/*' });
+    assert.deepEqual(parseMatchPattern('https://*.example.org/*'), {
+      scheme: 'https',
+      host: '*.example.org',
+      path: '/*',
+    });
     assert.deepEqual(parseMatchPattern('<all_urls>'), { scheme: '*', host: '*', path: '/*' });
     assert.equal(parseMatchPattern('https://example.org'), null);
     assert.equal(parseMatchPattern('ftp://example.org/*'), null);
@@ -33,7 +43,10 @@ describe('match patterns', () => {
     assert.equal(urlMatchesPattern('https://a.b.example.org/x', 'https://*.example.org/*'), true);
     assert.equal(urlMatchesPattern('https://example.org/x', 'https://*.example.org/*'), true);
     assert.equal(urlMatchesPattern('https://notexample.org/x', 'https://*.example.org/*'), false);
-    assert.equal(urlMatchesPattern('https://example.org/settings/ai?x=1', 'https://example.org/settings/*'), true);
+    assert.equal(
+      urlMatchesPattern('https://example.org/settings/ai?x=1', 'https://example.org/settings/*'),
+      true,
+    );
     assert.equal(urlMatchesPattern('https://example.org/other', 'https://example.org/settings/*'), false);
     assert.equal(urlMatchesPattern('https://user:pw@chatgpt.com/', 'https://chatgpt.com/*'), false);
     assert.equal(urlMatchesPattern('not a url', 'https://chatgpt.com/*'), false);
@@ -58,10 +71,18 @@ describe('manifest intersection (remote registry cannot widen access)', () => {
     const opt = toggleOptOut({
       automation: {
         ...toggleOptOut().automation,
-        hostPermissions: ['https://chatgpt.com/*', 'https://evil.test/*', 'https://app.example.org/*', '<all_urls>'],
+        hostPermissions: [
+          'https://chatgpt.com/*',
+          'https://evil.test/*',
+          'https://app.example.org/*',
+          '<all_urls>',
+        ],
       },
     });
-    assert.deepEqual(allowedHostPatterns(opt, DECLARED), ['https://chatgpt.com/*', 'https://app.example.org/*']);
+    assert.deepEqual(allowedHostPatterns(opt, DECLARED), [
+      'https://chatgpt.com/*',
+      'https://app.example.org/*',
+    ]);
     assert.deepEqual(allowedHostPatterns(rogueService().optOuts[0], DECLARED), []);
     assert.deepEqual(allowedHostPatterns({ id: 'x' }, DECLARED), []);
   });

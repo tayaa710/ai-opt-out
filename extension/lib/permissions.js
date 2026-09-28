@@ -65,7 +65,8 @@ export function patternCovers(broad, narrow) {
   const b = parseMatchPattern(broad);
   const n = parseMatchPattern(narrow);
   if (!b || !n) return false;
-  const schemeOk = b.scheme === n.scheme || (b.scheme === '*' && (n.scheme === 'http' || n.scheme === 'https'));
+  const schemeOk =
+    b.scheme === n.scheme || (b.scheme === '*' && (n.scheme === 'http' || n.scheme === 'https'));
   if (!schemeOk) return false;
   let hostOk;
   if (b.host === '*') hostOk = true;

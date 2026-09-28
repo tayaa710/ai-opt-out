@@ -102,8 +102,13 @@ export function createStore() {
 
 /** Fill in missing pieces so views never need defensive checks everywhere. */
 function normalise(state) {
-  const registry = state.registry && Array.isArray(state.registry.services) ? state.registry : { services: [], crawlers: [] };
-  const services = registry.services.filter((s) => s && typeof s.id === 'string' && typeof s.name === 'string');
+  const registry =
+    state.registry && Array.isArray(state.registry.services)
+      ? state.registry
+      : { services: [], crawlers: [] };
+  const services = registry.services.filter(
+    (s) => s && typeof s.id === 'string' && typeof s.name === 'string',
+  );
   return {
     registry: { ...registry, services, crawlers: Array.isArray(registry.crawlers) ? registry.crawlers : [] },
     registryMeta: state.registryMeta ?? {},

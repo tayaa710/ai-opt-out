@@ -34,10 +34,7 @@
       "automation": {
         "confidence": "experimental",
         "hostPermissions": ["https://wordpress.com/*", "https://my.wordpress.com/*"],
-        "loginIndicators": [
-          { "selector": "input#usernameOrEmail" },
-          { "selector": ".login__form" }
-        ],
+        "loginIndicators": [{ "selector": "input#usernameOrEmail" }, { "selector": ".login__form" }],
         "steps": [
           {
             "action": "waitFor",
@@ -54,7 +51,11 @@
           },
           {
             "action": "click",
-            "target": { "role": "button", "text": ["Save"], "within": { "selector": ".settings-site__privacy" } },
+            "target": {
+              "role": "button",
+              "text": ["Save"],
+              "within": { "selector": ".settings-site__privacy" }
+            },
             "optional": true,
             "description": "Saving"
           },

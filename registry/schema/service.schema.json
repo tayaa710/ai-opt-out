@@ -104,7 +104,11 @@
           "type": "object",
           "additionalProperties": false,
           "patternProperties": {
-            "^(EU|UK|CH|US|US-CA|CA|AU|BR|IN|JP|OTHER)$": { "type": "string", "minLength": 5, "maxLength": 600 }
+            "^(EU|UK|CH|US|US-CA|CA|AU|BR|IN|JP|OTHER)$": {
+              "type": "string",
+              "minLength": 5,
+              "maxLength": 600
+            }
           }
         }
       }
@@ -280,7 +284,19 @@
       "properties": {
         "selector": { "type": "string", "minLength": 1 },
         "role": {
-          "enum": ["switch", "checkbox", "button", "link", "tab", "menuitem", "radio", "option", "dialog", "textbox", "combobox"]
+          "enum": [
+            "switch",
+            "checkbox",
+            "button",
+            "link",
+            "tab",
+            "menuitem",
+            "radio",
+            "option",
+            "dialog",
+            "textbox",
+            "combobox"
+          ]
         },
         "text": {
           "type": "array",
@@ -300,15 +316,28 @@
           "enum": ["waitFor", "click", "setToggle", "assertToggle", "wait"]
         },
         "target": { "$ref": "#/$defs/target" },
-        "state": { "enum": ["on", "off"], "description": "Desired switch state for setToggle / assertToggle." },
+        "state": {
+          "enum": ["on", "off"],
+          "description": "Desired switch state for setToggle / assertToggle."
+        },
         "timeoutMs": { "type": "integer", "minimum": 0, "maximum": 60000 },
         "ms": { "type": "integer", "minimum": 0, "maximum": 10000 },
         "optional": { "type": "boolean", "description": "If true, a missing target is not an error." },
-        "description": { "type": "string", "maxLength": 200, "description": "Human-readable label shown in the overlay while the step runs." }
+        "description": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Human-readable label shown in the overlay while the step runs."
+        }
       },
       "allOf": [
-        { "if": { "properties": { "action": { "enum": ["waitFor", "click", "setToggle", "assertToggle"] } } }, "then": { "required": ["target"] } },
-        { "if": { "properties": { "action": { "enum": ["setToggle", "assertToggle"] } } }, "then": { "required": ["state"] } },
+        {
+          "if": { "properties": { "action": { "enum": ["waitFor", "click", "setToggle", "assertToggle"] } } },
+          "then": { "required": ["target"] }
+        },
+        {
+          "if": { "properties": { "action": { "enum": ["setToggle", "assertToggle"] } } },
+          "then": { "required": ["state"] }
+        },
         { "if": { "properties": { "action": { "const": "wait" } } }, "then": { "required": ["ms"] } }
       ]
     }

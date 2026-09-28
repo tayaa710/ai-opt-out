@@ -87,7 +87,10 @@ export function serviceIdentity(service, { link = true, size = 'md', sub } = {})
 }
 
 /** Button element with optional icon. */
-export function button(label, { variant = 'secondary', size, iconName, onClick, testid, ariaLabel, type = 'button', disabled, key } = {}) {
+export function button(
+  label,
+  { variant = 'secondary', size, iconName, onClick, testid, ariaLabel, type = 'button', disabled, key } = {},
+) {
   return h(
     'button',
     {
@@ -132,7 +135,7 @@ export function linkButton(label, href, { variant = 'secondary', size, iconName,
  */
 export function startOptOut(service, optOut, mode, { onStatus, button: btn } = {}) {
   const needsHost = (mode === 'auto' || mode === 'verify') && optOut.automation;
-  const origins = needsHost ? optOut.automation.hostPermissions ?? [] : [];
+  const origins = needsHost ? (optOut.automation.hostPermissions ?? []) : [];
   // Request first, synchronously within the user gesture.
   const permission = origins.length ? requestPermissions(origins).catch(() => false) : Promise.resolve(true);
   const report = (phase, message) => {
@@ -148,7 +151,10 @@ export function startOptOut(service, optOut, mode, { onStatus, button: btn } = {
       const granted = await permission;
       if (!granted) {
         const site = origins.map(describeOrigin).join(', ');
-        report('denied', `NoTrain needs access to ${site} to do this for you. You can follow the steps yourself instead.`);
+        report(
+          'denied',
+          `NoTrain needs access to ${site} to do this for you. You can follow the steps yourself instead.`,
+        );
         toast('Permission not granted. Follow the steps instead.', { tone: 'warn' });
         return { ok: false, reason: 'denied' };
       }
@@ -231,14 +237,16 @@ export async function copyText(text, what = 'Text') {
     const ta = h('textarea', { style: { position: 'fixed', opacity: '0' } }, text);
     document.body.append(ta);
     ta.select();
-    let ok = false;
+    let ok;
     try {
       ok = document.execCommand('copy');
     } catch {
       ok = false;
     }
     ta.remove();
-    toast(ok ? `${what} copied` : 'Couldn’t copy. Select the text and copy it yourself.', { tone: ok ? 'good' : 'bad' });
+    toast(ok ? `${what} copied` : 'Couldn’t copy. Select the text and copy it yourself.', {
+      tone: ok ? 'good' : 'bad',
+    });
     return ok;
   }
 }
@@ -294,7 +302,18 @@ export function selectField({ id, label, hint, value, options, onChange, testid 
   );
 }
 
-export function textField({ id, label, hint, value, type = 'text', placeholder, onInput, onChange, autocomplete, testid }) {
+export function textField({
+  id,
+  label,
+  hint,
+  value,
+  type = 'text',
+  placeholder,
+  onInput,
+  onChange,
+  autocomplete,
+  testid,
+}) {
   const hintId = hint ? `${id}-hint` : null;
   return h(
     'div',
@@ -361,10 +380,11 @@ function originPattern(url) {
 /** Host patterns needed for cookie-based account detection. */
 export function detectionOrigins(services) {
   const set = new Set();
-  for (const s of services) for (const c of s.detection?.cookies ?? []) {
-    const p = originPattern(c.url);
-    if (p) set.add(p);
-  }
+  for (const s of services)
+    for (const c of s.detection?.cookies ?? []) {
+      const p = originPattern(c.url);
+      if (p) set.add(p);
+    }
   return [...set];
 }
 
@@ -381,7 +401,7 @@ export function detectAccountsFlow(services) {
     perm = Promise.reject(err);
   }
   return (async () => {
-    let granted = false;
+    let granted;
     try {
       granted = await perm;
     } catch (err) {
@@ -394,9 +414,13 @@ export function detectAccountsFlow(services) {
     }
     try {
       const res = await api.detectAccounts();
-      const names = (res?.detected ?? []).map((id) => services.find((s) => s.id === id)?.name).filter(Boolean);
+      const names = (res?.detected ?? [])
+        .map((id) => services.find((s) => s.id === id)?.name)
+        .filter(Boolean);
       if (names.length) {
-        toast(`Found ${names.length === 1 ? '1 account' : `${names.length} accounts`}: ${names.slice(0, 3).join(', ')}${names.length > 3 ? '…' : ''}`);
+        toast(
+          `Found ${names.length === 1 ? '1 account' : `${names.length} accounts`}: ${names.slice(0, 3).join(', ')}${names.length > 3 ? '…' : ''}`,
+        );
       } else {
         toast('No signed-in accounts found. You can pick services yourself.', { tone: 'info' });
       }
