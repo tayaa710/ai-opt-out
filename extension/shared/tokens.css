@@ -1,0 +1,255 @@
+/*
+ * NoTrain design tokens.
+ * Semantic colour, type, spacing, radius, elevation and motion values shared
+ * by the popup, the dashboard and (as copied literals) the on-page overlay.
+ * Light theme is the default; dark follows prefers-color-scheme, and can be
+ * forced with <html data-theme="light|dark">.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Brand */
+  --nt-primary: #4f46e5;
+  --nt-primary-hover: #4338ca;
+  --nt-primary-active: #3730a3;
+  --nt-on-primary: #ffffff;
+  --nt-primary-soft: #eef0ff;
+  --nt-primary-soft-hover: #e0e4ff;
+  --nt-primary-text: #4338ca; /* primary used as text on surfaces, AA on white and bg */
+
+  /* Status */
+  --nt-good: #059669;
+  --nt-good-text: #047857;
+  --nt-good-soft: #e8f8f1;
+  --nt-good-border: #a7e3c9;
+  --nt-warn: #d97706;
+  --nt-warn-text: #b45309;
+  --nt-warn-soft: #fff6e5;
+  --nt-warn-border: #f6d28b;
+  --nt-bad: #dc2626;
+  --nt-bad-text: #b91c1c;
+  --nt-bad-soft: #fdeeee;
+  --nt-bad-border: #f5b5b5;
+  --nt-info: #2563eb;
+  --nt-info-text: #1d4ed8;
+  --nt-info-soft: #eaf1ff;
+  --nt-info-border: #b8cdfb;
+  --nt-neutral-soft: #f0f2f7;
+  --nt-neutral-text: #475569;
+  --nt-on-bad: #ffffff;
+  --nt-on-good: #ffffff;
+
+  /* Surfaces */
+  --nt-bg: #f5f6fa;
+  --nt-surface: #ffffff;
+  --nt-surface-2: #f8f9fc; /* subtle fill inside cards */
+  --nt-surface-3: #eef0f5; /* hover, inputs on tinted areas */
+  --nt-surface-raised: #ffffff; /* menus, dialogs, toasts */
+  --nt-overlay: rgba(15, 23, 42, 0.45);
+  --nt-toast-bg: #1e2433;
+  --nt-toast-text: #f4f6fb;
+  --nt-tile-ring: rgba(15, 23, 42, 0.08);
+
+  /* Text */
+  --nt-text: #0f172a;
+  --nt-text-2: #475569;
+  --nt-text-3: #5f6b7e; /* still >= 4.5:1 on --nt-bg */
+  --nt-text-inverse: #ffffff;
+  --nt-link: #4338ca;
+
+  /* Lines */
+  --nt-border: #e3e7ee;
+  --nt-border-strong: #cbd2dd;
+  --nt-divider: #edf0f4;
+
+  /* Focus */
+  --nt-focus-color: #4f46e5;
+  --nt-focus-ring: 0 0 0 2px var(--nt-surface), 0 0 0 4px var(--nt-focus-color);
+
+  /* Type */
+  --nt-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', Arial, sans-serif;
+  --nt-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --nt-text-xs: 0.75rem; /* 12 */
+  --nt-text-sm: 0.8125rem; /* 13 */
+  --nt-text-base: 0.875rem; /* 14 */
+  --nt-text-md: 0.9375rem; /* 15 */
+  --nt-text-lg: 1.0625rem; /* 17 */
+  --nt-text-xl: 1.25rem; /* 20 */
+  --nt-text-2xl: 1.5rem; /* 24 */
+  --nt-text-3xl: 1.875rem; /* 30 */
+  --nt-leading: 1.5;
+  --nt-leading-tight: 1.25;
+  --nt-weight-medium: 500;
+  --nt-weight-semibold: 600;
+  --nt-weight-bold: 700;
+
+  /* Spacing (4 px grid) */
+  --nt-space-1: 4px;
+  --nt-space-2: 8px;
+  --nt-space-3: 12px;
+  --nt-space-4: 16px;
+  --nt-space-5: 20px;
+  --nt-space-6: 24px;
+  --nt-space-8: 32px;
+  --nt-space-10: 40px;
+  --nt-space-12: 48px;
+  --nt-space-16: 64px;
+
+  /* Radii */
+  --nt-radius-xs: 6px;
+  --nt-radius-sm: 8px;
+  --nt-radius: 12px;
+  --nt-radius-lg: 16px;
+  --nt-radius-xl: 20px;
+  --nt-radius-pill: 999px;
+
+  /* Elevation */
+  --nt-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --nt-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --nt-shadow-md: 0 2px 4px rgba(15, 23, 42, 0.04), 0 6px 16px rgba(15, 23, 42, 0.08);
+  --nt-shadow-lg: 0 8px 24px rgba(15, 23, 42, 0.12), 0 24px 48px rgba(15, 23, 42, 0.1);
+
+  /* Motion */
+  --nt-ease: cubic-bezier(0.2, 0, 0, 1);
+  --nt-duration-fast: 120ms;
+  --nt-duration: 200ms;
+  --nt-duration-slow: 320ms;
+
+  /* Layout */
+  --nt-content-max: 960px;
+  --nt-sidebar-width: 244px;
+  --nt-control-height: 40px;
+  --nt-control-height-sm: 32px;
+}
+
+/* Dark theme, shared by the media query and the explicit override. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --nt-primary: #818cf8;
+    --nt-primary-hover: #a5b4fc;
+    --nt-primary-active: #c7d2fe;
+    --nt-on-primary: #11132b;
+    --nt-primary-soft: #23264a;
+    --nt-primary-soft-hover: #2c3060;
+    --nt-primary-text: #a5b4fc;
+
+    --nt-good: #34d399;
+    --nt-good-text: #6ee7b7;
+    --nt-good-soft: #10302a;
+    --nt-good-border: #1d5b48;
+    --nt-warn: #fbbf24;
+    --nt-warn-text: #fcd34d;
+    --nt-warn-soft: #362a10;
+    --nt-warn-border: #6b5217;
+    --nt-bad: #f87171;
+    --nt-bad-text: #fca5a5;
+    --nt-bad-soft: #3a1c20;
+    --nt-bad-border: #6f2d33;
+    --nt-info: #60a5fa;
+    --nt-info-text: #93c5fd;
+    --nt-info-soft: #172a47;
+    --nt-info-border: #284a7a;
+    --nt-neutral-soft: #222838;
+    --nt-neutral-text: #b4bccd;
+    --nt-on-bad: #1f0a0c;
+    --nt-on-good: #06201a;
+
+    --nt-bg: #0d0f16;
+    --nt-surface: #151822;
+    --nt-surface-2: #1a1e2a;
+    --nt-surface-3: #222736;
+    --nt-surface-raised: #1d2130;
+    --nt-overlay: rgba(0, 0, 0, 0.6);
+  --nt-toast-bg: #eceef5;
+  --nt-toast-text: #11131c;
+  --nt-tile-ring: rgba(255, 255, 255, 0.14);
+    --nt-toast-bg: #eceef5;
+    --nt-toast-text: #11131c;
+    --nt-tile-ring: rgba(255, 255, 255, 0.14);
+
+    --nt-text: #eceef5;
+    --nt-text-2: #b3bacb;
+    --nt-text-3: #9ba3b6;
+    --nt-text-inverse: #0d0f16;
+    --nt-link: #a5b4fc;
+
+    --nt-border: #2a2f3e;
+    --nt-border-strong: #3b4254;
+    --nt-divider: #232837;
+
+    --nt-focus-color: #a5b4fc;
+
+    --nt-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --nt-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+    --nt-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.35);
+    --nt-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45), 0 24px 48px rgba(0, 0, 0, 0.4);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --nt-primary: #818cf8;
+  --nt-primary-hover: #a5b4fc;
+  --nt-primary-active: #c7d2fe;
+  --nt-on-primary: #11132b;
+  --nt-primary-soft: #23264a;
+  --nt-primary-soft-hover: #2c3060;
+  --nt-primary-text: #a5b4fc;
+
+  --nt-good: #34d399;
+  --nt-good-text: #6ee7b7;
+  --nt-good-soft: #10302a;
+  --nt-good-border: #1d5b48;
+  --nt-warn: #fbbf24;
+  --nt-warn-text: #fcd34d;
+  --nt-warn-soft: #362a10;
+  --nt-warn-border: #6b5217;
+  --nt-bad: #f87171;
+  --nt-bad-text: #fca5a5;
+  --nt-bad-soft: #3a1c20;
+  --nt-bad-border: #6f2d33;
+  --nt-info: #60a5fa;
+  --nt-info-text: #93c5fd;
+  --nt-info-soft: #172a47;
+  --nt-info-border: #284a7a;
+  --nt-neutral-soft: #222838;
+  --nt-neutral-text: #b4bccd;
+  --nt-on-bad: #1f0a0c;
+  --nt-on-good: #06201a;
+
+  --nt-bg: #0d0f16;
+  --nt-surface: #151822;
+  --nt-surface-2: #1a1e2a;
+  --nt-surface-3: #222736;
+  --nt-surface-raised: #1d2130;
+  --nt-overlay: rgba(0, 0, 0, 0.6);
+
+  --nt-text: #eceef5;
+  --nt-text-2: #b3bacb;
+  --nt-text-3: #9ba3b6;
+  --nt-text-inverse: #0d0f16;
+  --nt-link: #a5b4fc;
+
+  --nt-border: #2a2f3e;
+  --nt-border-strong: #3b4254;
+  --nt-divider: #232837;
+
+  --nt-focus-color: #a5b4fc;
+
+  --nt-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --nt-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --nt-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.35);
+  --nt-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.45), 0 24px 48px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --nt-duration-fast: 0ms;
+    --nt-duration: 0ms;
+    --nt-duration-slow: 0ms;
+  }
+}

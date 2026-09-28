@@ -1,0 +1,374 @@
+/* NoTrain popup: 380 px wide, up to 580 px tall, the middle scrolls. */
+
+html,
+body.popup {
+  width: 380px;
+  background: var(--nt-bg);
+}
+
+body.popup {
+  overflow: hidden;
+}
+
+.popup-app {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 580px;
+  min-height: 300px;
+}
+
+/* In a normal tab (screenshots, tests) keep the popup framed. */
+html.is-tab body.popup {
+  width: auto;
+  min-height: 100vh;
+  display: grid;
+  place-items: start center;
+  padding: 24px;
+  overflow: auto;
+}
+
+html.is-tab .popup-app {
+  width: 380px;
+  height: 580px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--nt-bg);
+  box-shadow: var(--nt-shadow-lg);
+  border: 1px solid var(--nt-border);
+}
+
+/* ---------- Header ---------- */
+
+.p-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nt-space-2);
+  padding: 12px 12px 12px 16px;
+  background: var(--nt-surface);
+  border-bottom: 1px solid var(--nt-border);
+  flex-shrink: 0;
+}
+
+.p-header .nt-logo {
+  font-size: var(--nt-text-md);
+  gap: 8px;
+}
+
+.p-header__actions {
+  display: flex;
+  gap: 2px;
+}
+
+.p-iconbtn {
+  position: relative;
+}
+
+.p-iconbtn .nt-count {
+  position: absolute;
+  top: 3px;
+  right: 2px;
+  box-shadow: 0 0 0 2px var(--nt-surface);
+}
+
+/* ---------- Scroll area ---------- */
+
+.p-main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  scrollbar-width: thin;
+}
+
+/* ---------- Summary ---------- */
+
+.p-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.p-summary__text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.p-summary__headline {
+  font-size: var(--nt-text-lg);
+  font-weight: var(--nt-weight-semibold);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.p-summary__detail {
+  font-size: var(--nt-text-sm);
+  color: var(--nt-text-2);
+  line-height: 1.45;
+}
+
+/* ---------- Current site ---------- */
+
+.p-site {
+  padding: 14px 16px 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.p-site__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.p-site__title {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.p-site__eyebrow {
+  font-size: var(--nt-text-xs);
+  color: var(--nt-text-3);
+  font-weight: var(--nt-weight-medium);
+}
+
+.p-site__name {
+  font-size: var(--nt-text-md);
+  font-weight: var(--nt-weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.p-site__fact {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: var(--nt-text-sm);
+  color: var(--nt-text-2);
+  line-height: 1.45;
+}
+
+.p-site__fact .nt-icon {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+}
+
+.p-site__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.p-site__actions .nt-btn {
+  flex: 1;
+}
+
+.p-site__wellknown {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: var(--nt-radius);
+  background: var(--nt-surface-2);
+  border: 1px solid var(--nt-divider);
+  font-size: var(--nt-text-sm);
+}
+
+.p-site__wellknown-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--nt-weight-semibold);
+}
+
+.p-site__wellknown-title .nt-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--nt-primary-text);
+}
+
+/* ---------- Services list ---------- */
+
+.p-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 4px 4px 0;
+}
+
+.p-section-title {
+  font-size: var(--nt-text-sm);
+  font-weight: var(--nt-weight-semibold);
+  color: var(--nt-text-2);
+}
+
+.p-list {
+  overflow: hidden;
+}
+
+.p-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  min-height: 60px;
+}
+
+.p-row__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  padding: 2px;
+  margin: -2px;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--nt-radius-sm);
+}
+
+.p-row__link:hover .p-row__name {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.p-row__text {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  justify-items: start;
+}
+
+.p-row__name {
+  font-weight: var(--nt-weight-semibold);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.p-row__reason {
+  font-size: var(--nt-text-xs);
+  color: var(--nt-text-3);
+}
+
+.p-row .nt-pill {
+  min-height: 20px;
+  padding: 1px 8px 1px 7px;
+  font-size: 11px;
+}
+
+.p-row__check {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--nt-good);
+}
+
+.p-row__check .nt-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.p-more {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  border-top: 1px solid var(--nt-divider);
+}
+
+/* ---------- First run ---------- */
+
+.p-welcome {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 28px 20px 24px;
+  text-align: center;
+}
+
+.p-welcome__title {
+  font-size: var(--nt-text-xl);
+  font-weight: var(--nt-weight-semibold);
+  letter-spacing: -0.02em;
+  margin-top: 6px;
+}
+
+.p-welcome__text {
+  color: var(--nt-text-2);
+  font-size: var(--nt-text-sm);
+  max-width: 34ch;
+}
+
+.p-welcome__points {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 6px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  font-size: var(--nt-text-sm);
+  color: var(--nt-text-2);
+}
+
+.p-welcome__points li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.p-welcome__points .nt-icon {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--nt-good);
+}
+
+/* ---------- Footer ---------- */
+
+.p-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--nt-surface);
+  border-top: 1px solid var(--nt-border);
+  font-size: var(--nt-text-xs);
+  color: var(--nt-text-3);
+  flex-shrink: 0;
+}
+
+.p-footer__private {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.p-footer__private .nt-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.p-footer .nt-link {
+  font-size: var(--nt-text-xs);
+}
+
+/* ---------- Loading ---------- */
+
+.p-skel-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}

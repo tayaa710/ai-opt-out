@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/tayaa710/ai-opt-out/registry/schema/crawlers.schema.json",
+  "title": "NoTrain AI crawler list",
+  "description": "Web crawlers and fetchers operated for AI purposes. Used by the creator tool (robots.txt / ai.txt generator). Regular search-engine crawlers (Googlebot, Bingbot, ...) do not belong here.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["crawlers"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "crawlers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/crawler" }
+    }
+  },
+  "$defs": {
+    "crawler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token", "operator", "purpose", "respectsRobotsTxt", "docsUrl"],
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 64,
+          "description": "The product token matched against `User-agent:` lines in robots.txt (RFC 9309 section 2.2.1), e.g. \"GPTBot\". Unique, case-insensitively."
+        },
+        "operator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "description": "Company or project that runs the crawler. Used to group entries in generated files."
+        },
+        "purpose": {
+          "enum": ["training", "search", "user-triggered", "mixed"],
+          "description": "training = collects data to train models; search = indexes pages for AI search/answers; user-triggered = fetches a page because a user asked an assistant to; mixed = more than one of these, including training."
+        },
+        "respectsRobotsTxt": {
+          "enum": [true, false, "unknown"],
+          "description": "Whether the operator documents that it honours robots.txt and whether that holds in practice (false if credibly reported to ignore it)."
+        },
+        "docsUrl": {
+          "type": "string",
+          "pattern": "^https://",
+          "description": "The operator's documentation for this crawler, or the best public source if there is none."
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 400,
+          "description": "One or two plain sentences shown as a comment in generated files."
+        }
+      }
+    }
+  }
+}

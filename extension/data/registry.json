@@ -1,0 +1,210 @@
+{
+  "formatVersion": 1,
+  "generatedAt": "2026-09-28T17:37:26.369Z",
+  "services": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "company": "OpenAI",
+      "category": "ai-assistant",
+      "brandColor": "#10a37f",
+      "domains": [
+        "chatgpt.com",
+        "chat.openai.com",
+        "openai.com"
+      ],
+      "summary": "Your ChatGPT conversations are used to train OpenAI's models unless you turn this off. Business, Enterprise and API data is excluded by default.",
+      "training": {
+        "trainsOnUserData": "yes",
+        "defaultState": "opted_in",
+        "dataTypes": [
+          "chats",
+          "files",
+          "voice",
+          "images",
+          "feedback"
+        ],
+        "details": "For Free, Plus and Pro accounts, OpenAI may use your conversations (text, uploaded files, images and voice) to improve its models. The \"Improve the model for everyone\" setting controls this and is on by default. Temporary Chats are never used for training. ChatGPT Business, Enterprise, Edu and API data is not used for training by default.",
+        "since": "2022-11",
+        "retroactiveRemoval": false,
+        "regionNotes": {
+          "EU": "You can also object to processing under GDPR Article 21 using OpenAI's privacy portal.",
+          "UK": "You can also object to processing under UK GDPR Article 21 using OpenAI's privacy portal."
+        }
+      },
+      "optOuts": [
+        {
+          "id": "improve-model-toggle",
+          "type": "toggle",
+          "title": "Turn off “Improve the model for everyone”",
+          "description": "The account-level switch that stops new conversations being used for training.",
+          "url": "https://chatgpt.com/#settings/DataControls",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "quick",
+          "steps": [
+            "Open ChatGPT and sign in.",
+            "Click your profile picture, then Settings.",
+            "Open Data controls.",
+            "Turn off “Improve the model for everyone”."
+          ],
+          "effect": "Stops new conversations from being used to train OpenAI models. Chats already used for training are not removed. Your chat history is kept.",
+          "automation": {
+            "confidence": "medium",
+            "hostPermissions": [
+              "https://chatgpt.com/*"
+            ],
+            "loginIndicators": [
+              {
+                "role": "button",
+                "text": [
+                  "Log in",
+                  "Sign up for free"
+                ]
+              }
+            ],
+            "steps": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Improve the model for everyone"
+                  ]
+                },
+                "timeoutMs": 15000,
+                "description": "Waiting for Data controls to load"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Improve the model for everyone"
+                  ]
+                },
+                "optional": true,
+                "description": "Opening the “Improve the model” setting"
+              },
+              {
+                "action": "setToggle",
+                "target": {
+                  "role": "switch",
+                  "text": [
+                    "Improve the model for everyone"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000,
+                "description": "Turning off “Improve the model for everyone”"
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Done"
+                  ],
+                  "within": {
+                    "role": "dialog"
+                  }
+                },
+                "optional": true,
+                "description": "Saving"
+              }
+            ],
+            "verify": [
+              {
+                "action": "waitFor",
+                "target": {
+                  "text": [
+                    "Improve the model for everyone"
+                  ]
+                },
+                "timeoutMs": 15000
+              },
+              {
+                "action": "click",
+                "target": {
+                  "role": "button",
+                  "text": [
+                    "Improve the model for everyone"
+                  ]
+                },
+                "optional": true
+              },
+              {
+                "action": "assertToggle",
+                "target": {
+                  "role": "switch",
+                  "text": [
+                    "Improve the model for everyone"
+                  ]
+                },
+                "state": "off",
+                "timeoutMs": 10000
+              }
+            ]
+          }
+        },
+        {
+          "id": "privacy-portal-do-not-train",
+          "type": "form",
+          "title": "Ask OpenAI not to train on your content (privacy portal)",
+          "description": "A request through OpenAI's privacy portal. Useful if you want a written record of your objection.",
+          "url": "https://privacy.openai.com/",
+          "regions": [
+            "ALL"
+          ],
+          "effort": "moderate",
+          "steps": [
+            "Open OpenAI's privacy portal.",
+            "Choose “Make a privacy request”.",
+            "Select “Do not train on my content”.",
+            "Confirm using the email address on your ChatGPT account."
+          ],
+          "effect": "Records a request that OpenAI not train on your content going forward. It does not delete chats already used."
+        }
+      ],
+      "detection": {
+        "cookies": [
+          {
+            "url": "https://chatgpt.com",
+            "name": "__Secure-next-auth.session-token"
+          }
+        ]
+      },
+      "contacts": {
+        "privacyEmail": "dsar@openai.com",
+        "privacyRequestUrl": "https://privacy.openai.com/"
+      },
+      "policyUrls": [
+        "https://openai.com/policies/privacy-policy/",
+        "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt"
+      ],
+      "sources": [
+        {
+          "title": "Data controls in ChatGPT | OpenAI Help Center",
+          "url": "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt",
+          "accessed": "2026-09-28"
+        },
+        {
+          "title": "How your data is used to improve model performance | OpenAI Help Center",
+          "url": "https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance",
+          "accessed": "2026-09-28"
+        }
+      ],
+      "lastVerified": "2026-09-28",
+      "policyVersion": 1,
+      "changelog": [
+        {
+          "version": 1,
+          "date": "2026-09-28",
+          "summary": "Added to the NoTrain registry.",
+          "severity": "info"
+        }
+      ]
+    }
+  ],
+  "crawlers": []
+}
