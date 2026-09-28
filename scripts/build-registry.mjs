@@ -18,6 +18,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { updateReadmeServices } from './readme-services.mjs';
+import { SEARCH_ENGINE_TOKENS as SEARCH_ENGINE_TOKEN_LIST } from '../extension/lib/robots.js';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const FORMAT_VERSION = 1;
@@ -35,15 +36,8 @@ export const PATHS = Object.freeze({
 /** Days after which `lastVerified` produces a staleness warning. */
 export const STALE_AFTER_DAYS = 180;
 
-/**
- * Regular search-engine crawlers. They are not AI crawlers and must never be blocked by the
- * creator tool's presets, so they should not appear in crawlers.json.
- */
-export const SEARCH_ENGINE_TOKENS = new Set(
-  ['googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider', 'yandexbot', 'applebot', 'msnbot'].map(
-    (t) => t.toLowerCase(),
-  ),
-);
+/** Regular search-engine crawlers (shared with the creator tool, which never blocks them by default). */
+export const SEARCH_ENGINE_TOKENS = new Set(SEARCH_ENGINE_TOKEN_LIST.map((t) => t.toLowerCase()));
 
 // ---------------------------------------------------------------------------
 // Helpers
