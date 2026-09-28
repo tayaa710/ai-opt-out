@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "NoTrain: Opt out of AI training",
+    "description": "Extension name shown in the Chrome Web Store and chrome://extensions."
+  },
+  "extDescription": {
+    "message": "See which services train AI on your data, opt out in a click, and get alerted when a company changes the rules.",
+    "description": "Extension description (max 132 characters)."
+  }
+}

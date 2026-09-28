@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/tayaa710/ai-opt-out/registry/schema/service.schema.json",
+  "title": "NoTrain registry service entry",
+  "description": "One online service, what it does with user data for AI training, and how to opt out.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "company",
+    "category",
+    "domains",
+    "summary",
+    "training",
+    "optOuts",
+    "sources",
+    "lastVerified",
+    "policyVersion",
+    "changelog"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Stable kebab-case id. Must equal the file name without .json. Never change once published."
+    },
+    "name": { "type": "string", "minLength": 1, "maxLength": 60 },
+    "company": { "type": "string", "minLength": 1, "maxLength": 80 },
+    "category": {
+      "enum": [
+        "ai-assistant",
+        "social",
+        "professional",
+        "productivity",
+        "communication",
+        "creative",
+        "developer",
+        "search-browser",
+        "shopping",
+        "other"
+      ]
+    },
+    "brandColor": {
+      "type": "string",
+      "pattern": "^#[0-9a-fA-F]{6}$",
+      "description": "Background colour for the generated monogram. Brand logos are NOT bundled."
+    },
+    "domains": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9.-]+\\.[a-z]{2,}$" },
+      "description": "Registrable hostnames used to recognise the service (e.g. for 'you are on X' in the popup)."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 240,
+      "description": "One or two plain-language sentences a non-technical person understands."
+    },
+    "training": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trainsOnUserData", "defaultState", "dataTypes", "details", "retroactiveRemoval"],
+      "properties": {
+        "trainsOnUserData": {
+          "enum": ["yes", "no", "conditional", "unknown"],
+          "description": "yes = consumer data is used to train AI models; conditional = only in some circumstances/regions/products; no = company states it does not."
+        },
+        "defaultState": {
+          "enum": ["opted_in", "opted_out", "no_choice", "varies_by_region", "not_applicable"],
+          "description": "What happens if the user does nothing. opted_in = training ON by default."
+        },
+        "dataTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "chats",
+              "files",
+              "voice",
+              "images",
+              "video",
+              "posts",
+              "comments",
+              "messages",
+              "code",
+              "documents",
+              "profile",
+              "activity",
+              "feedback",
+              "creative-works"
+            ]
+          }
+        },
+        "details": { "type": "string", "minLength": 20, "maxLength": 1200 },
+        "since": { "type": "string", "pattern": "^\\d{4}(-\\d{2}){0,2}$" },
+        "retroactiveRemoval": {
+          "type": "boolean",
+          "description": "true only if opting out removes data already used for training. Almost always false."
+        },
+        "regionNotes": {
+          "type": "object",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(EU|UK|CH|US|US-CA|CA|AU|BR|IN|JP|OTHER)$": { "type": "string", "minLength": 5, "maxLength": 600 }
+          }
+        }
+      }
+    },
+    "optOuts": {
+      "type": "array",
+      "description": "Ways to opt out. Use a single entry of type 'none' when no opt-out exists.",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/optOut" }
+    },
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cookies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["url", "name"],
+            "properties": {
+              "url": { "type": "string", "pattern": "^https://" },
+              "name": { "type": "string", "minLength": 1 }
+            }
+          },
+          "description": "Presence of ANY of these cookies suggests the user is signed in. Only presence is checked, the value is never read or stored."
+        }
+      }
+    },
+    "contacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "privacyEmail": { "type": "string", "format": "email" },
+        "dpoEmail": { "type": "string", "format": "email" },
+        "privacyRequestUrl": { "type": "string", "pattern": "^https://" },
+        "postalAddress": { "type": "string", "maxLength": 300 }
+      }
+    },
+    "policyUrls": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^https://" },
+      "description": "Privacy policy / AI terms pages watched for changes by scripts/policy-watch.mjs."
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "url"],
+        "properties": {
+          "title": { "type": "string", "minLength": 3 },
+          "url": { "type": "string", "pattern": "^https://" },
+          "accessed": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+        }
+      }
+    },
+    "lastVerified": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "policyVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Bump by one whenever training behaviour or opt-out options materially change. Drives user alerts."
+    },
+    "changelog": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["version", "date", "summary", "severity"],
+        "properties": {
+          "version": { "type": "integer", "minimum": 1 },
+          "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+          "summary": { "type": "string", "minLength": 10, "maxLength": 300 },
+          "severity": {
+            "enum": ["info", "warning", "critical"],
+            "description": "critical = service started training on user data / turned training on by default."
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "region": {
+      "enum": ["ALL", "EU", "UK", "CH", "US", "US-CA", "CA", "AU", "BR", "IN", "JP", "OTHER"]
+    },
+    "optOut": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "regions", "effort", "steps", "effect"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "type": {
+          "enum": ["toggle", "form", "email", "account-deletion", "none"],
+          "description": "toggle = account setting; form = web objection/privacy form; email = send a request letter; account-deletion = only way out; none = no opt-out exists."
+        },
+        "title": { "type": "string", "minLength": 5, "maxLength": 120 },
+        "description": { "type": "string", "maxLength": 600 },
+        "url": {
+          "type": "string",
+          "pattern": "^https://",
+          "description": "Deep link to the exact settings page or form. Required for toggle and form."
+        },
+        "regions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/region" }
+        },
+        "effort": { "enum": ["quick", "moderate", "involved"] },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 3, "maxLength": 300 }
+        },
+        "effect": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 400,
+          "description": "What opting out actually does (and does not do)."
+        },
+        "perDevice": {
+          "type": "boolean",
+          "description": "true if the setting must be repeated per device/app/browser."
+        },
+        "automation": { "$ref": "#/$defs/automation" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "enum": ["toggle", "form"] } } },
+          "then": { "required": ["url"] }
+        }
+      ]
+    },
+    "automation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confidence", "hostPermissions", "steps"],
+      "properties": {
+        "confidence": {
+          "enum": ["high", "medium", "experimental"],
+          "description": "How likely the recipe is to work against the live site."
+        },
+        "hostPermissions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^https://[a-z0-9.*-]+/\\*$" },
+          "description": "Match patterns requested (optional permission) before injecting. Must be covered by the extension manifest's optional_host_permissions."
+        },
+        "loginIndicators": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/target" },
+          "description": "If any of these is found, the user is not signed in; the run ends with outcome needs_login."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/step" },
+          "description": "Steps that perform the opt-out."
+        },
+        "verify": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/step" },
+          "description": "Read-only steps (waitFor, click to navigate, assertToggle) used to re-check the setting without changing it."
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "selector": { "type": "string", "minLength": 1 },
+        "role": {
+          "enum": ["switch", "checkbox", "button", "link", "tab", "menuitem", "radio", "option", "dialog", "textbox", "combobox"]
+        },
+        "text": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 2 },
+          "description": "Candidate labels, matched case-insensitively (whitespace-normalised substring) against the element's accessible name or its row's text."
+        },
+        "within": { "$ref": "#/$defs/target" }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action"],
+      "properties": {
+        "action": {
+          "enum": ["waitFor", "click", "setToggle", "assertToggle", "wait"]
+        },
+        "target": { "$ref": "#/$defs/target" },
+        "state": { "enum": ["on", "off"], "description": "Desired switch state for setToggle / assertToggle." },
+        "timeoutMs": { "type": "integer", "minimum": 0, "maximum": 60000 },
+        "ms": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "optional": { "type": "boolean", "description": "If true, a missing target is not an error." },
+        "description": { "type": "string", "maxLength": 200, "description": "Human-readable label shown in the overlay while the step runs." }
+      },
+      "allOf": [
+        { "if": { "properties": { "action": { "enum": ["waitFor", "click", "setToggle", "assertToggle"] } } }, "then": { "required": ["target"] } },
+        { "if": { "properties": { "action": { "enum": ["setToggle", "assertToggle"] } } }, "then": { "required": ["state"] } },
+        { "if": { "properties": { "action": { "const": "wait" } } }, "then": { "required": ["ms"] } }
+      ]
+    }
+  }
+}

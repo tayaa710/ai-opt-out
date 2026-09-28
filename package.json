@@ -1,0 +1,29 @@
+{
+  "name": "notrain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NoTrain: see which services train AI on your data, opt out in a click, and get alerted when that changes.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "registry:build": "node scripts/build-registry.mjs",
+    "registry:validate": "node scripts/build-registry.mjs --check",
+    "build": "node scripts/build.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test tests/unit/",
+    "test:e2e": "playwright test",
+    "policy-watch": "node scripts/policy-watch.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1"
+  }
+}
