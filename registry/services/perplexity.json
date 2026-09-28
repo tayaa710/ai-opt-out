@@ -1,0 +1,141 @@
+{
+  "id": "perplexity",
+  "name": "Perplexity",
+  "company": "Perplexity AI",
+  "category": "ai-assistant",
+  "brandColor": "#20808d",
+  "domains": ["perplexity.ai"],
+  "summary": "Perplexity uses your searches, chats and uploads to improve its AI models unless you turn off “AI data retention”. Enterprise accounts are excluded, and you can't opt out while logged out.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["chats", "files"],
+    "details": "Perplexity's Privacy Notice (last updated 8 July 2026) says it uses the prompts, queries and uploads you submit to improve or create its services, including its AI models. For Free, Pro and Max accounts the “AI data retention” setting is on by default; turning it off excludes your future signed-in activity from model training. The July 2026 notice no longer describes this opt-out itself, but the setting is still in the product. If you use Perplexity without logging in, you cannot opt out. Enterprise data is never used for training, and the Enterprise and API offerings are outside the notice. Incognito mode stops your search history being saved; Perplexity does not say whether it changes training. The Comet browser and the Email Assistant have their own rules (Perplexity says email content is not used to train AI models).",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "VeraSafe is Perplexity's representative in the EU. You can object to processing through Perplexity's data request form.",
+      "UK": "VeraSafe is Perplexity's representative in the UK. You can object to processing through Perplexity's data request form."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "ai-data-retention-toggle",
+      "type": "toggle",
+      "title": "Turn off “AI data retention”",
+      "description": "The account setting that decides whether your activity is used to train Perplexity's models.",
+      "url": "https://www.perplexity.ai/account/preferences",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Perplexity.",
+        "Click your account name, choose All settings, then Preferences.",
+        "Turn off “AI data retention”."
+      ],
+      "effect": "Your future signed-in searches and chats are excluded from model training. Data already used is not removed.",
+      "automation": {
+        "confidence": "medium",
+        "hostPermissions": ["https://www.perplexity.ai/*"],
+        "loginIndicators": [
+          {
+            "role": "button",
+            "text": ["Continue with Google", "Continue with Apple", "Continue with email"]
+          },
+          { "text": ["Sign in to manage your account"] }
+        ],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["AI data retention", "AI data usage"] },
+            "timeoutMs": 15000,
+            "description": "Waiting for Preferences to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "[role='switch'], input[type='checkbox']",
+              "text": ["AI data retention", "AI data usage"]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off “AI data retention”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["AI data retention", "AI data usage"] },
+            "timeoutMs": 15000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "[role='switch'], input[type='checkbox']",
+              "text": ["AI data retention", "AI data usage"]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    },
+    {
+      "id": "data-request-form-objection",
+      "type": "form",
+      "title": "Object to training through Perplexity's data request form",
+      "description": "A written objection for people in the EU, UK or Switzerland. The account switch is quicker.",
+      "url": "https://perplexity.typeform.com/datarequest",
+      "regions": ["EU", "UK", "CH"],
+      "effort": "moderate",
+      "steps": [
+        "Open Perplexity's data request form.",
+        "Use the email address of your Perplexity account.",
+        "Say that you object to your prompts, searches and uploads being used to train AI models, and submit.",
+        "Perplexity may ask you to verify your identity."
+      ],
+      "effect": "Creates a written objection that Perplexity must answer under GDPR or UK GDPR. It does not remove data already used."
+    }
+  ],
+  "detection": {
+    "cookies": [{ "url": "https://www.perplexity.ai", "name": "__Secure-next-auth.session-token" }]
+  },
+  "contacts": {
+    "privacyEmail": "support@perplexity.ai",
+    "privacyRequestUrl": "https://perplexity.typeform.com/datarequest"
+  },
+  "policyUrls": [
+    "https://www.perplexity.ai/hub/legal/privacy-notice",
+    "https://www.perplexity.ai/help-center/en/articles/11564572-data-collection-at-perplexity"
+  ],
+  "sources": [
+    {
+      "title": "Perplexity Privacy Notice (last updated 8 July 2026)",
+      "url": "https://www.perplexity.ai/hub/legal/privacy-notice",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Data Collection at Perplexity | Perplexity Help Center",
+      "url": "https://www.perplexity.ai/help-center/en/articles/11564572-data-collection-at-perplexity",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Account & Settings | Perplexity Help Center",
+      "url": "https://www.perplexity.ai/help-center/en/articles/10352990-account-settings",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Data retention and privacy for Enterprise organizations | Perplexity Help Center",
+      "url": "https://www.perplexity.ai/help-center/en/articles/11187708-data-retention-and-privacy-for-enterprise-organizations-and-users",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

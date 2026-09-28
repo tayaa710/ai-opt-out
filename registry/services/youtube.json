@@ -1,0 +1,81 @@
+{
+  "id": "youtube",
+  "name": "YouTube",
+  "company": "Google",
+  "category": "social",
+  "brandColor": "#FF0000",
+  "domains": ["youtube.com", "youtu.be"],
+  "summary": "Google trains its own AI models on YouTube videos, and creators can’t opt out of that. Whether other AI companies may train on your videos is a creator setting that stays off unless you turn it on.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "no_choice",
+    "dataTypes": ["video", "creative-works"],
+    "details": "YouTube’s terms let Google use content uploaded to YouTube to improve its products, including through machine learning and AI. Google has confirmed it trains models such as Gemini and Veo on a subset of YouTube videos, under its agreements with creators; there is no opt-out from Google’s own use. Since December 2024, creators can choose in YouTube Studio whether specific third-party AI companies may train on their videos. This “Third-party training” setting is off by default, and YouTube says unauthorised scraping still breaks its terms. Viewers’ watch and search history is used for recommendations and can be paused or deleted in your Google Account.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "No dedicated opt-out from Google’s training. You can contact Google’s privacy team or DPO to object under GDPR Article 21."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "no-opt-out",
+      "type": "none",
+      "title": "No opt-out from Google training on YouTube videos",
+      "description": "Nothing stops Google using uploaded videos for its own AI. Creators can only control third-party companies, and that is off unless they turn it on.",
+      "url": "https://studio.youtube.com/",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Creators: sign in to YouTube Studio on a computer and click Settings.",
+        "Open Channel › Advanced settings and check “Third-party training”.",
+        "Make sure third-party training is not allowed (no companies selected), then click Save.",
+        "To keep a video out of Google’s use entirely, the only option is not to upload it, or to delete it."
+      ],
+      "effect": "Keeping third-party training off means YouTube doesn’t authorise other AI companies to train on your videos. Google’s own training continues, and content already used stays in its models."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      {
+        "url": "https://www.youtube.com",
+        "name": "LOGIN_INFO"
+      }
+    ]
+  },
+  "contacts": {
+    "privacyRequestUrl": "https://support.google.com/policies/troubleshooter/7575787",
+    "postalAddress": "Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA (EEA/Switzerland: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland)"
+  },
+  "policyUrls": [
+    "https://policies.google.com/privacy",
+    "https://www.youtube.com/t/terms",
+    "https://support.google.com/youtube/answer/15509945"
+  ],
+  "sources": [
+    {
+      "title": "Third-party training | YouTube Help",
+      "url": "https://support.google.com/youtube/answer/15509945",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "YouTube Terms of Service",
+      "url": "https://www.youtube.com/t/terms",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Google Privacy Policy",
+      "url": "https://policies.google.com/privacy",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

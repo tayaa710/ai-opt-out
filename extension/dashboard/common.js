@@ -347,3 +347,63 @@ export function runLiveRegion(serviceId, optOutId, className = 'd-live') {
     msg?.message ?? '',
   );
 }
+
+/** Match pattern for a detection cookie URL: https://chatgpt.com → https://chatgpt.com/* */
+function originPattern(url) {
+  try {
+    const u = new URL(url);
+    return `${u.protocol}//${u.hostname}/*`;
+  } catch {
+    return null;
+  }
+}
+
+/** Host patterns needed for cookie-based account detection. */
+export function detectionOrigins(services) {
+  const set = new Set();
+  for (const s of services) for (const c of s.detection?.cookies ?? []) {
+    const p = originPattern(c.url);
+    if (p) set.add(p);
+  }
+  return [...set];
+}
+
+/**
+ * Account detection. MUST be called synchronously from a click handler.
+ * @returns {Promise<{ detected: string[], checked: number }|null>} null if declined or failed
+ */
+export function detectAccountsFlow(services) {
+  const origins = detectionOrigins(services);
+  let perm;
+  try {
+    perm = requestPermissions(origins, ['cookies']);
+  } catch (err) {
+    perm = Promise.reject(err);
+  }
+  return (async () => {
+    let granted = false;
+    try {
+      granted = await perm;
+    } catch (err) {
+      toast(`Couldn’t ask for permission: ${err.message}`, { tone: 'bad' });
+      return null;
+    }
+    if (!granted) {
+      toast('No problem. You can pick your services yourself.', { tone: 'info' });
+      return null;
+    }
+    try {
+      const res = await api.detectAccounts();
+      const names = (res?.detected ?? []).map((id) => services.find((s) => s.id === id)?.name).filter(Boolean);
+      if (names.length) {
+        toast(`Found ${names.length === 1 ? '1 account' : `${names.length} accounts`}: ${names.slice(0, 3).join(', ')}${names.length > 3 ? '…' : ''}`);
+      } else {
+        toast('No signed-in accounts found. You can pick services yourself.', { tone: 'info' });
+      }
+      return res;
+    } catch (err) {
+      toast(`Detection failed: ${err.message}`, { tone: 'bad' });
+      return null;
+    }
+  })();
+}

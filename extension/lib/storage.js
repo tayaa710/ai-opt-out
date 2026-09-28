@@ -349,6 +349,26 @@ export function updateLocal(keys, mutator) {
   });
 }
 
+const MIGRATED_KEYS = [STORAGE_KEYS.settings, STORAGE_KEYS.userState, STORAGE_KEYS.alerts, STORAGE_KEYS.history];
+
+/**
+ * Runs migrations on the stored data and writes back whatever changed
+ * (including writing defaults on first run).
+ * @returns {Promise<{ fromVersion: number, changed: string[] }>}
+ */
+export function migrateStorage() {
+  return serialize(async () => {
+    const raw = await local().get(MIGRATED_KEYS);
+    const { data, fromVersion } = migrate(raw);
+    const set = {};
+    for (const k of MIGRATED_KEYS) {
+      if (JSON.stringify(raw[k]) !== JSON.stringify(data[k])) set[k] = data[k];
+    }
+    if (Object.keys(set).length > 0) await local().set(set);
+    return { fromVersion, changed: Object.keys(set) };
+  });
+}
+
 /** Raw write (still serialised). */
 export function writeLocal(values) {
   return serialize(() => local().set(values));

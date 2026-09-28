@@ -1,0 +1,144 @@
+{
+  "id": "pinterest",
+  "name": "Pinterest",
+  "company": "Pinterest, Inc.",
+  "category": "social",
+  "brandColor": "#E60023",
+  "domains": ["pinterest.com"],
+  "summary": "Pinterest trains its AI, including its image generator Pinterest Canvas, on Pins, images and descriptions. Adults are opted in by default and one setting turns it off; under-18s are excluded.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["images", "posts", "creative-works"],
+    "details": "Pinterest uses Pins, images, descriptions and metadata that people save or upload to train Pinterest Canvas, its image-generation model (used in part to create ad imagery). Its privacy policy says it uses your information to train machine learning models, including generative AI, regardless of when Pins were posted. The “Use your data to train Pinterest Canvas” setting under Privacy and data is on by default for adults; users under 18 are opted out and can’t opt in. The setting covers generative AI training, not other machine learning such as recommendations. Pinterest has announced a privacy policy update, effective 12 November 2026, that adds more detail on how it trains its models.",
+    "since": "2024",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "You can also object under GDPR using Pinterest’s Data Protection Officer contact form.",
+      "UK": "You can also object under UK GDPR using Pinterest’s Data Protection Officer contact form."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "canvas-training-toggle",
+      "type": "toggle",
+      "title": "Turn off “Use your data to train Pinterest Canvas”",
+      "description": "The Privacy and data setting that keeps your Pins out of Pinterest’s generative AI training.",
+      "url": "https://www.pinterest.com/settings/privacy",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Pinterest.",
+        "Open Settings › Privacy and data.",
+        "Turn off “Use your data to train Pinterest Canvas”.",
+        "Click Save if a Save button appears."
+      ],
+      "effect": "Stops your content being used to train Pinterest Canvas from now on. It doesn’t undo past training or stop other machine learning, such as recommendations.",
+      "automation": {
+        "confidence": "experimental",
+        "hostPermissions": ["https://*.pinterest.com/*"],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": ["Use your data to train Pinterest Canvas", "train Pinterest Canvas"]
+            },
+            "timeoutMs": 20000,
+            "description": "Waiting for Privacy and data settings to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": ["Use your data to train Pinterest Canvas", "train Pinterest Canvas"]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off “Use your data to train Pinterest Canvas”"
+          },
+          {
+            "action": "click",
+            "target": {
+              "role": "button",
+              "text": ["Save"]
+            },
+            "optional": true,
+            "description": "Saving your settings"
+          },
+          {
+            "action": "wait",
+            "ms": 1500
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": ["Use your data to train Pinterest Canvas", "train Pinterest Canvas"]
+            },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": ["Use your data to train Pinterest Canvas", "train Pinterest Canvas"]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy-support@pinterest.com",
+    "privacyRequestUrl": "https://help.pinterest.com/en/data-protection-officer-contact-form"
+  },
+  "policyUrls": [
+    "https://policy.pinterest.com/en/privacy-policy",
+    "https://help.pinterest.com/en/article/manage-genai-settings"
+  ],
+  "sources": [
+    {
+      "title": "Manage GenAI settings | Pinterest Help",
+      "url": "https://help.pinterest.com/en/article/manage-genai-settings",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Manage your privacy and data settings | Pinterest Help",
+      "url": "https://help.pinterest.com/en/article/your-privacy-and-data-settings",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "AI at Pinterest | Pinterest Help",
+      "url": "https://help.pinterest.com/en/article/ai-at-pinterest",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy | Pinterest Policy",
+      "url": "https://policy.pinterest.com/en/privacy-policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Pinterest changed its User Terms to train AI on your photos and data. Here’s how to opt out | Transparency Coalition",
+      "url": "https://www.transparencycoalition.ai/news/pinterest-changed-its-user-terms-to-train-ai-on-your-photos-and-data-heres-how-to-stop-it",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Pinterest bans binary options ads under new scam and deception rules (November 2026 policy update) | PPC Land",
+      "url": "https://ppc.land/pinterest-bans-binary-options-ads-under-new-scam-and-deception-rules/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

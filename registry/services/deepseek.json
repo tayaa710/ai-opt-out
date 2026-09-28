@@ -1,0 +1,90 @@
+{
+  "id": "deepseek",
+  "name": "DeepSeek",
+  "company": "Hangzhou DeepSeek Artificial Intelligence Co., Ltd.",
+  "category": "ai-assistant",
+  "brandColor": "#4d6bfe",
+  "domains": ["deepseek.com", "chat.deepseek.com"],
+  "summary": "DeepSeek uses your chats, uploads and voice input to train and improve its models unless you turn off “Improve the model for everyone”. Your data is stored in China.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["chats", "files", "images", "voice", "feedback"],
+    "details": "DeepSeek's privacy policy (last updated 10 February 2026) says it uses your inputs (text and voice input, prompts, uploaded files, photos, feedback and chat history) to train and improve its models. Its Terms of Use say it uses de-identified inputs and outputs to improve its services, and that you can refuse by turning off “Improve the model for everyone”. The setting is on unless you change it. The privacy policy also lists a right to opt out of training, which you can use by emailing privacy@deepseek.com. DeepSeek collects, processes and stores your data in the People's Republic of China. It does not say whether opting out removes data already used.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "In the EEA and Switzerland, DeepSeek relies on legitimate interests (or consent) for training, so you can object under GDPR Article 21. Its EU representative is Prighter (rep_deepseek@prighter.com, subject “Data Subject Request”).",
+      "UK": "DeepSeek's UK representative is Prighter (rep_deepseek@prighter.com, subject “Data Subject Request”). You can object to training under UK GDPR Article 21."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "improve-model-toggle",
+      "type": "toggle",
+      "title": "Turn off “Improve the model for everyone”",
+      "description": "DeepSeek's Terms name this switch. Its exact place in the menus may differ between the website and the app.",
+      "url": "https://chat.deepseek.com/",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Open DeepSeek (chat.deepseek.com) or the app and sign in.",
+        "Open Settings from your profile menu (bottom left on the website).",
+        "Find “Improve the model for everyone” in the data settings and turn it off."
+      ],
+      "effect": "DeepSeek says it stops using your inputs and outputs to improve its models from then on. It does not say whether data already used is removed."
+    },
+    {
+      "id": "email-opt-out",
+      "type": "email",
+      "title": "Ask DeepSeek by email not to train on your data",
+      "description": "Uses the training opt-out right listed in DeepSeek's privacy policy. The in-app switch is the quicker route.",
+      "regions": ["ALL"],
+      "effort": "moderate",
+      "steps": [
+        "Email privacy@deepseek.com.",
+        "Say that you opt out of your personal data being used to train or optimise DeepSeek's models.",
+        "Include the email address or phone number of your account. DeepSeek may ask you to verify your identity."
+      ],
+      "effect": "Creates a written request that DeepSeek must consider under applicable law. It does not remove data already used for training."
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@deepseek.com"
+  },
+  "policyUrls": [
+    "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
+    "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html"
+  ],
+  "sources": [
+    {
+      "title": "DeepSeek Privacy Policy (last updated 10 February 2026)",
+      "url": "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "DeepSeek Terms of Use",
+      "url": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Model Mechanism and Training Methods of DeepSeek",
+      "url": "https://cdn.deepseek.com/policies/en-US/model-algorithm-disclosure.html",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "DeepSeek privacy policy and terms archive (Open Terms Archive)",
+      "url": "https://github.com/OpenTermsArchive/genai-contrib-versions/tree/main/DeepSeek",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

@@ -196,9 +196,7 @@ export function sortServices(services) {
 }
 
 export function sortCrawlers(crawlers) {
-  return [...crawlers].sort(
-    (a, b) => compareText(a.operator, b.operator) || compareText(a.token, b.token),
-  );
+  return [...crawlers].sort((a, b) => compareText(a.operator, b.operator) || compareText(a.token, b.token));
 }
 
 export function serializeRegistry(registry) {
@@ -271,14 +269,15 @@ export function checkServiceInvariants(service, { file, fileId, today }) {
   if (service.training?.since) {
     const [, month, day] = service.training.since.split('-');
     const bad =
-      (month && (Number(month) < 1 || Number(month) > 12)) ||
-      (day && !isValidDate(service.training.since));
+      (month && (Number(month) < 1 || Number(month) > 12)) || (day && !isValidDate(service.training.since));
     if (bad) errors.push(at(`training.since: "${service.training.since}" is not a valid date`));
   }
   if (isValidDate(service.lastVerified) && service.lastVerified <= today) {
     const age = daysBetween(service.lastVerified, today);
     if (age > STALE_AFTER_DAYS) {
-      warnings.push(at(`lastVerified: ${service.lastVerified} is ${age} days old; please re-verify the entry`));
+      warnings.push(
+        at(`lastVerified: ${service.lastVerified} is ${age} days old; please re-verify the entry`),
+      );
     }
   }
 
@@ -347,7 +346,11 @@ export function checkServiceInvariants(service, { file, fileId, today }) {
       at('optOuts: an opt-out of type "none" should be the only entry (it means no opt-out exists)'),
     );
   }
-  if (optOuts.some((o) => o.type === 'email') && !service.contacts?.privacyEmail && !service.contacts?.dpoEmail) {
+  if (
+    optOuts.some((o) => o.type === 'email') &&
+    !service.contacts?.privacyEmail &&
+    !service.contacts?.dpoEmail
+  ) {
     warnings.push(
       at('contacts: an opt-out of type "email" exists but contacts has no privacyEmail or dpoEmail'),
     );
@@ -368,7 +371,9 @@ export function checkServiceInvariants(service, { file, fileId, today }) {
   });
 
   if (!service.policyUrls?.length) {
-    warnings.push(at('policyUrls: empty or missing, so scripts/policy-watch.mjs cannot monitor this service'));
+    warnings.push(
+      at('policyUrls: empty or missing, so scripts/policy-watch.mjs cannot monitor this service'),
+    );
   }
 
   const seenSources = new Set();
@@ -421,13 +426,17 @@ export function setOptionalHostPermissions(manifestText, patterns) {
     return manifestText.slice(0, m.index) + render(m[1], trailing) + after;
   }
   // Key absent: insert it after "optional_permissions" or "permissions" if present, else re-serialise.
-  const anchor = /^([ \t]*)"(?:optional_permissions|permissions)"\s*:\s*\[[^\]]*\],?[ \t]*$/m.exec(manifestText);
+  const anchor = /^([ \t]*)"(?:optional_permissions|permissions)"\s*:\s*\[[^\]]*\],?[ \t]*$/m.exec(
+    manifestText,
+  );
   if (anchor) {
     const hadComma = /,\s*$/.test(anchor[0]);
     const base = anchor[0].replace(/,?\s*$/, '');
     const trailing = hadComma ? ',' : '';
     const inserted = `${base},\n${render(anchor[1], trailing)}${trailing}`;
-    return manifestText.slice(0, anchor.index) + inserted + manifestText.slice(anchor.index + anchor[0].length);
+    return (
+      manifestText.slice(0, anchor.index) + inserted + manifestText.slice(anchor.index + anchor[0].length)
+    );
   }
   const manifest = JSON.parse(manifestText);
   manifest.optional_host_permissions = patterns;
@@ -558,7 +567,9 @@ export async function buildRegistry({ root = ROOT, check = false, now = new Date
   // Compile.
   const crawlerItemSchema = crawlersSchema.$defs?.crawler ?? {};
   const compiledServices = sortServices(services).map((s) => canonicalize(s, serviceSchema));
-  const compiledCrawlers = sortCrawlers(crawlers).map((c) => canonicalize(c, crawlerItemSchema, crawlersSchema));
+  const compiledCrawlers = sortCrawlers(crawlers).map((c) =>
+    canonicalize(c, crawlerItemSchema, crawlersSchema),
+  );
 
   const payload = (r) => JSON.stringify([r?.formatVersion, r?.services, r?.crawlers]);
   const [primaryOutput] = PATHS.outputs;
@@ -567,7 +578,11 @@ export async function buildRegistry({ root = ROOT, check = false, now = new Date
   if (previousText) {
     try {
       const previous = JSON.parse(previousText);
-      const candidate = { formatVersion: FORMAT_VERSION, services: compiledServices, crawlers: compiledCrawlers };
+      const candidate = {
+        formatVersion: FORMAT_VERSION,
+        services: compiledServices,
+        crawlers: compiledCrawlers,
+      };
       if (payload(previous) === payload(candidate) && typeof previous.generatedAt === 'string') {
         generatedAt = previous.generatedAt; // content unchanged → keep the timestamp (deterministic rebuilds)
       }
@@ -575,7 +590,12 @@ export async function buildRegistry({ root = ROOT, check = false, now = new Date
       // unreadable previous output: regenerate
     }
   }
-  registry = { formatVersion: FORMAT_VERSION, generatedAt, services: compiledServices, crawlers: compiledCrawlers };
+  registry = {
+    formatVersion: FORMAT_VERSION,
+    generatedAt,
+    services: compiledServices,
+    crawlers: compiledCrawlers,
+  };
   const text = serializeRegistry(registry);
 
   for (const rel of PATHS.outputs) {
@@ -653,7 +673,9 @@ async function main(argv) {
     console.log(
       `Registry compiled: ${n} services, ${c} crawlers, ${res.hostPermissions.length} host permissions (generatedAt ${res.registry.generatedAt}).`,
     );
-    console.log(res.written.length ? `Updated: ${res.written.join(', ')}` : 'All outputs were already up to date.');
+    console.log(
+      res.written.length ? `Updated: ${res.written.join(', ')}` : 'All outputs were already up to date.',
+    );
   }
   if (strict && res.warnings.length) {
     console.error(`\n${res.warnings.length} warning(s) and --strict was given.`);

@@ -1,0 +1,146 @@
+{
+  "id": "claude",
+  "name": "Claude",
+  "company": "Anthropic",
+  "category": "ai-assistant",
+  "brandColor": "#d97757",
+  "domains": ["claude.ai", "claude.com"],
+  "summary": "Anthropic can use your Claude chats and coding sessions to train its models while “Help improve Claude” is on. You can switch it off in Privacy settings. Work, education and API accounts are not included.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["chats", "files", "images", "code", "feedback"],
+    "details": "Under the consumer terms change announced on 28 August 2025 (a choice was required by 8 October 2025), Anthropic may use chats and coding sessions from Claude Free, Pro and Max accounts, including Claude Code used with those accounts, to train its models while the model-training setting (“Help improve Claude”) is on. The switch was pre-set to on when users were asked to choose. If it is on, your data may be kept for up to 5 years; if it is off, the usual 30-day retention applies. Even with it off, Anthropic still uses conversations flagged for safety review and anything you send as feedback (for example thumbs up or down). Incognito chats are not used for training. Claude for Work (Team and Enterprise), Claude for Education, Claude for Government and API use are not covered.",
+    "since": "2025-08",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Anthropic Ireland, Limited is the data controller in the European Region. Anthropic relies on legitimate interests and scientific research for training, so you can also object under GDPR Article 21 by emailing privacy@anthropic.com (DPO: dpo@anthropic.com).",
+      "UK": "You can also object to training under UK GDPR Article 21 by emailing privacy@anthropic.com."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "help-improve-claude-toggle",
+      "type": "toggle",
+      "title": "Turn off “Help improve Claude”",
+      "description": "The account-level model-training switch in Claude's Privacy settings. It also covers Claude Code used with the same account.",
+      "url": "https://claude.ai/settings/data-privacy-controls",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Open Claude and sign in.",
+        "Click your name at the bottom left, then Settings, then Privacy.",
+        "Turn off “Help improve Claude”.",
+        "In the mobile app the same switch is under Settings → Privacy."
+      ],
+      "effect": "New chats and coding sessions are not used for training, and your stored chats are left out of future training runs. Models already trained are not changed. Chats flagged for safety review and feedback you send can still be used.",
+      "automation": {
+        "confidence": "medium",
+        "hostPermissions": ["https://claude.ai/*"],
+        "loginIndicators": [{ "role": "button", "text": ["Continue with Google", "Continue with email"] }],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Help improve Claude", "Help improve our AI models"] },
+            "timeoutMs": 15000,
+            "description": "Waiting for Privacy settings to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "[role='switch'], input[type='checkbox']",
+              "text": ["Help improve Claude", "Help improve our AI models"]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off “Help improve Claude”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Help improve Claude", "Help improve our AI models"] },
+            "timeoutMs": 15000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "[role='switch'], input[type='checkbox']",
+              "text": ["Help improve Claude", "Help improve our AI models"]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    },
+    {
+      "id": "gdpr-objection-email",
+      "type": "email",
+      "title": "Object to training by email (GDPR / UK GDPR)",
+      "description": "A written objection for people in the EU, UK or Switzerland. Useful if you want a record, but the account switch is quicker.",
+      "regions": ["EU", "UK", "CH"],
+      "effort": "moderate",
+      "steps": [
+        "Email privacy@anthropic.com from the address you use for Claude.",
+        "Say that you object under Article 21 GDPR (or UK GDPR) to your personal data, including your chats, being used to train Anthropic's models.",
+        "Anthropic may ask you to verify your identity before it responds, usually within one month."
+      ],
+      "effect": "Anthropic must stop the processing unless it shows overriding legitimate grounds. It does not change models that are already trained."
+    }
+  ],
+  "detection": {
+    "cookies": [{ "url": "https://claude.ai", "name": "sessionKey" }]
+  },
+  "contacts": {
+    "privacyEmail": "privacy@anthropic.com",
+    "dpoEmail": "dpo@anthropic.com"
+  },
+  "policyUrls": [
+    "https://www.anthropic.com/legal/privacy",
+    "https://www.anthropic.com/legal/consumer-terms",
+    "https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training"
+  ],
+  "sources": [
+    {
+      "title": "Privacy Policy | Anthropic (effective 10 September 2026)",
+      "url": "https://www.anthropic.com/legal/privacy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Consumer Terms of Service | Anthropic",
+      "url": "https://www.anthropic.com/legal/consumer-terms",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Updates to Consumer Terms and Privacy Policy | Anthropic",
+      "url": "https://www.anthropic.com/news/updates-to-our-consumer-terms",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How do I change my model improvement privacy settings? | Anthropic Privacy Center",
+      "url": "https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How long do you store my data? | Anthropic Privacy Center",
+      "url": "https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Data usage | Claude Code Docs",
+      "url": "https://code.claude.com/docs/en/data-usage",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

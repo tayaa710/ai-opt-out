@@ -1,0 +1,126 @@
+{
+  "id": "quora",
+  "name": "Quora",
+  "company": "Quora, Inc.",
+  "category": "social",
+  "brandColor": "#B92B27",
+  "domains": ["quora.com"],
+  "summary": "Quora says it doesn’t currently train its own AI on your answers, but a setting allowing AI training on your content is on by default. You can switch it off in privacy settings.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "opted_in",
+    "dataTypes": ["posts", "comments"],
+    "details": "Quora’s help center says it does not currently use answers, posts or comments from users to train the large language models that generate content on Quora, but that this may change. The setting “Allow large language models to be trained on your content” is on by default and controls future training. Comments you leave on AI-generated answers may still be used for training because they respond directly to the AI. Models already trained on your content won’t unlearn it, and Quora can’t fully stop third parties scraping public content. Quora’s Poe chatbot app is separate: bot developers on Poe may use your chats to train their models.",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "llm-training-toggle",
+      "type": "toggle",
+      "title": "Turn off “Allow large language models to be trained on your content”",
+      "description": "The privacy setting that keeps your Quora content out of future LLM training.",
+      "url": "https://www.quora.com/settings/privacy",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Quora.",
+        "Click your profile picture › Settings › Privacy.",
+        "Turn off “Allow large language models to be trained on your content”."
+      ],
+      "effect": "Your content won’t be used in future LLM training from the moment you switch it off. Comments on AI-generated answers may still be used, and past training isn’t undone.",
+      "automation": {
+        "confidence": "medium",
+        "hostPermissions": ["https://*.quora.com/*"],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": [
+                "Allow large language models to be trained on your content",
+                "large language models to be trained"
+              ]
+            },
+            "timeoutMs": 20000,
+            "description": "Waiting for Quora’s privacy settings to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": [
+                "Allow large language models to be trained on your content",
+                "large language models to be trained"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off “Allow large language models to be trained on your content”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": [
+                "Allow large language models to be trained on your content",
+                "large language models to be trained"
+              ]
+            },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": [
+                "Allow large language models to be trained on your content",
+                "large language models to be trained"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@quora.com"
+  },
+  "policyUrls": [
+    "https://www.quora.com/about/privacy",
+    "https://help.quora.com/hc/en-us/articles/15205064557844-Can-I-opt-out-of-having-my-Quora-content-used-to-train-LLMs"
+  ],
+  "sources": [
+    {
+      "title": "Can I opt-out of having my Quora content used to train LLMs? | Quora Help Center",
+      "url": "https://help.quora.com/hc/en-us/articles/15205064557844-Can-I-opt-out-of-having-my-Quora-content-used-to-train-LLMs",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "What are LLMs and how does Quora use them? | Quora Help Center",
+      "url": "https://help.quora.com/hc/en-us/articles/15204996933780-What-are-LLMs-and-how-does-Quora-use-them",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Quora Privacy Policy",
+      "url": "https://www.quora.com/about/privacy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Poe Privacy Policy",
+      "url": "https://poe.com/pages/privacy",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

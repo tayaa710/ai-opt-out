@@ -1,0 +1,95 @@
+{
+  "id": "reddit",
+  "name": "Reddit",
+  "company": "Reddit, Inc.",
+  "category": "social",
+  "brandColor": "#FF4500",
+  "domains": ["reddit.com", "redd.it"],
+  "summary": "Reddit licenses public posts and comments to AI companies such as Google and OpenAI for training. There is no opt-out, but licensees must stop using content you delete.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "no_choice",
+    "dataTypes": ["posts", "comments", "images", "video"],
+    "details": "Reddit licenses public content (posts, comments and media in public communities) to AI companies, including Google (from 2024) and OpenAI, which can use it to train and power their models; Reddit also uses content for its own AI features. Private messages, chats and content in private communities are not licensed. Reddit requires licensees to stop using or displaying content once you delete it, but it cannot control copies others have scraped, and it is unclear whether deleted content is removed from models already trained. Reddit’s privacy policy effective 1 July 2026 also lists “LLM providers” that help summarise public content for search results on Reddit.",
+    "since": "2024-02",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "No dedicated opt-out. Under GDPR you can ask Reddit to erase your data or object to processing by emailing its privacy team; deleting your content is still the most effective step.",
+      "UK": "No dedicated opt-out. You can send an erasure or objection request under UK GDPR."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "no-opt-out",
+      "type": "none",
+      "title": "No opt-out from Reddit’s AI data licensing",
+      "description": "Reddit has no setting that keeps your public posts out of its AI licensing deals.",
+      "regions": ["ALL"],
+      "effort": "involved",
+      "steps": [
+        "Delete posts and comments you don’t want licensed (open your profile, then use the ••• menu on each item › Delete).",
+        "Post in private communities, or use chat and messages, for things you want kept out.",
+        "If you delete your account, delete your posts and comments first: deleting the account alone leaves them up without your username.",
+        "EU/UK users can also email an objection or erasure request to redditdatarequests@reddit.com."
+      ],
+      "effect": "Deletion is the only lever: licensees must stop using deleted content from then on, but data already used for training is not removed."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      {
+        "url": "https://www.reddit.com",
+        "name": "reddit_session"
+      }
+    ]
+  },
+  "contacts": {
+    "privacyEmail": "redditdatarequests@reddit.com"
+  },
+  "policyUrls": [
+    "https://www.reddit.com/policies/privacy-policy",
+    "https://support.reddithelp.com/hc/en-us/articles/26410290525844-Public-Content-Policy"
+  ],
+  "sources": [
+    {
+      "title": "Public Content Policy | Reddit Help",
+      "url": "https://support.reddithelp.com/hc/en-us/articles/26410290525844-Public-Content-Policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Do Reddit’s data licensees have to stop using data deleted from Reddit? | Reddit Help",
+      "url": "https://support.reddithelp.com/hc/en-us/articles/26417433892756-Do-Reddit-s-data-licensees-have-to-stop-using-data-deleted-from-Reddit",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "What happens when I delete my data? | Reddit Help",
+      "url": "https://support.reddithelp.com/hc/en-us/articles/24656943463828-What-happens-when-I-delete-my-data",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Reddit Privacy Policy",
+      "url": "https://www.reddit.com/policies/privacy-policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Reddit locks down its public data in new content policy, says use now requires a contract | TechCrunch",
+      "url": "https://techcrunch.com/2024/05/09/reddit-locks-down-its-public-data-in-new-content-policy-says-use-now-requires-a-contract",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Reddit Quietly Expands AI Data Sharing in New Privacy Policy | State of Surveillance",
+      "url": "https://stateofsurveillance.org/news/reddit-privacy-policy-update-ai-data-sharing-llm-july-1-2026/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

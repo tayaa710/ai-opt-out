@@ -1,0 +1,77 @@
+{
+  "id": "tiktok",
+  "name": "TikTok",
+  "company": "TikTok",
+  "category": "social",
+  "brandColor": "#FE2C55",
+  "domains": ["tiktok.com"],
+  "summary": "TikTok’s privacy policy lets it use your videos, comments and activity to train its machine-learning and AI systems. There’s no setting to opt out; in the EU, UK and Switzerland you can object in writing.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "no_choice",
+    "dataTypes": ["video", "images", "comments", "activity"],
+    "details": "TikTok’s privacy policies say it uses the information it collects, including content you post and how you use the app, to develop and improve its platform, including by training its machine learning models and algorithms. That powers recommendations, moderation and TikTok’s generative AI features. TikTok offers no setting to stop this. It publishes little detail on how much public content trains its generative models specifically, so treat this entry as a summary of its privacy policy.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "You can object under GDPR Article 21 to processing based on legitimate interests using TikTok’s privacy request form; TikTok must stop unless it shows compelling grounds.",
+      "UK": "You can object under UK GDPR Article 21 using TikTok’s privacy request form.",
+      "US": "Covered by TikTok’s US privacy policy. No opt-out. A private account (Settings and privacy › Privacy › Private account) limits who sees your videos, and you can delete content, but neither stops TikTok using what you post for its own models.",
+      "OTHER": "No opt-out outside the EU/EEA, UK and Switzerland. A private account (Settings and privacy › Privacy › Private account) limits who sees your videos, and you can delete content, but neither stops TikTok using what you post for its own models."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "privacy-objection",
+      "type": "form",
+      "title": "Object to AI training via TikTok’s privacy request form",
+      "description": "A formal objection for people covered by GDPR, UK GDPR or the Swiss FADP.",
+      "url": "https://www.tiktok.com/legal/report/privacy",
+      "regions": ["EU", "UK", "CH"],
+      "effort": "moderate",
+      "steps": [
+        "Open TikTok’s privacy request form and sign in if asked.",
+        "Choose the option for exercising a data protection right.",
+        "State that you object under Article 21 GDPR to TikTok using your content and activity to train machine learning and AI models.",
+        "Submit and keep the confirmation."
+      ],
+      "effect": "TikTok must assess your objection and stop unless it has compelling grounds. It only affects future processing."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      {
+        "url": "https://www.tiktok.com",
+        "name": "sessionid"
+      }
+    ]
+  },
+  "contacts": {
+    "privacyRequestUrl": "https://www.tiktok.com/legal/report/privacy"
+  },
+  "policyUrls": [
+    "https://www.tiktok.com/legal/page/us/privacy-policy/en",
+    "https://www.tiktok.com/legal/page/eea/privacy-policy/en"
+  ],
+  "sources": [
+    {
+      "title": "TikTok Privacy Policy (US)",
+      "url": "https://www.tiktok.com/legal/page/us/privacy-policy/en",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "TikTok Privacy Policy (EEA, UK and Switzerland)",
+      "url": "https://www.tiktok.com/legal/page/eea/privacy-policy/en",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "mistral-le-chat",
+  "name": "Mistral Vibe (formerly Le Chat)",
+  "company": "Mistral AI",
+  "category": "ai-assistant",
+  "brandColor": "#fa520f",
+  "domains": ["chat.mistral.ai", "mistral.ai"],
+  "summary": "Mistral trains its models on your Vibe (formerly Le Chat) chats and uploads unless you opt out. This covers Free, Pro and Student plans, and Team workspaces unless an admin opts out. Enterprise is excluded.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["chats", "files", "feedback"],
+    "details": "Mistral renamed Le Chat to Vibe at the end of May 2026. Its privacy policy (effective 3 September 2026) says it trains its models on your inputs and outputs “subject to your opt-out”, and on the feedback (thumbs up or down) you give. Documents you upload count as input. Mistral's help center (updated September 2026) says Vibe users are not opted out by default, while Enterprise customers are. Earlier policies said Le Chat Team was never used for training. The current policy no longer says this, and the help center describes Team admins switching training off for the whole organisation, so treat Team workspaces as included unless your admin has opted out. The Vibe switch and the Mistral Studio / API switch (“Anonymous improvement data”) are separate. Feedback is listed separately from the opt-out, so it may still be used.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Mistral AI is a French company, so the GDPR applies directly. You can also object through its “Privacy Requests” contact form, which goes to its Data Protection Officer."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "vibe-training-toggle",
+      "type": "toggle",
+      "title": "Turn off “Allow your interactions to be used to train our models”",
+      "description": "The Vibe training switch in Mistral's Admin panel. On mobile it is called “Enable data sharing”.",
+      "url": "https://admin.mistral.ai/",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to the Mistral Admin panel with your Vibe account.",
+        "Under Manage, select Vibe.",
+        "In the Privacy section, turn off “Allow your interactions to be used to train our models”.",
+        "In the Vibe mobile app: Settings → Data & Account Controls → untick “Enable data sharing”.",
+        "On a Team plan, an admin can switch this off for the whole organisation."
+      ],
+      "effect": "Mistral stops using your future inputs and outputs, including uploaded documents, for training. It does not cover the separate Studio / API setting or feedback you give, and does not remove data already used."
+    },
+    {
+      "id": "privacy-request-form",
+      "type": "form",
+      "title": "Object through Mistral's “Privacy Requests” form",
+      "description": "A written objection handled by Mistral's Data Protection Officer. The account switch is quicker.",
+      "url": "https://mistral.ai/en/contact",
+      "regions": ["ALL"],
+      "effort": "moderate",
+      "steps": [
+        "Open Mistral's contact page and choose “Privacy Requests”.",
+        "Use the email address of your Vibe account.",
+        "Say that you object to your inputs, outputs and feedback being used to train Mistral's models, and submit."
+      ],
+      "effect": "Records a formal objection. Mistral notes that requests about training data have technical limits, so data already used may not be removed."
+    }
+  ],
+  "contacts": {
+    "privacyRequestUrl": "https://mistral.ai/en/contact",
+    "postalAddress": "Mistral AI, Attn: DPO, 15 rue des Halles, 75001 Paris, France"
+  },
+  "policyUrls": [
+    "https://legal.mistral.ai/terms/privacy-policy",
+    "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training"
+  ],
+  "sources": [
+    {
+      "title": "Privacy Policy | Mistral AI (effective 3 September 2026)",
+      "url": "https://legal.mistral.ai/terms/privacy-policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Can I opt out of my input or output data being used for training? | Mistral Help Center",
+      "url": "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Le Chat is now Vibe | Mistral Help Center",
+      "url": "https://help.mistral.ai/en/articles/682992-le-chat-is-now-vibe",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Mistral Vibe privacy policy archive (Open Terms Archive)",
+      "url": "https://github.com/OpenTermsArchive/genai-eu-versions/blob/main/Vibe/Privacy%20Policy.md",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

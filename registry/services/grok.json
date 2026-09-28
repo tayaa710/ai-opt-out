@@ -1,0 +1,75 @@
+{
+  "id": "grok",
+  "name": "Grok",
+  "company": "xAI",
+  "category": "ai-assistant",
+  "brandColor": "#111111",
+  "domains": ["grok.com", "x.ai"],
+  "summary": "xAI can use your Grok chats on grok.com and in the Grok apps to train its models unless you turn off “Improve the Model”. Grok inside X is controlled by X's own settings.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["chats", "files", "images", "voice", "video", "feedback"],
+    "details": "xAI's privacy policy (effective 4 April 2026) says it may use your prompts, uploads (files, images, audio, voice and video) and Grok's replies to develop its services and train its models. xAI's Consumer FAQ says you control this with the “Improve the Model” setting, which is on unless you turn it off. Private Chat conversations are not used for training and are deleted within 30 days. Feedback you give can still be used after you opt out, and a limited number of xAI staff may review conversations. If you use Grok without logging in, outside the EU and UK you cannot opt out. Business, enterprise and API customer content is not used to improve models. Grok used inside X is covered by X's privacy policy and X's own data-sharing setting, not by this one (see the X entry).",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "xAI relies on legitimate interests to train on your data in Europe, and says you can object in your settings. Its EU representative is Lionheart Squared (Europe) Ltd (xai@lionheartsquared.eu).",
+      "UK": "xAI's UK representative is Lionheart Squared Limited (xai@lionheartsquared.co.uk). You can object to training in your settings.",
+      "CH": "xAI's Swiss representative is Lionheart Squared Switzerland SarL (xai@lionheartsquared.ch)."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "improve-the-model-toggle",
+      "type": "toggle",
+      "title": "Turn off “Improve the Model”",
+      "description": "The account setting on grok.com and in the Grok apps. It does not affect Grok inside X.",
+      "url": "https://grok.com/",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Open grok.com and sign in.",
+        "Open Settings, then Data.",
+        "Turn off “Improve the Model”.",
+        "In the Grok mobile app: Settings → Data Controls → turn off “Improve the model”."
+      ],
+      "effect": "New conversations are not used to train xAI's models. Conversations already used are not removed, and feedback you give can still be used."
+    }
+  ],
+  "detection": {
+    "cookies": [{ "url": "https://grok.com", "name": "sso" }]
+  },
+  "contacts": {
+    "privacyEmail": "privacy@x.ai",
+    "dpoEmail": "privacy@x.ai",
+    "privacyRequestUrl": "https://x.ai/privacy-portal/"
+  },
+  "policyUrls": ["https://x.ai/legal/privacy-policy", "https://x.ai/legal/faq"],
+  "sources": [
+    {
+      "title": "xAI Privacy Policy (effective 4 April 2026)",
+      "url": "https://x.ai/legal/privacy-policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "xAI Consumer FAQs",
+      "url": "https://x.ai/legal/faq",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Grok privacy policy archive (Open Terms Archive)",
+      "url": "https://github.com/OpenTermsArchive/genai-eu-versions/blob/main/Grok/Privacy%20Policy.md",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

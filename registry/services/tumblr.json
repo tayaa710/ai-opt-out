@@ -1,0 +1,144 @@
+{
+  "id": "tumblr",
+  "name": "Tumblr",
+  "company": "Automattic",
+  "category": "social",
+  "brandColor": "#001935",
+  "domains": ["tumblr.com"],
+  "summary": "Tumblr shares public blog content with partners, including AI companies, unless you turn on “Prevent third-party sharing” for each blog. It’s off by default unless you already discourage search engines.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["posts", "images", "creative-works"],
+    "details": "In February 2024 Tumblr’s owner Automattic confirmed it shares public content with a network of licensed content and research partners, including companies that train AI models (reported to include OpenAI and Midjourney). The “Prevent third-party sharing” switch in each blog’s Visibility settings keeps that blog out; it is off by default, but is switched on automatically if you already chose to discourage external search engines. Automattic said it would tell partners about opt-outs and ask them to delete opted-out content from past and future training, which can’t be guaranteed. Reporting in 2024 raised questions about content compiled before the switch existed.",
+    "since": "2024-02",
+    "retroactiveRemoval": false
+  },
+  "optOuts": [
+    {
+      "id": "prevent-third-party-sharing",
+      "type": "toggle",
+      "title": "Turn on “Prevent third-party sharing” for each blog",
+      "description": "A per-blog switch. Turning it ON is what opts you out. NoTrain’s automation handles your first listed blog; repeat for side blogs.",
+      "url": "https://www.tumblr.com/settings/account",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Tumblr on the web and open Settings.",
+        "Pick a blog from the Blogs list.",
+        "Under Visibility, turn on “Prevent third-party sharing for [blog name]”.",
+        "Repeat for every blog you run, including side blogs. In the app: Account › gear icon › choose the blog › Visibility."
+      ],
+      "effect": "Stops that blog’s content being shared with Tumblr’s licensed partners, including AI companies, from now on. Automattic says it asks partners to delete opted-out content, but past sharing can’t be fully undone.",
+      "automation": {
+        "confidence": "experimental",
+        "hostPermissions": ["https://www.tumblr.com/*"],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": {
+              "selector": "a[href*='/settings/blog/']"
+            },
+            "timeoutMs": 20000,
+            "description": "Waiting for your blogs to appear in Settings"
+          },
+          {
+            "action": "click",
+            "target": {
+              "selector": "a[href*='/settings/blog/']"
+            },
+            "description": "Opening your first blog’s settings"
+          },
+          {
+            "action": "waitFor",
+            "target": {
+              "text": ["Prevent third-party sharing"]
+            },
+            "timeoutMs": 20000,
+            "description": "Waiting for the blog’s Visibility settings"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": ["Prevent third-party sharing"]
+            },
+            "state": "on",
+            "timeoutMs": 10000,
+            "description": "Turning on “Prevent third-party sharing”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": {
+              "selector": "a[href*='/settings/blog/']"
+            },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "click",
+            "target": {
+              "selector": "a[href*='/settings/blog/']"
+            }
+          },
+          {
+            "action": "waitFor",
+            "target": {
+              "text": ["Prevent third-party sharing"]
+            },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": ["Prevent third-party sharing"]
+            },
+            "state": "on",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    }
+  ],
+  "contacts": {
+    "privacyEmail": "privacy@tumblr.com"
+  },
+  "policyUrls": [
+    "https://www.tumblr.com/privacy/en",
+    "https://help.tumblr.com/knowledge-base/privacy-options/"
+  ],
+  "sources": [
+    {
+      "title": "Privacy options | Tumblr Help Center",
+      "url": "https://help.tumblr.com/knowledge-base/privacy-options/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Hi, Tumblr. It’s Tumblr. We’re working on some things that we want to share with you | @staff",
+      "url": "https://www.tumblr.com/staff/743510217982083072/hi-tumblr-its-tumblr-were-working-on-some",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Tumblr Privacy Policy",
+      "url": "https://www.tumblr.com/privacy/en",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Tumblr and WordPress to Sell Users’ Data to Train AI Tools | 404 Media",
+      "url": "https://www.404media.co/tumblr-and-wordpress-to-sell-users-data-to-train-ai-tools/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

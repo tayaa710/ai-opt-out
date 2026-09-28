@@ -1,0 +1,91 @@
+{
+  "id": "microsoft-copilot",
+  "name": "Microsoft Copilot",
+  "company": "Microsoft",
+  "category": "ai-assistant",
+  "brandColor": "#0078d4",
+  "domains": ["copilot.microsoft.com", "copilot.com"],
+  "summary": "Microsoft says chats in the updated Copilot app (from August 2026) are not used to train its foundation models. The older app could train on your text and voice chats unless you switched that off.",
+  "training": {
+    "trainsOnUserData": "conditional",
+    "defaultState": "varies_by_region",
+    "dataTypes": ["chats", "voice"],
+    "details": "Microsoft is moving personal accounts to an updated Microsoft Copilot app, available since 18 August 2026. For that app, Microsoft states that your prompts, responses and file contents are not used to train foundation models, and its privacy settings no longer include a training switch. Optional feedback may still be used to improve Copilot. In the previous consumer app, Microsoft could use your de-identified text and voice conversations to train its generative AI models by default, with switches to opt out. That did not apply to users under 18, signed-out users, or users in the EEA and several other countries. Work or school (Entra ID) accounts and Copilot inside Microsoft 365 Personal and Family apps are not used for training. Microsoft's general privacy statement still says it may use data to develop and train AI models, so if you still use the older app, check its Privacy settings.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Microsoft says it does not train its models on consumer Copilot data from the European Economic Area, so the training switches are not shown there.",
+      "BR": "Copilot conversations from Brazil are excluded from model training (as are China excluding Hong Kong, Israel, Nigeria, South Korea and Vietnam).",
+      "UK": "Microsoft's list of excluded places does not name the UK. If the older app shows you the training switches, turn them off."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "training-toggles-legacy-app",
+      "type": "toggle",
+      "title": "Turn off training on your conversations (older Copilot app)",
+      "description": "Only in the previous version of the Copilot app. The updated app (from August 2026) has no training switch, because Microsoft says it doesn't train foundation models on those chats.",
+      "url": "https://copilot.microsoft.com/",
+      "regions": ["US", "US-CA", "UK", "CH", "CA", "AU", "IN", "JP", "OTHER"],
+      "effort": "quick",
+      "steps": [
+        "Open Copilot and sign in with your Microsoft account.",
+        "Select your profile icon, then your profile name, then Privacy. In the Windows or Mac app: profile icon → Settings → Privacy. In the mobile app: menu → profile icon → Account → Privacy.",
+        "Turn off “Training on conversation activity” and “Training on voice conversations” (some versions call them “Model training on text” and “Model training on voice”).",
+        "If you don't see these switches, you are on the updated app or in a place where training is already off."
+      ],
+      "effect": "Excludes your future conversations from training Microsoft's AI models. It does not stop use for safety, general product improvement or advertising, and does not remove past data."
+    }
+  ],
+  "contacts": {
+    "privacyRequestUrl": "https://aka.ms/privacyresponse",
+    "postalAddress": "Microsoft Ireland Operations Limited, Attn: Data Protection Officer, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Ireland"
+  },
+  "policyUrls": [
+    "https://privacy.microsoft.com/en-us/privacystatement",
+    "https://support.microsoft.com/en-us/privacy/microsoft-copilot/activity-history",
+    "https://support.microsoft.com/en-us/privacy/microsoft-copilot/privacy-controls",
+    "https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot"
+  ],
+  "sources": [
+    {
+      "title": "Microsoft Copilot for individuals: your activity history | Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/privacy/microsoft-copilot/activity-history",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Microsoft Copilot for individuals: your privacy controls and choices | Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/privacy/microsoft-copilot/privacy-controls",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Microsoft Copilot privacy controls (previous app) | Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-privacy-controls",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy FAQ for Microsoft Copilot | Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Copilot App Updates for Personal, Work, and School Accounts | Microsoft Support",
+      "url": "https://support.microsoft.com/en-us/microsoft-365-copilot/learning/changes-microsoft-copilot-app",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Microsoft Privacy Statement (last updated September 2026)",
+      "url": "https://privacy.microsoft.com/en-us/privacystatement",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

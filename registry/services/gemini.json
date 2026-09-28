@@ -1,0 +1,138 @@
+{
+  "id": "gemini",
+  "name": "Gemini",
+  "company": "Google",
+  "category": "ai-assistant",
+  "brandColor": "#4285f4",
+  "domains": ["gemini.google.com"],
+  "summary": "While “Keep Activity” is on, Google uses your Gemini chats and uploads to improve its services, including its AI, and some chats are read by human reviewers. It is on by default for adults.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["chats", "files", "images", "video", "voice", "feedback"],
+    "details": "With Keep Activity on (called Gemini Apps Activity until 2025, and on by default if you are 18 or over), Google saves your Gemini chats to your account (auto-deleted after 18 months unless you change it) and uses them, plus a sample of your uploads since 2 September 2025, to improve Google services, including its AI models. Human reviewers read a subset of chats. Reviewed chats are kept for up to 3 years, disconnected from your account, and are not deleted when you delete your activity. With Keep Activity off, or in a Temporary Chat, chats are still kept for up to 72 hours to reply to you and keep the service safe, but Google says they are not used to improve its AI models unless you send feedback. Audio, Gemini Live video and screen shares are only used if you tick a separate box, which is off by default. Work and school (Google Workspace) accounts are not used to train models outside your organisation, and only an administrator can change their Keep Activity setting.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Google Ireland Limited is responsible for your data in the EEA and Switzerland. You can exercise GDPR rights, including the right to object, through Google's privacy contact form."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "keep-activity-off",
+      "type": "toggle",
+      "title": "Turn off “Keep Activity” for Gemini",
+      "description": "The main Gemini setting. It belongs to your Google Account, so it applies on every device.",
+      "url": "https://myactivity.google.com/product/gemini",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Open gemini.google.com and sign in, then choose Settings & help → Activity (or open the link above).",
+        "Near the top, click “Turn off”. Choose “Turn off and delete activity” if you also want past chats deleted.",
+        "Confirm if Google asks you to."
+      ],
+      "effect": "New chats are not saved to your activity or used to improve Google's AI (they are still kept for up to 72 hours). You lose saved history for new chats. Chats already reviewed by humans are kept for up to 3 years."
+    },
+    {
+      "id": "audio-live-recordings",
+      "type": "toggle",
+      "title": "Untick sharing of audio and Gemini Live recordings",
+      "description": "Only matters if you turned it on: this box is off by default and only works while Keep Activity is on.",
+      "url": "https://myactivity.google.com/product/gemini",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Open your Gemini Apps Activity page and sign in.",
+        "Find “Improve Google services with your audio and Gemini Live videos and screenshares”.",
+        "Make sure the box is unticked."
+      ],
+      "effect": "Stops future audio, Gemini Live video and screen share recordings being used to improve Google services. Transcripts of your chats are still covered by Keep Activity.",
+      "automation": {
+        "confidence": "experimental",
+        "hostPermissions": ["https://myactivity.google.com/*"],
+        "loginIndicators": [
+          { "role": "link", "text": ["Sign in"] },
+          { "role": "button", "text": ["Sign in"] }
+        ],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Improve Google services with your audio", "audio and Gemini Live"] },
+            "timeoutMs": 15000,
+            "description": "Looking for the audio and Gemini Live setting"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "role": "checkbox",
+              "text": ["Improve Google services with your audio", "audio and Gemini Live"]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Unticking audio and Gemini Live recordings"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": { "text": ["Improve Google services with your audio", "audio and Gemini Live"] },
+            "timeoutMs": 15000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "role": "checkbox",
+              "text": ["Improve Google services with your audio", "audio and Gemini Live"]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    }
+  ],
+  "contacts": {
+    "privacyRequestUrl": "https://support.google.com/policies/contact/general_privacy_form"
+  },
+  "policyUrls": [
+    "https://support.google.com/gemini/answer/13594961",
+    "https://support.google.com/gemini/answer/13278892",
+    "https://policies.google.com/privacy"
+  ],
+  "sources": [
+    {
+      "title": "Gemini Apps Privacy Hub | Gemini Apps Help",
+      "url": "https://support.google.com/gemini/answer/13594961?hl=en",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Manage & delete your activity in Gemini Apps | Gemini Apps Help",
+      "url": "https://support.google.com/gemini/answer/13278892?hl=en&co=GENIE.Platform%3DDesktop",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Gemini adds Temporary Chats and new personalization features | Google Blog",
+      "url": "https://blog.google/products/gemini/temporary-chats-privacy-controls/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Use Gemini Apps with a work or school Google Account | Gemini Apps Help",
+      "url": "https://support.google.com/gemini/answer/14620100",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Policy | Google",
+      "url": "https://policies.google.com/privacy",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

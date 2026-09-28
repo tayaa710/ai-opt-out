@@ -1,0 +1,179 @@
+{
+  "id": "linkedin",
+  "name": "LinkedIn",
+  "company": "LinkedIn (Microsoft)",
+  "category": "professional",
+  "brandColor": "#0A66C2",
+  "domains": ["linkedin.com"],
+  "summary": "LinkedIn uses your profile, public posts and use of its AI features to train content-generating AI, including Microsoft’s. It’s on by default in every region, and one setting turns it off.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["profile", "posts", "comments", "feedback"],
+    "details": "LinkedIn and its affiliates may use details from your profile, the public content you post, and how you use LinkedIn’s generative AI features (including feedback you give) to train models that generate content, such as writing suggestions. Private messages are not used. The “Data for Generative AI Improvement” setting is on by default and also controls whether LinkedIn shares your data with its affiliate Microsoft for Microsoft’s own model training. Turning it off doesn’t undo training already done and doesn’t cover AI that doesn’t generate content (for example personalisation, security or moderation models); for those, LinkedIn offers a Data Processing Objection form.",
+    "since": "2024-09",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Training on EU/EEA members’ data started on 3 November 2025, with the setting on by default. You can also object under GDPR Article 21 using LinkedIn’s objection form.",
+      "UK": "Training on UK members’ data started on 3 November 2025, with the setting on by default.",
+      "CH": "Training on Swiss members’ data started on 3 November 2025, with the setting on by default.",
+      "CA": "Training on Canadian members’ data started on 3 November 2025, with the setting on by default.",
+      "US": "US members’ data has been used since at least September 2024; LinkedIn updated its terms after training had begun."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "data-for-ai-toggle",
+      "type": "toggle",
+      "title": "Turn off “Data for Generative AI Improvement”",
+      "description": "The account setting that stops LinkedIn (and Microsoft) training content-generating AI on your data.",
+      "url": "https://www.linkedin.com/mypreferences/d/settings/data-for-ai-improvement",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to LinkedIn.",
+        "Click Me › Settings & Privacy.",
+        "Select Data privacy, then “Data for Generative AI Improvement”.",
+        "Turn off “Use my data for training content creation AI models”."
+      ],
+      "effect": "Stops LinkedIn and its affiliates, including Microsoft, using your data and content to train content-generating AI from now on. Training already done is not undone.",
+      "automation": {
+        "confidence": "medium",
+        "hostPermissions": ["https://www.linkedin.com/*"],
+        "loginIndicators": [
+          {
+            "selector": "input[name='session_key']"
+          },
+          {
+            "selector": "input[name='session_password']"
+          }
+        ],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": [
+                "Use my data for training content creation AI models",
+                "training content creation AI models"
+              ]
+            },
+            "timeoutMs": 20000,
+            "description": "Waiting for “Data for Generative AI Improvement” to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": [
+                "Use my data for training content creation AI models",
+                "training content creation AI models",
+                "Data for Generative AI Improvement"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Turning off “Use my data for training content creation AI models”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": [
+                "Use my data for training content creation AI models",
+                "training content creation AI models"
+              ]
+            },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": [
+                "Use my data for training content creation AI models",
+                "training content creation AI models",
+                "Data for Generative AI Improvement"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    },
+    {
+      "id": "objection-form",
+      "type": "form",
+      "title": "Object to other AI uses of your data (objection form)",
+      "description": "LinkedIn’s Data Processing Objection form covers AI the setting doesn’t, such as models used for personalisation, security and moderation.",
+      "url": "https://www.linkedin.com/help/linkedin/ask/TS-DPRO",
+      "regions": ["ALL"],
+      "effort": "moderate",
+      "steps": [
+        "Sign in to LinkedIn and open the Data Processing Objection form.",
+        "Choose the processing you object to (for example, training AI models) and explain your request.",
+        "Submit, and keep LinkedIn’s reply."
+      ],
+      "effect": "LinkedIn reviews the objection and applies it to future processing only. Outside the EU, UK and Switzerland it may not be legally required to agree."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      {
+        "url": "https://www.linkedin.com",
+        "name": "li_at"
+      }
+    ]
+  },
+  "contacts": {
+    "privacyRequestUrl": "https://www.linkedin.com/help/linkedin/ask/TSO-DPO",
+    "postalAddress": "LinkedIn Ireland Unlimited Company, Wilton Plaza, Wilton Place, Dublin 2, Ireland"
+  },
+  "policyUrls": [
+    "https://www.linkedin.com/legal/privacy-policy",
+    "https://www.linkedin.com/help/linkedin/answer/a5538339"
+  ],
+  "sources": [
+    {
+      "title": "LinkedIn and Generative AI (GAI) FAQs | LinkedIn Help",
+      "url": "https://www.linkedin.com/help/linkedin/answer/a5538339",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Control whether LinkedIn uses your data to improve generative AI | LinkedIn Help",
+      "url": "https://www.linkedin.com/help/linkedin/answer/a6278444",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Update to our Terms and data use | LinkedIn Help",
+      "url": "https://www.linkedin.com/help/linkedin/answer/a8059228",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "LinkedIn Privacy Policy",
+      "url": "https://www.linkedin.com/legal/privacy-policy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "LinkedIn scraped user data for training before updating its terms of service | TechCrunch",
+      "url": "https://techcrunch.com/2024/09/18/linkedin-scraped-user-data-for-training-before-updating-its-terms-of-service",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "LinkedIn will use your data to train its AI unless you opt out now | Malwarebytes",
+      "url": "https://www.malwarebytes.com/blog/news/2025/09/linkedin-will-use-your-data-to-train-its-ai-unless-you-opt-out-now",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

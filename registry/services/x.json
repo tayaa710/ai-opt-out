@@ -1,0 +1,176 @@
+{
+  "id": "x",
+  "name": "X (Twitter)",
+  "company": "X Corp. (xAI)",
+  "category": "social",
+  "brandColor": "#000000",
+  "domains": ["x.com", "twitter.com"],
+  "summary": "X shares your public posts and Grok chats with xAI to train Grok, and may let other companies train AI on them. It’s on by default; a checkbox in X’s privacy settings turns it off.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "opted_in",
+    "dataTypes": ["posts", "profile", "activity", "chats"],
+    "details": "X shares data such as your public profile, public posts, engagement and your interactions with Grok with its affiliate xAI, which uses it to train and fine-tune Grok. X’s privacy policy also lets “third-party collaborators” use your data to train their own AI models unless you opt out. Both are controlled by one checkbox under Settings and privacy › Privacy and safety › Grok & Third-party Collaborators, which is ticked by default. X’s terms (updated 15 January 2026) grant X a broad licence to use your content, including Grok prompts and outputs, for training AI. Posts from protected accounts are reported not to be used. The standalone Grok app at grok.com has its own training setting (see the separate Grok entry).",
+    "since": "2024-05",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "After action by Ireland’s Data Protection Commission, X agreed in 2024 not to use EU/EEA users’ public posts collected between 7 May and 1 August 2024 to train Grok. In April 2025 the DPC opened a formal inquiry into Grok training on EU posts. The checkbox works in the EU, and you can also object under GDPR Article 21 through X’s privacy form.",
+      "UK": "You can also object under UK GDPR Article 21 through X’s privacy form."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "grok-training-checkbox",
+      "type": "toggle",
+      "title": "Untick Grok & third-party training in X’s privacy settings",
+      "description": "One checkbox controls sharing your public data and Grok interactions for training Grok and third-party AI models.",
+      "url": "https://x.com/settings/grok_settings",
+      "regions": ["ALL"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to X in a browser.",
+        "Go to More › Settings and privacy › Privacy and safety › Grok & Third-party Collaborators.",
+        "Untick “Allow your public data as well as your interactions, inputs, and results with Grok and xAI to be used for training and fine-tuning.”",
+        "Optional: the personalisation and conversation-memory boxes on the same page don’t control training, but you can untick them too."
+      ],
+      "effect": "Stops X sharing your public data and Grok interactions for training Grok or third-party models from now on. Data already used stays, and X’s terms still grant it a broad licence to your content.",
+      "automation": {
+        "confidence": "medium",
+        "hostPermissions": ["https://x.com/*"],
+        "loginIndicators": [
+          {
+            "text": ["Sign in to X"]
+          },
+          {
+            "selector": "a[href='/login']"
+          }
+        ],
+        "steps": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": [
+                "Allow your public data as well as your interactions",
+                "to be used for training and fine-tuning"
+              ]
+            },
+            "timeoutMs": 20000,
+            "description": "Waiting for Grok & Third-party Collaborators settings to load"
+          },
+          {
+            "action": "setToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": [
+                "Allow your public data as well as your interactions",
+                "to be used for training and fine-tuning"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000,
+            "description": "Unticking “Allow your public data … to be used for training and fine-tuning”"
+          }
+        ],
+        "verify": [
+          {
+            "action": "waitFor",
+            "target": {
+              "text": [
+                "Allow your public data as well as your interactions",
+                "to be used for training and fine-tuning"
+              ]
+            },
+            "timeoutMs": 20000
+          },
+          {
+            "action": "assertToggle",
+            "target": {
+              "selector": "input[type='checkbox'], [role='switch'], [role='checkbox']",
+              "text": [
+                "Allow your public data as well as your interactions",
+                "to be used for training and fine-tuning"
+              ]
+            },
+            "state": "off",
+            "timeoutMs": 10000
+          }
+        ]
+      }
+    },
+    {
+      "id": "gdpr-objection",
+      "type": "form",
+      "title": "Object to AI training under data protection law (X privacy form)",
+      "description": "A formal objection for people covered by GDPR, UK GDPR or the Swiss FADP.",
+      "url": "https://help.x.com/forms/privacy",
+      "regions": ["EU", "UK", "CH"],
+      "effort": "moderate",
+      "steps": [
+        "Open X’s privacy form and choose the option for a data protection request.",
+        "Say that you object under Article 21 GDPR to X using your personal data to train AI, including sharing it with xAI and third-party collaborators.",
+        "Submit and keep the confirmation."
+      ],
+      "effect": "X must stop unless it can show compelling legitimate grounds. It applies to future processing only."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      {
+        "url": "https://x.com",
+        "name": "auth_token"
+      }
+    ]
+  },
+  "contacts": {
+    "privacyRequestUrl": "https://help.x.com/forms/privacy",
+    "postalAddress": "X Internet Unlimited Company, One Cumberland Place, Fenian Street, Dublin 2, D02 AX07, Ireland"
+  },
+  "policyUrls": ["https://x.com/en/privacy", "https://help.x.com/en/using-x/about-grok"],
+  "sources": [
+    {
+      "title": "About Grok | X Help",
+      "url": "https://help.x.com/en/using-x/about-grok",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "X Privacy Policy",
+      "url": "https://x.com/en/privacy",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "More information on X’s data processing | X Help",
+      "url": "https://help.x.com/en/rules-and-policies/data-processing-legal-bases",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Data Protection Commission welcomes conclusion of proceedings relating to X’s AI tool ‘Grok’ | DPC Ireland",
+      "url": "https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Ireland’s data regulator investigates X’s use of European user data to train Grok | TechCrunch",
+      "url": "https://techcrunch.com/2025/04/11/irelands-data-regulator-investigates-xs-use-of-european-user-data-to-train-grok",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Elon Musk’s X is changing its privacy policy to allow third parties to train AI on your posts | TechCrunch",
+      "url": "https://techcrunch.com/2024/10/17/elon-musks-x-is-changing-its-privacy-policy-to-allow-third-parties-to-train-ai-on-your-posts",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "X’s New Terms Make AI Prompts, Outputs Explicitly the User’s Responsibility | Pure AI",
+      "url": "https://pureai.com/articles/2025/12/22/x-new-terms-ai-prompts.aspx",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "id": "meta-ai",
+  "name": "Meta AI",
+  "company": "Meta Platforms",
+  "category": "ai-assistant",
+  "brandColor": "#0064E0",
+  "domains": ["meta.ai"],
+  "summary": "Meta uses what you say to Meta AI, including text, voice and images, to improve its AI and, outside the EU, UK and South Korea, to target ads. Only the EU, UK, Switzerland and Brazil get an objection form.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "varies_by_region",
+    "dataTypes": ["chats", "voice", "images", "feedback"],
+    "details": "Meta’s help pages say it uses your interactions with its AIs to improve AI at Meta. This covers the Meta AI app and website and Meta AI inside Facebook, Instagram, Messenger and WhatsApp. Meta says voice transcripts and recordings may be stored to improve its products, including speech technology. Your profile, activity and location can be used to personalise answers, and if Meta AI can’t answer, your message may be shared with search partners. Since 16 December 2025 (outside the EU, UK and South Korea) your Meta AI chats also shape the content and ads you see; Meta says topics such as health, religion or politics are not used for ads. You can delete chats, but no setting stops training. Meta also has a separate form for personal information from third-party sources used to train its AI.",
+    "since": "2023-09",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Meta AI launched in the EU in 2025. Since 27 May 2025 your interactions with Meta AI can be used for training unless you object with Meta’s form. Chats are not used for ads in the EU.",
+      "UK": "You can object with Meta’s form. Chats are not used for ads in the UK.",
+      "CH": "You can object with Meta’s form (choose Switzerland as your country).",
+      "BR": "You can object with Meta’s form.",
+      "US": "No opt-out from training, and since 16 December 2025 your chats are also used to personalise ads and content. You can delete chats (Meta AI app › Settings › Data & privacy › Manage your information), delete saved memories, reset WhatsApp AI chats with /reset-ai, or avoid Meta AI. Deleting doesn’t undo past training.",
+      "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil there is no opt-out, and (except in South Korea) your chats also shape ads and content. You can delete chats (Meta AI app › Settings › Data & privacy › Manage your information), delete saved memories, reset WhatsApp AI chats with /reset-ai, or avoid Meta AI. Deleting doesn’t undo past training."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "objection-form",
+      "type": "form",
+      "title": "Object to Meta using your Meta AI chats for training",
+      "description": "Meta’s objection form covers your interactions with AI at Meta as well as public posts. Use the form for the account you use Meta AI with.",
+      "url": "https://www.facebook.com/help/contact/712876720715583",
+      "regions": ["EU", "UK", "CH", "BR"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Facebook and open the objection form. If you use Meta AI with an Instagram account, use Instagram’s form instead (help.instagram.com/contact/767264225370182). WhatsApp has its own form in the app.",
+        "Choose your country and enter the email address on your account.",
+        "Add a short reason if the form asks for one, then submit.",
+        "Keep the confirmation email Meta sends you."
+      ],
+      "effect": "Once accepted, Meta stops using your future Meta AI interactions (and public posts) for AI training. Chats already used are not removed."
+    }
+  ],
+  "contacts": {
+    "privacyRequestUrl": "https://www.facebook.com/privacy/center/",
+    "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+  },
+  "policyUrls": [
+    "https://www.facebook.com/privacy/policy/",
+    "https://www.meta.com/help/artificial-intelligence/1771195753735844/"
+  ],
+  "sources": [
+    {
+      "title": "Start a chat with Meta AI | Meta Help Center",
+      "url": "https://www.meta.com/help/artificial-intelligence/943942350800511/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Manage your information on Meta AI and Vibes | Meta Help Center",
+      "url": "https://www.meta.com/help/artificial-intelligence/1771195753735844/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Remove posts, chats and media from Meta AI and Vibes | Meta Help Center",
+      "url": "https://www.meta.com/help/artificial-intelligence/2457110494637611/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Introducing the Meta AI App | Meta Newsroom",
+      "url": "https://about.fb.com/news/2025/04/introducing-meta-ai-app-new-way-access-ai-assistant/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Improving Your Recommendations on Our Apps With AI at Meta | Meta Newsroom",
+      "url": "https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How Meta uses information for generative AI models | Meta Privacy Center",
+      "url": "https://www.facebook.com/privacy/genai/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Data Subject Rights for Third Party Information Used for AI at Meta | Facebook",
+      "url": "https://www.facebook.com/help/contact/510058597920541",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How to delete your chats with Meta AI | WhatsApp Help Center",
+      "url": "https://faq.whatsapp.com/688464770796037/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+      "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

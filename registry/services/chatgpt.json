@@ -5,17 +5,17 @@
   "category": "ai-assistant",
   "brandColor": "#10a37f",
   "domains": ["chatgpt.com", "chat.openai.com", "openai.com"],
-  "summary": "Your ChatGPT conversations are used to train OpenAI's models unless you turn this off. Business, Enterprise and API data is excluded by default.",
+  "summary": "Your ChatGPT conversations are used to train OpenAI's models unless you turn this off. Business, Enterprise, Edu and API data is excluded by default.",
   "training": {
     "trainsOnUserData": "yes",
     "defaultState": "opted_in",
-    "dataTypes": ["chats", "files", "voice", "images", "feedback"],
-    "details": "For Free, Plus and Pro accounts, OpenAI may use your conversations (text, uploaded files, images and voice) to improve its models. The \"Improve the model for everyone\" setting controls this and is on by default. Temporary Chats are never used for training. ChatGPT Business, Enterprise, Edu and API data is not used for training by default.",
+    "dataTypes": ["chats", "files", "images", "voice", "feedback"],
+    "details": "For Free, Go, Plus and Pro accounts, OpenAI may use your conversations (text, uploaded files and images, and transcripts of voice chats) to train its models. The “Improve the model for everyone” setting controls this. It is on by default and, when you are signed in, applies to your whole account on every device. Audio and video clips from voice chats are only used if you also turn on “Include your audio recordings” or “Include your video recordings”. Temporary Chats are not used for training (OpenAI may keep a copy for up to 30 days for safety). If you rate a reply with thumbs up or down, that whole conversation may be used for training even if you opted out. ChatGPT Business (formerly Team), Enterprise, Edu and API data is not used for training by default. Sora has its own setting, but a “Do not train on my content” request in the privacy portal covers ChatGPT and Sora.",
     "since": "2022-11",
     "retroactiveRemoval": false,
     "regionNotes": {
-      "EU": "You can also object to processing under GDPR Article 21 using OpenAI's privacy portal.",
-      "UK": "You can also object to processing under UK GDPR Article 21 using OpenAI's privacy portal."
+      "EU": "OpenAI Ireland Limited is the data controller in the EEA and Switzerland. You can also object to training under GDPR Article 21 through OpenAI's privacy portal or dsar@openai.com.",
+      "UK": "You can also object to training under UK GDPR Article 21 through OpenAI's privacy portal or dsar@openai.com."
     }
   },
   "optOuts": [
@@ -31,15 +31,14 @@
         "Open ChatGPT and sign in.",
         "Click your profile picture, then Settings.",
         "Open Data controls.",
-        "Turn off “Improve the model for everyone”."
+        "Select “Improve the model for everyone”, turn it off, then select Done.",
+        "In the mobile app the same switch is under Settings → Data controls. It syncs to your account when you are signed in."
       ],
-      "effect": "Stops new conversations from being used to train OpenAI models. Chats already used for training are not removed. Your chat history is kept.",
+      "effect": "Stops new conversations from being used to train OpenAI models. Chats already used for training are not removed, and your chat history is kept. Conversations you rate with thumbs up or down can still be used.",
       "automation": {
         "confidence": "medium",
         "hostPermissions": ["https://chatgpt.com/*"],
-        "loginIndicators": [
-          { "role": "button", "text": ["Log in", "Sign up for free"] }
-        ],
+        "loginIndicators": [{ "role": "button", "text": ["Log in", "Sign up for free"] }],
         "steps": [
           {
             "action": "waitFor",
@@ -91,41 +90,62 @@
       "id": "privacy-portal-do-not-train",
       "type": "form",
       "title": "Ask OpenAI not to train on your content (privacy portal)",
-      "description": "A request through OpenAI's privacy portal. Useful if you want a written record of your objection.",
-      "url": "https://privacy.openai.com/",
+      "description": "A request through OpenAI's privacy portal. It also covers Sora, and gives you a written record of your choice.",
+      "url": "https://privacy.openai.com/policies?modal=take-control",
       "regions": ["ALL"],
       "effort": "moderate",
       "steps": [
         "Open OpenAI's privacy portal.",
-        "Choose “Make a privacy request”.",
-        "Select “Do not train on my content”.",
-        "Confirm using the email address on your ChatGPT account."
+        "Choose “Do not train on my content”.",
+        "Enter the email address of your ChatGPT account and confirm it using the link OpenAI emails you.",
+        "Submit the request."
       ],
-      "effect": "Records a request that OpenAI not train on your content going forward. It does not delete chats already used."
+      "effect": "Once processed, new conversations (and Sora content) are not used to train OpenAI models. It does not remove data already used for training."
     }
   ],
   "detection": {
-    "cookies": [
-      { "url": "https://chatgpt.com", "name": "__Secure-next-auth.session-token" }
-    ]
+    "cookies": [{ "url": "https://chatgpt.com", "name": "__Secure-next-auth.session-token" }]
   },
   "contacts": {
     "privacyEmail": "dsar@openai.com",
+    "dpoEmail": "dpo@openai.com",
     "privacyRequestUrl": "https://privacy.openai.com/"
   },
   "policyUrls": [
     "https://openai.com/policies/privacy-policy/",
-    "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt"
+    "https://openai.com/policies/eu-privacy-policy/",
+    "https://openai.com/policies/how-your-data-is-used-to-improve-model-performance/",
+    "https://help.openai.com/en/articles/7730893-data-controls-faq"
   ],
   "sources": [
     {
+      "title": "Europe privacy policy | OpenAI (updated 24 August 2026)",
+      "url": "https://openai.com/policies/eu-privacy-policy/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How your data is used to improve model performance | OpenAI",
+      "url": "https://openai.com/policies/how-your-data-is-used-to-improve-model-performance/",
+      "accessed": "2026-09-28"
+    },
+    {
       "title": "Data controls in ChatGPT | OpenAI Help Center",
-      "url": "https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt",
+      "url": "https://help.openai.com/en/articles/7730893-data-controls-faq",
       "accessed": "2026-09-28"
     },
     {
       "title": "How your data is used to improve model performance | OpenAI Help Center",
       "url": "https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "ChatGPT Voice | OpenAI Help Center",
+      "url": "https://help.openai.com/en/articles/8400625-voice-mode-faq",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Temporary chat in ChatGPT | OpenAI Help Center",
+      "url": "https://help.openai.com/en/articles/8914046-temporary-chat-faq",
       "accessed": "2026-09-28"
     }
   ],

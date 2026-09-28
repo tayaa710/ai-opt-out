@@ -1,0 +1,114 @@
+{
+  "id": "facebook",
+  "name": "Facebook",
+  "company": "Meta Platforms",
+  "category": "social",
+  "brandColor": "#0866FF",
+  "domains": ["facebook.com", "fb.com"],
+  "summary": "Meta trains its AI on public Facebook posts, comments and photos from adults, and on your chats with Meta AI. The EU, UK, Switzerland and Brazil have an objection form; the US and most other countries have no opt-out.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "varies_by_region",
+    "dataTypes": ["posts", "comments", "images", "chats"],
+    "details": "Meta trains its generative AI models (Llama and the models behind Meta AI) on content adults share publicly on Facebook, such as public posts, comments, and photos with their captions, and on your interactions with Meta AI. Meta says it only uses public content and does not train on private messages with friends and family unless you or someone in the chat shares them with Meta AI. Photos or posts of you that other people share publicly can still be used even if you object. Since 16 December 2025, outside the EU, UK and South Korea, Meta also uses your Meta AI chats to personalise the content and ads you see, with no opt-out.",
+    "since": "2023-09",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Since 27 May 2025 Meta has trained on public Facebook content from adults in the EU/EEA, relying on “legitimate interests”. You can object at any time with Meta’s form; an objection only covers future training. Public content from under-18s in the EU is not used.",
+      "UK": "Meta began training on UK adults’ public posts in late 2024 after changes agreed with the ICO. UK users can object with the same form, which only covers future training.",
+      "CH": "Swiss users were included from 27 May 2025 and can object with the same form (choose Switzerland as your country).",
+      "BR": "After Brazil’s data regulator (ANPD) paused Meta’s plans in 2024, Meta resumed with notices and an objection form for Brazilian users.",
+      "US": "No opt-out. Meta has used public posts from US adults to train its AI since at least 2023. Meta says it only trains on public content, so you can set future posts to Friends (Settings › Audience and visibility › Posts), use “Limit who can see past posts”, or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+      "AU": "No opt-out. Meta confirmed to an Australian Senate inquiry in 2024 that it trains on public posts from Australian adults. Meta says it only trains on public content, so you can set future posts to Friends (Settings › Audience and visibility › Posts), use “Limit who can see past posts”, or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+      "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil, Meta offers no opt-out in most countries, including Canada, India and Japan. Meta says it only trains on public content, so you can set future posts to Friends (Settings › Audience and visibility › Posts), use “Limit who can see past posts”, or delete public posts. Avoid Meta AI if you don’t want your chats used."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "objection-form",
+      "type": "form",
+      "title": "Object to Meta using your Facebook data for AI",
+      "description": "Meta’s “right to object” form for AI at Meta. One objection should cover accounts linked in the same Accounts Center; if in doubt, also submit the Instagram form.",
+      "url": "https://www.facebook.com/help/contact/712876720715583",
+      "regions": ["EU", "UK", "CH", "BR"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Facebook in your browser.",
+        "Open the objection form. You can also reach it from Settings & privacy › Privacy Center, on the page about how Meta uses information for generative AI models.",
+        "Choose your country and enter the email address on your account. Add a short reason if the form asks for one.",
+        "Submit, then keep the confirmation email Meta sends you."
+      ],
+      "effect": "Once accepted, Meta stops using your public Facebook posts, comments and photos, and your Meta AI chats, for future AI training. Data already used is not removed, and public posts about you by others are not covered."
+    }
+  ],
+  "detection": {
+    "cookies": [
+      {
+        "url": "https://www.facebook.com",
+        "name": "c_user"
+      }
+    ]
+  },
+  "contacts": {
+    "privacyRequestUrl": "https://www.facebook.com/privacy/center/",
+    "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+  },
+  "policyUrls": ["https://www.facebook.com/privacy/policy/", "https://www.facebook.com/privacy/genai/"],
+  "sources": [
+    {
+      "title": "How Meta uses information for generative AI models | Meta Privacy Center",
+      "url": "https://www.facebook.com/privacy/genai/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+      "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Building AI Technology for the UK in a Responsible and Transparent Way | Meta Newsroom",
+      "url": "https://about.fb.com/news/2024/09/building-ai-technology-for-the-uk-in-a-responsible-and-transparent-way/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Improving Your Recommendations on Our Apps With AI at Meta | Meta Newsroom",
+      "url": "https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Meta starts training its AI using Europeans’ personal data (Icelandic Data Protection Authority, links both objection forms)",
+      "url": "https://island.is/en/news/meta-starts-training-its-artificial-intelligence-using-europeans-personal",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Daten für Meta-KI: Wer nicht will, muss jetzt handeln | SRF Kassensturz (Switzerland)",
+      "url": "https://www.srf.ch/sendungen/kassensturz-espresso/espresso/kuenstliche-intelligenz-daten-fuer-meta-ki-wer-nicht-will-muss-jetzt-handeln",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Processing of Personal Data for AI Training in Brazil: ANPD’s decisions in the Meta case | Future of Privacy Forum",
+      "url": "https://fpf.org/blog/processing-of-personal-data-for-ai-training-in-brazil-takeaways-from-anpds-preliminary-decisions-in-the-meta-case/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Privacy Matters: Meta’s Generative AI Features | Meta Newsroom",
+      "url": "https://about.fb.com/news/2023/09/privacy-matters-metas-generative-ai-features/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Seus dados agora podem treinar a IA da Meta — veja como impedir | TechTudo (Brazil)",
+      "url": "https://www.techtudo.com.br/noticias/2025/12/seus-dados-agora-podem-treinar-a-ia-da-meta-veja-como-impedir-edapps.ghtml",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

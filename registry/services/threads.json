@@ -1,0 +1,92 @@
+{
+  "id": "threads",
+  "name": "Threads",
+  "company": "Meta Platforms",
+  "category": "social",
+  "brandColor": "#101010",
+  "domains": ["threads.com", "threads.net"],
+  "summary": "Meta can train its AI on public Threads posts from adults and on your chats with Meta AI. Threads has no opt-out of its own; in the EU, UK, Switzerland and Brazil you object through Meta’s Instagram form.",
+  "training": {
+    "trainsOnUserData": "yes",
+    "defaultState": "varies_by_region",
+    "dataTypes": ["posts", "comments", "images", "chats"],
+    "details": "A Threads profile is part of your Instagram account and is covered by Meta’s Privacy Policy and the Threads Supplemental Privacy Policy. Public Threads posts and replies from adults are public content on Meta’s products, which Meta uses to train its generative AI, and by using Threads you agree that your interactions with AIs are used to improve AI at Meta. Meta has not published a Threads-specific objection form or said explicitly whether its Instagram objection covers Threads; objections are applied to accounts in the same Accounts Center, so submitting the Instagram form is the best available route. Posts from a private Threads profile are not public.",
+    "retroactiveRemoval": false,
+    "regionNotes": {
+      "EU": "Meta has trained on public content from EU/EEA adults since 27 May 2025. Object through the Instagram form linked to your Threads profile; the objection only covers future training.",
+      "UK": "UK users can object through the Instagram form linked to their Threads profile.",
+      "CH": "Swiss users can object through the Instagram form (choose Switzerland as your country).",
+      "BR": "Brazilian users can object through Meta’s Instagram or Facebook form.",
+      "US": "No opt-out. You can make your Threads profile private (Settings › Privacy › Private profile) or delete public posts. Avoid Meta AI if you don’t want your chats used.",
+      "OTHER": "Outside the EU/EEA, UK, Switzerland and Brazil, Meta offers no opt-out in most countries. You can make your Threads profile private (Settings › Privacy › Private profile) or delete public posts. Avoid Meta AI if you don’t want your chats used."
+    }
+  },
+  "optOuts": [
+    {
+      "id": "objection-form",
+      "type": "form",
+      "title": "Object via Meta’s Instagram form (covers linked accounts)",
+      "description": "There is no Threads-only form. Submit Meta’s Instagram objection while signed in to the Instagram account behind your Threads profile.",
+      "url": "https://help.instagram.com/contact/767264225370182",
+      "regions": ["EU", "UK", "CH", "BR"],
+      "effort": "quick",
+      "steps": [
+        "Sign in to Instagram with the account your Threads profile uses.",
+        "Open the objection form, choose your country and enter the email address on your account.",
+        "Add a short reason if the form asks for one, then submit.",
+        "Keep the confirmation email Meta sends you."
+      ],
+      "effect": "Once accepted, Meta should stop using your public content and Meta AI chats for future training across linked accounts. Meta hasn’t confirmed Threads is covered, and past training is not undone."
+    }
+  ],
+  "contacts": {
+    "privacyRequestUrl": "https://privacycenter.instagram.com/",
+    "postalAddress": "Meta Platforms Ireland Limited, Merrion Road, Dublin 4, D04 X2K5, Ireland"
+  },
+  "policyUrls": [
+    "https://help.instagram.com/515230437301944",
+    "https://privacycenter.instagram.com/privacy/genai/"
+  ],
+  "sources": [
+    {
+      "title": "Threads Supplemental Privacy Policy | Instagram Help Center",
+      "url": "https://help.instagram.com/515230437301944",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "About Threads | Instagram Help Center",
+      "url": "https://help.instagram.com/788669719351544/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "How Meta uses information for generative AI models | Instagram Privacy Center",
+      "url": "https://privacycenter.instagram.com/privacy/genai/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Making AI Work Harder for Europeans | Meta Newsroom",
+      "url": "https://about.fb.com/news/2025/04/making-ai-work-harder-for-europeans/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Building AI Technology for the UK in a Responsible and Transparent Way | Meta Newsroom",
+      "url": "https://about.fb.com/news/2024/09/building-ai-technology-for-the-uk-in-a-responsible-and-transparent-way/",
+      "accessed": "2026-09-28"
+    },
+    {
+      "title": "Seus dados agora podem treinar a IA da Meta — veja como impedir | TechTudo (Brazil)",
+      "url": "https://www.techtudo.com.br/noticias/2025/12/seus-dados-agora-podem-treinar-a-ia-da-meta-veja-como-impedir-edapps.ghtml",
+      "accessed": "2026-09-28"
+    }
+  ],
+  "lastVerified": "2026-09-28",
+  "policyVersion": 1,
+  "changelog": [
+    {
+      "version": 1,
+      "date": "2026-09-28",
+      "summary": "Added to the NoTrain registry.",
+      "severity": "info"
+    }
+  ]
+}

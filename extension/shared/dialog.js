@@ -5,10 +5,11 @@ import { h, uid } from './dom.js';
 import { icon } from './icons.js';
 
 /**
- * @param {{ title: string, body?: string|Node, confirmLabel?: string, cancelLabel?: string, tone?: 'primary'|'danger', iconName?: string }} opts
+ * @param {{ title: string, body?: string|Node, confirmLabel?: string, cancelLabel?: string, tone?: 'primary'|'danger', iconName?: string, onConfirm?: () => void }} opts
+ *   onConfirm runs synchronously inside the confirm click (a user gesture), e.g. for permission requests.
  * @returns {Promise<boolean>}
  */
-export function confirmDialog({ title, body, confirmLabel = 'Confirm', cancelLabel = 'Cancel', tone = 'primary', iconName }) {
+export function confirmDialog({ title, body, confirmLabel = 'Confirm', cancelLabel = 'Cancel', tone = 'primary', iconName, onConfirm }) {
   return new Promise((resolve) => {
     const titleId = uid('dlg-title');
     const bodyId = uid('dlg-body');
@@ -38,7 +39,11 @@ export function confirmDialog({ title, body, confirmLabel = 'Confirm', cancelLab
     cancelBtn.addEventListener('click', () => dialog.close());
     confirmBtn.addEventListener('click', () => {
       result = true;
-      dialog.close();
+      try {
+        onConfirm?.();
+      } finally {
+        dialog.close();
+      }
     });
     dialog.addEventListener('click', (e) => {
       // Click on the backdrop closes.
