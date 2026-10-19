@@ -1,0 +1,55 @@
+Guides/Edit your website/Site settings/Make your website public
+Make your website public
+Last reviewed on October 5, 2026
+By setting your WordPress.com site to public, everyone on the internet can see it (including search engines). This guide will show you how to publish your website and make it public.
+In this guide
+Video tutorial
+Publish your website
+Discourage search engines
+Prevent third-party sharing
+Have a question?
+Ask our Support Assistant
+Video tutorial
+In this video, you'll learn how to make your WordPress.com website public. It walks through setting your site visibility so anyone on the internet can find it.
+Publish your website
+To publish your website and make it available on the internet, follow these steps:
+Visit your site's dashboard.
+Navigate to Settings → Reading.
+Scroll to the Site Visibility section.
+Select the Public option.
+If you don't see the Public option, your site hasn't been launched yet. Launch your site to make it public.
+Click the "Save Changes" button at the bottom of the page.
+Discourage search engines
+If you want all human visitors to be able to see your site but don't want your site to appear in search engines like Google, you can block most search engine web crawlers from visiting your site.
+To discourage search engines from indexing your site:
+Visit your site's dashboard.
+Navigate to Settings → Reading.
+Scroll to the Site Visibility section.
+Select the Public option and then tick the "Discourage search engines from indexing this site" checkbox.
+Click the "Save Changes" button at the bottom of the page.
+Please note that not all search engines may respect this setting. Using the "Discourage search engines" option will also exclude your blog posts from showing in the WordPress.com Reader.
+Prevent third-party sharing
+The "Prevent third-party sharing" option can be used to restrict your site's content from AI training and third-party use.
+To opt out of sharing your site's public content with third parties (including AI models):
+Visit your site's dashboard.
+Navigate to Settings → Reading.
+Scroll to the Site Visibility section.
+Select the Public option and then tick the "Prevent third-party sharing" checkbox
+Click the "Save Changes" button at the bottom of the page.
+We work with various third-party partners who license content, including companies and researchers looking to understand content across the web. This collaboration helps us foster innovation and encourage research into new areas. We provide a simple way to opt out of this content sharing, including with AI platforms that use content for model training.
+Activating the "Prevent third-party sharing" feature excludes that site's public content from our network of third-party content and research partners. It also adds known AI bots to the "disallow" list in your site's robots.txt file to stop them from crawling your site, though it is up to AI platforms to honor this request.
+If you manage multiple websites that you wish to exclude from AI training and third-party use, make sure to update the "Prevent third-party sharing" setting for each site.
+Was this guide helpful for you?
+Yay
+Nay
+Not quite what you're looking for? Get Help!
+Get Help
+Related guides
+Make your website private 3 min readLaunch your website 3 min readDisplay a coming soon page 2 min read
+In this guide
+Video tutorial
+Publish your website
+Discourage search engines
+Prevent third-party sharing
+Have a question?
+Ask our Support Assistant

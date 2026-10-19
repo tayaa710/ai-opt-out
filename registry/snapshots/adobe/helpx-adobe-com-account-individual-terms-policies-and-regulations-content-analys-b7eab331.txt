@@ -1,0 +1,144 @@
+Adobe Help Center
+Account, Plans, and Billing help
+Manage your account
+Create an Adobe account using social sign-in
+Create an Adobe account using an email address
+Can't find an Adobe account with your email address
+Close a duplicate Adobe account
+Change primary email for your Adobe account
+Manage your Adobe account profile
+Connect a social account with your Adobe account
+Disconnect a social account from your Adobe account
+Revoke third-party app access to your Adobe account
+How unlinking Facebook affects Adobe account access
+Delete your Adobe account
+Reactivate your Adobe account
+View your Adobe support cases
+Update an open Adobe support case
+Sign-in and security
+Sign-in methods
+Sign in with your social account
+Sign in to your Adobe account using email address
+Passkeys overview
+Use passkeys for your Adobe account
+Remove a saved passkey
+Use Adobe Account Access app to sign in to your Adobe account
+Can't sign in using the Adobe Account Access app
+Deactivate the Adobe Account Access app
+Adobe apps request QR code for sign-in
+Security and recovery
+Use two-step verification for your Adobe account
+Can't sign in with two-step verification
+Deactivate two-step verification
+Add or update your phone number
+Reset your Adobe password
+Reset forgotten password with phone verification
+Can't sign in to your Adobe account
+Can't sign in with social accounts
+Communications and preferences
+Didn't receive subscription-related emails from Adobe
+Manage phone notifications for Adobe transactions
+Manage marketing communication preferences
+Received a warning to update your browser
+Subscriptions and plans
+Plans types and eligibility
+Changes to Creative Cloud for individuals plans including students and teachers plans
+Changes to Creative Cloud for teams plans
+Changes to Creative Cloud higher education institution plans
+Web and mobile access with Creative Cloud for individuals plans
+Plan changes and upgrades
+Change your Adobe plan
+Upgrade to the Creative Cloud Pro plan
+Convert Creative Cloud trial to paid subscription
+Renewals and cancellations
+Auto-renew your Adobe subscription
+Renew or extend your Adobe subscription
+Reactivate an inactive Adobe subscription
+Renew your Adobe account plan with student and teacher discount
+Cancel your Adobe trial or subscription
+Account access after plan cancellation
+Close account due to death, incapacitation, or incarceration
+Renew your Adobe account with a nonprofit discount
+Adobe for Nonprofits renewal FAQ
+Billing and payments
+Payment methods
+Update payment information
+Update payment information for third-party Adobe subscriptions
+Switch between credit card and PayPal
+Update your PayPal details
+Pay for Adobe subscriptions with Klarna FAQ
+Online order and payment FAQ
+Remove a payment method from your Adobe account
+Pay for your Adobe purchases using SEPA
+View billing and invoices
+Find Adobe invoices and receipts
+Update your tax identification number
+Understand billing charges
+Payment and billing issues
+Identify your Adobe charge
+Adobe Charge Finder FAQ
+Retry a failed or missed payment
+Can't update your payment method on Adobe account
+Charged higher than expected on the bill
+Received renewal reminder after successful payment
+Terms, policies, and regulations
+Understand Adobe's subscription terms and refund policies
+Adobe compliance with U.S. Executive Order in Venezuela
+Content Analysis FAQ
+Your Adobe plan doesn't align with your primary country of use
+Content Analysis FAQ
+Last updated on Jun 4, 2026
+Find answers to your questions about content analysis for product improvement when using Creative Cloud and Document Cloud apps.
+Note
+We made some clarifying updates to this page, including how your opt-out rights work and using simpler language and examples.
+You are in control over whether Adobe may analyze your content that is processed or stored on our servers when using Creative Cloud and Document Cloud apps to improve our products and services.
+Generative AI
+We do not analyze your content to train generative AI models, unless you choose to submit content to the Adobe Stock marketplace.
+Our Adobe Firefly generative AI models were trained on licensed content, like Adobe Stock, and public domain content where copyright has expired.
+Frequently asked questions
+No.
+For clarity, all references to "content" in this FAQ are meant to refer to content processed or stored on our servers not your local device (like a computer, phone or tablet).
+Yes, though how you manage content analysis for product improvement varies by the type of account or profile you are using.
+As a reminder, turning off content analysis for product improvement does not affect your ability to use any features.
+Users with a personal account
+If you are accessing digital media apps via a personal account, you can turn off content analysis for product improvement at any time via your account preferences.
+Take the following steps to turn off content analysis for product improvement:
+Sign in at https://account.adobe.com/privacy.
+In the Content analysis for product improvement section, click the Off toggle.
+If you are a minor and do not see the content analysis setting in your account preferences, then you have been automatically opted out of content analysis for product improvement.
+Users with a business account or profile
+If you are accessing your account under a business profile or account (such as a team profile or a company or school account), then you have been automatically opted out of content analysis for product improvement. You will not see any toggle in your Adobe account setting.
+When you are not logged in or when you choose to participate in programs where you proactively submit content to improve our products and services, turning off content analysis does not affect our ability to analyze your content for product improvement. Examples of such programs include:
+Adobe Photoshop Improvement Program: This program allows you to submit the images you edit in Photoshop to help improve machine learning-based features. (Learn more)
+Feedback: Certain features allow you to submit content as feedback.
+Beta, Prerelease, and User Studies: Certain beta, prerelease, or early access products or features, including user studies.
+Adobe Stock Contributors: Content submitted to the Adobe Stock platform by contributors.
+Locally stored content
+We do not analyze content processed or stored locally on your device (like a computer, phone or tablet) for product improvement.
+Content on our servers
+Subject to your opt-out and consent rights described above, we may analyze your content that is processed or stored on our servers for product improvement.
+Your privacy is maintained during content analysis for product improvement. The insights obtained through content analysis will not be used to re-create your content or attempt to re-identify you.
+When we analyze your content for product improvement, we first aggregate content before using it to improve our products and services.
+Human review under limited circumstances
+Our human review process includes safeguards designed to help protect privacy and confidentiality. For example, if human review is performed on content that is not publicly available, we will perform the review with personnel subject to confidentiality requirements and privacy training.
+We may do human review of your content for product improvement in the following limited situations:
+If you make your content public, such as:
+Contributions to Adobe Stock and Behance.
+Content that you submit to be featured on Adobe Express.
+Content that you submit as tutorials in Lightroom.
+When you submit content to us for human review, such as:
+You submit feedback with content to our engineering teams for feature development.
+If you participate in a prerelease, beta, early access, or product improvement program, such as:
+You submit content through the Adobe Photoshop Improvement Program.
+You submit content through the Adobe Acrobat Improvement Program.
+If we can use automated systems to remove all user-generated materials and identifying features from your content, we may also human review your content for product improvement. For example: (1) PDFs that are processed so that only structural elements, and not any text or images, are left, or (2) Images that are processed so that only object masks remain (like the outline of an object).
+Previous
+Adobe compliance with U.S. Executive Order in Venezuela
+Next
+Your Adobe plan doesn't align with your primary country of use
+Learn
+Learn with step-by-step video tutorials and hands-on guidance right in the app.
+Community
+Join discussions, find answers, learn from experts, and share your knowledge.
+Adobe Home
+Access your favorite Creative Cloud apps, services, file management, and more.

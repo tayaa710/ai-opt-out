@@ -1,0 +1,28 @@
+In certain cases, your input and output data (such as conversations, documents, and other user-provided content) may be included in Mistral's model training programs.
+🔑 You retain full control over this processing and have the right to opt out of these programs at any time.
+The opt-out process depends on the service or platform used, as described below.
+Opt out of Vibe data training (via the Admin panel)
+🔑 Vibe: users are not opted out by default and can opt out at any time in their settings.
+🔑 Vibe (Teams): Administrators can disable data training usage for the entire organization.
+🔑 Vibe (Enterprise): customers are opted out of training by default - the opt-in toggle is managed at the admin level.
+You can opt out of training through the Admin panel by following the procedure below:
+Select Vibe under the Manage section.
+Under the Privacy section, disable the toggle labelled Allow your interactions to be used to train our models.
+📌 Documents attached or uploaded within Vibe are considered as input data. Therefore, you may wish to opt out to prevent such documents from being used to improve Mistral's models.
+🔑 Once the opt-out is confirmed, Mistral no longer uses your input or output data for the purpose of training its models.
+Opt out of Vibe data training on the mobile application (iOS and Android)
+On both iOS and Android, the opt-out procedure is as follows:
+Open the Settings page of the application.
+Select Data & Account Controls under the Account section.
+In the Data & Account Controls panel, deselect the Enable data sharing checkbox to opt out of Mistral's training program.
+Opt out of Mistral Studio and API data training (via the Admin panel)
+🔑 Customers retain full control over this processing and have the right to opt out at any time.
+You may opt out of data training for Mistral Studio and related API services by following the steps below:
+In the Admin panel, open the Privacy menu in the left-hand navigation bar.
+Under the Anonymous improvement data section, disable the toggle to prevent API calls and related data from being used to improve Mistral's services.
+🔑 Vibe and API opt-out toggles are separate. Opting out of one does not opt you out of the other - you must configure each toggle individually.
+Can I activate Zero Data Retention (ZDR)?
+Do you use my user data to train your Artificial Intelligence models?
+Can other people view my conversations?
+How can I exercise my GDPR rights?
+How do you handle my data when using the Memories feature?

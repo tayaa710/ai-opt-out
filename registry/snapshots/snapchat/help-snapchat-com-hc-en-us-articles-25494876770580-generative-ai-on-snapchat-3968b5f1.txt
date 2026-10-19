@@ -1,0 +1,57 @@
+{[{category.name}]}
+{[{article.name}]}
+Contact Us
+Snapchat Support
+Using Snapchat
+Generative AI on Snapchat
+Table of Contents:
+What is generative AI?
+Which Snapchat features use generative AI?
+How can I recognize generative AI tools on Snapchat?
+What is the Snap Ghost with sparkles watermark?
+What are the dos and don'ts of generative AI on Snapchat?
+How is information I share with generative AI features used?
+What can I do if I don't like an image or response created with generative AI?
+How is my content used for generative AI improvement?
+What is generative AI?
+Generative AI is a type of technology that learns from a large amount of data to create entirely new content - like text, images, and videos. Machine learning models, like generative AI, can get more accurate over time by recognizing patterns. For example, it can recognize that an image of a dog is a dog after seeing many pictures of different breeds by identifying similarities in images. These models evolve (for example, when they are trained with additional data) so that over time they get better, eventually recognizing more attributes (for example, a specific breed of dog).
+Which Snapchat features use generative AI?
+We are constantly working on new ways to enhance your experience with generative AI. Many new features on Snapchat are powered by generative AI, like AI Lenses, My AI, AI Snaps in Memories, AI Snaps in creative tools, personalized titles or chapter labels for some Featured Stories in Memories, generating songs from Chat messages, and AI-powered replies when you message Team Snapchat (where available).
+How can I recognize generative AI tools on Snapchat?
+We may indicate that a feature in Snapchat is powered by generative AI in a number of ways, including using the sparkle icon ✨, specific disclaimers, Context Cards, or tool tips. When you see these contextual symbols or other indicators in Snapchat, you should know that you are interacting with AI and not a human, or viewing content that has been produced using AI and does not depict real world scenarios.
+Here are examples of what these AI indicators look like in Snapchat:
+When some AI generated images are shared with you on Snapchat, we may include a Context Card to let you know that the image was created with a generative AI-powered feature.
+What is the Snap Ghost with sparkles watermark?
+Some generative AI-powered features, like AI Snaps, allow you to create or edit images. When you export or save a generated image to Camera Roll, a watermark of a Snap Ghost with sparkles may be added to those images. The purpose of these watermarks is to provide transparency that the image was created with generative AI and is not real or based on real events, even if it is a realistic style.
+Here's an example of what the watermark looks like:
+⚠️ Please Note: Not all AI generated images will include a Context Card or watermark. Images created with non-Snap products may not be labeled as AI generated.
+What are the dos and don'ts of generative AI on Snapchat?
+Across all of Snapchat's tools and services we strive to empower people to express themselves, live in the moment, learn about the world, and have fun together. We are so excited by generative AI technology's potential to help our community continue to unlock their creativity and imagination.
+Generative AI is a quickly evolving technology and we are committed to developing it responsibly. To make Snapchat's generative AI features safe and meaningful for all users, please adhere to these guidelines:
+Dos:
+Get creative with generative AI-powered features to express yourself and learn new things!
+Use Snapchat responsibly, following our Terms of Service and Community Guidelines, which, among other things, prohibit generating harmful, inappropriate or misleading content.
+Don'ts:
+Do not share sensitive or private information. For example, do not share health related information with My AI or images of people who have not given you permission to use their image or likeness in generative AI imagery features.
+Do not assume generative AI outputs are true or depict real events. Generative AI can and will make mistakes, and as a result outputs may be incorrect, inappropriate, or wrong.
+Do not expect generated images to reflect how you look in real life or accurately maintain vital image attributes. This is technology intended to alter or transform an image. For example, if you typically wear a headscarf, generated images may depict you without one.
+Do not remove Snap's Ghost with sparkles watermark as it is a violation of our Terms.
+How is information I share with generative AI features used?
+When you share text and images with generative features, the AI uses that information to provide the generated text or image or response to you. If you ask our AI tools to generate a dog riding a horse, that text prompt "dog riding a horse" is processed by the model and used to deliver that image to you. For additional information on how Snap uses your information, please see our Privacy Policy and Privacy by Product page.
+What can I do if I don't like an image or response created with generative AI?
+Many of Snapchat's generative AI features have reporting tools. To report, tap the flag icon or three dots in the top right corner to provide feedback. Snap wants your feedback and we encourage you to report any content that violates our Community Guidelines.
+How is my content used for generative AI improvement?
+Snap may use the images, videos, audio, and text content that you have posted publicly on Snapchat (such as posts to Spotlight, Public Stories, and the Snap Map) to develop, train, and improve Snap's generative AI content creation models. This may include a combination of automated and human review of this public content. In Settings, you can opt out of allowing Snap to use your public content for these purposes. If you opt out, Snap will no longer use your public content to develop, train, or improve Snap's generative AI content creation models going forward, but opting out does not affect training that has already taken place.
+If you opt out, Snap may still use the content for other purposes consistent with our Privacy Policy and Privacy by Product page. Snap may still process and use information about you if you appear in public content posted on Snapchat by another user.
+If you'd like to opt out, follow these steps:
+Tap ⚙️ to go to Settings
+Under "Privacy Control," tap 'Manage My Information'
+From here, you can opt out of Snap using your Public Content to train generative AI models by toggling the setting off
+Sorry about that! How could this article have been more helpful?
+Thanks for your feedback!
+Articles in this section
+How does the AI Snaps creative tool work with Snapchat+?
+What is Snapchat+?
+About Context Cards on Snapchat
+Insights Glossary for Snapchat Creators
+Who can contact me on Snapchat?
