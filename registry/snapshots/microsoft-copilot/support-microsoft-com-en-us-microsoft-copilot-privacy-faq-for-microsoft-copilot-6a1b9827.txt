@@ -1,0 +1,206 @@
+Privacy FAQ for Microsoft Copilot
+Important
+An updated version of the Microsoft Copilot app for web, desktop, and mobile devices is available as of August 18, 2026. The information in this article applies only to the older version of the Microsoft Copilot app.
+If you're using Microsoft Copilot on the web, or if you've updated to or downloaded the new version of the Microsoft Copilot app, please see Microsoft Copilot for individuals: your data, privacy, and responsible AI.
+Note
+This article refers to privacy and safety topics related to Microsoft Copilot. It does not apply to the use of Microsoft 365 Copilot when signed in with Entra ID. For more information on this, read about Enterprise Data Protection.
+Conversation History
+Are my Copilot conversations saved?
+By default, the conversations you have with Copilot are saved, and you can view and access past conversations. For example, if you've created a detailed trip itinerary with Copilot, the conversation you have will be saved. You can return to and reference that conversation by accessing your conversation history in the Copilot app.
+How will my Copilot conversations be used?
+Your privacy and trust are paramount to us. Microsoft will only use your conversations for the limited purposes explained in the Microsoft Privacy Statement to troubleshoot problems, diagnose bugs, prevent abuse, and to monitor, analyze, and improve performance, and so we can provide Copilot to you.
+We give you the power to decide if you want us to use your conversations for other purposes. You control whether we can use your conversations to:
+Personalize your experience with Copilot and provide you with a more tailored and useful experience that meets your needs. You can disable personalization at any time.
+Train our generative AI models to create a better experience for you and others. You can opt out of use of your conversation activity for model training at any time.
+How long are my Copilot conversations saved for?
+By default, we store conversation activity for 18 months. You can delete individual conversations or your entire conversation history at any time.
+Can I delete my past conversations?
+Yes, you can delete individual conversations or your entire conversation history at any time.
+Will my Copilot conversations become visible to other users?
+No, nothing you say to Copilot will be made public. Your conversations and data will never be shared with other users.
+Why do my Microsoft 365 Copilot conversations appear in Copilot?
+Conversations you start in Microsoft 365 Copilot (using the same Microsoft personal account) will appear in Copilot. This will create a more seamless experience and will allow you to review and reference your past conversations when switching between Copilot experiences.
+Can I continue Microsoft 365 Copilot conversations within Copilot?
+No. Microsoft 365 Copilot conversations are shown as read-only within Copilot. To continue any conversations originating in Microsoft 365 Copilot, you'll be redirected back to the original Microsoft 365 app. Once you've updated that conversation, the full conversation will be viewable in Copilot, again as read-only.
+Is my Microsoft 365 Copilot data used to train Copilot models?
+No. Conversations from Microsoft 365 Copilot remain read-only for you and are not used to train Copilot's generative AI models.
+Can I control or turn off the visibility of Microsoft 365 Copilot conversations within Copilot?
+Yes. You can manage or turn off the visibility of Microsoft 365 Copilot conversations at any time in your Copilot settings.
+How will my privacy be protected when I upload an image or a file to Copilot?
+If you share a file with Copilot (for example, uploading an image or document and asking Copilot to summarize it), the file will be stored securely for a short time (no longer than 18 months) and then automatically deleted. The file itself and any conversations you have about the file will be treated just like any other conversation, subject to your choices about whether to permit model training and personalization, and which you can delete at any time.
+What happens to the images I capture and share with Copilot?
+When you use Copilot Vision, Copilot helps safeguard your data and protect your privacy.
+Images you capture with Vision are processed only to respond to your request and aren't used to train AI models or personalize your experience. Screenshots and camera images shared with Vision aren't stored after your session ends.
+Text transcripts of your interactions may be saved so you can revisit them later and to help monitor for abuse. You can delete these transcripts at any time.
+Copilot clearly shows when Vision is active, and you're always in control.
+How does Copilot handle images of people?
+Copilot may ask for your permission to process biometric data-like faces or hands-when you use features such as Copilot Vision. Consent for biometric processing applies anytime you capture an image or video while using Copilot. This includes through your use of Copilot Vision, and image generation and editing tools. You only need to give consent once, and it applies across all Copilot experiences that involve image or video input and capture.
+Biometric data is only processed if you upload or capture it, and it's used solely to respond to your request. For example, if you snap a selfie and ask Copilot for help choosing a new hairstyle, or learning how to whistle, it may analyze your facial features to help craft a response.
+You're always in control of what you share. If you prefer not to have biometric data processed, simply avoid using these features. Do not share images of others without their consent.
+How should I engage with Copilot on confidential or sensitive topics?
+You shouldn't provide any confidential or sensitive personal data that you would not want Microsoft to use for purposes explained in this FAQ and in the Microsoft Privacy Statement. This includes data that might reveal, for example, your race, religion, sexual orientation, or health status.
+At any time, you can delete a prior Copilot conversation from your conversation history. You can also control whether Copilot uses your conversation activity for model training or to personalize your experience.
+What if I have questions about privacy or data protection?
+To learn more about Microsoft's commitment to privacy, visit the Microsoft Privacy Statement and Privacy at Microsoft.
+Personalization & Memory
+How does Copilot personalize my experience?
+If personalization is enabled for you, Copilot will start remembering key details from your conversations and will use those memories in future conversations to provide you with a more tailored and relevant experience.
+What does Copilot remember about me?
+If personalization is enabled, Copilot remembers key details you share, such as your name, interests, and goals. Copilot does not remember demographic or other sensitive data.
+You can edit or delete what Copilot remembers or turn off personalization entirely at any time.
+How can I see, change, or delete what Copilot remembers about me?
+You can control what Copilot remembers about you at any time.
+Is personalization on by default?
+If personalization is available to you, it will be on by default. Personalization is not currently available for users in Brazil, China (excluding Hong Kong), Israel, Nigeria, South Korea, and Vietnam, or for users who are not signed in to Copilot via their Microsoft Account or other third-party authentication.
+When you first begin using Copilot you will see a notice at the start of your first few conversations, and periodically thereafter, if personalization is enabled for you. To check or change your personalization settings, click the link in that notice to opt out, or disable personalization in your Copilot settings.
+How can I turn off personalization?
+You can turn off personalization at any time. Read about how to control personalization in Copilot.
+Please note that these options are only available to users who are signed in, as personalization is disabled for unauthenticated users.
+If you turn off personalization, Copilot will forget its memories of your conversations. You can still view your past conversations; however, your future Copilot experience will no longer be personalized. If you later turn personalization on again, Copilot will begin remembering details that you've shared with it and will begin personalizing your experience again.
+Does the Copilot personalization setting control personalized advertising?
+The personalization setting in Copilot does not control whether you receive personalized ads, which is a separate choice you can make. You can change your personalized ads setting, which applies to Copilot and other applicable Microsoft services, at any time.
+In certain countries, we may also present you with a prompt that will ask you to decide whether to receive personalized ads in Copilot. If you have chosen not to receive personalized ads, through either the personalized ads setting or the Copilot-specific prompt, we will not deliver personalized ads to you in Copilot.
+If your settings allow us to deliver personalized ads in Copilot, and if Copilot's personalization setting is enabled, we will use your Copilot conversation history to help further personalize the ads you already receive. Note that regardless of your settings, Copilot does not serve personalized advertising to authenticated users under the age of 18.
+If I turn off personalization, does that delete my conversation history?
+You can turn off personalization within Copilot settings at any time. Turning off personalization won't delete your conversation history, but Copilot will forget its memories of your conversations and will stop personalizing your experience.
+Does Copilot personalize interactions based on sensitive topics?
+With your permission, the optional Copilot Health feature is designed to personalize interactions with you based on the health information you provide, including your conversations, details you add to your health profile, and data from wearables or health records you choose to connect. You can access your health profile in Copilot at any time to view, manage, or delete the personal health information you've shared. Copilot Health uses only the health information from your profile to personalize your interactions, and other types of sensitive data will not be used. Learn more
+In other Copilot experiences outside of Copilot Health, Copilot is designed not to personalize interactions with you based on certain sensitive topics like your personal attributes (e.g. age, gender, race/ethnicity, sexual orientation), health-related information, and political affiliation and preferences. We have measures in place to filter out content from your past conversations that may be considered sensitive, even if personalization is turned on in your settings.
+Remember to use caution when sharing information with Copilot that you consider to be sensitive. At any time you can control what Copilot remembers about you.
+How does Copilot work in Xbox?
+If you choose to use Copilot in Xbox, Copilot will use your Xbox activity (for example, your profile, play history, and achievements) to provide you with tailored and relevant experiences. You can view and manage your Xbox profile and activity at any time by signing in to your account at xbox.com.
+Model Training
+Important
+An updated version of the Microsoft Copilot app for web, desktop, and mobile devices is available as of August 18, 2026. The information in this "Model Training" section applies only to the older version of the Microsoft Copilot app.
+If you're using Microsoft Copilot on the web, or if you've updated to or downloaded the new version of the Microsoft Copilot app, please see Microsoft Copilot for individuals: your data, privacy, and responsible AI.
+What is "model training"?
+Generative AI refers to a category of AI models that analyze data, find patterns and use these patterns to generate or create a new output, such as text, photo, video, code, data, and more. "Training" a generative AI model means providing it with information to help it learn to make predictions or decisions. Training is a broad concept that includes many different activities to help models provide more appropriate results.
+These models use training data to learn general relationships in language, not to memorize specific conversations. They do not store or have access to the original training data. Instead, generative AI models are designed to generate new expressive works and content.
+We also take additional steps to prevent these models from inadvertently reproducing their training data, such as conducting testing and building filters that screen out previously published or used material.
+What external data does Microsoft use for training Copilot?
+Microsoft uses publicly available data, mostly collected from industry-standard machine learning datasets and web crawls, like search engines. We exclude sources with paywalls, content that violates our policies, or sites that have utilized industry-standard methods to opt out of training. On top of this, we do not train on data from domains listed in the Office of the United States Trade Representative (USTR) Notorious Markets for Counterfeiting and Piracy list.
+Does Microsoft use my data to train AI models?
+Except for certain categories of users or users who have opted out, Microsoft uses data from Bing, MSN, Copilot, and interactions with ads on Microsoft for AI training. This includes de-identified search and news data, interactions with ads, and your voice and conversation activity with Copilot, including the images or files you upload. This data will be used to improve Copilot and our other products and services to create a better user experience for you and others.
+By using real-world consumer data to help train our underlying generative AI models, we can improve Copilot and offer a more reliable and relevant experience. The more diversity in conversations our AI models are exposed to, the better they will understand and serve important regional languages, geographies, cultural references, and trending topics of interest to you and other users.
+You can also control whether Copilot uses your conversation activity for model training.
+What data is excluded from model training?
+We do not train Copilot on data from the following types of users:
+Users signed into Copilot with an organizational Entra ID account. You can learn more about Enterprise Data Protection.
+Users of Copilot within Microsoft 365 apps with Personal or Family subscriptions.
+Users who are not signed into Copilot (either using a Microsoft Account or other third-party authentication).
+Users under the age of 18 who are signed in to Copilot.
+Users who have opted out of model training.
+Users in Brazil, China (excluding Hong Kong), Israel, Nigeria, South Korea, and Vietnam. This means that Copilot will be available in some of those markets, but no user data will be used for generative AI model training in those locations until further notice.
+We also limit the types of data we use for training. We do not train AI models on:
+Personal account data like your Microsoft account profile data or email contents.
+Identifying information in uploaded images or files. If any images or files are included in your Copilot conversations, we take steps to de-identify them such as removing metadata or other personal data and blurring images of faces.
+Information that may identify you, like names, phone numbers, device or account identifiers, sensitive personal data, physical addresses, and email addresses.
+How does Microsoft protect my data when training AI models?
+Your personal interactions with our services are kept private and are not disclosed without your permission. We remove information that may identify you, like names, phone numbers, device or account identifiers, sensitive personal data, physical addresses, and email addresses, before training AI models.
+Your data remains private when using our services. We will protect your personal data as explained in the Microsoft Privacy Statement and in compliance with privacy laws around the world.
+How can I control whether my data is used for model training?
+If you are logged into Copilot with a Microsoft Account or other third-party authentication, you can control whether your conversation activity is used for training Microsoft's generative AI models. Opting out will exclude your future conversations from being used for training these AI models, unless you choose to opt back in.
+If you are not logged into Copilot with a Microsoft Account or other third-party authentication, we do not train on your conversations.
+Read how to control whether your conversations are used for model training.
+We may eventually expand model training and opt-out controls to users in certain countries where we do not currently use conversation history for model training (see What data is excluded from model training?). But we will do so gradually, to ensure we get this right for consumers and to ensure we comply with local privacy laws around the world.
+Can I opt-out of model training and still have a personalized Copilot experience?
+Yes, you can opt-out of model training and still have personalization turned on. In this case, Copilot will remember key details from your conversations to give you a more personalized response, but Microsoft will not use your conversations for training generative AI models.
+Does model training apply to Microsoft 365?
+AI model training applies to our consumer Copilot experience. It excludes users of Copilot with organizational Entra ID accounts, and any Microsoft 365 consumer users or Copilot conversations integrated within Microsoft 365 consumer apps such as Word, Excel, PowerPoint, or Outlook. Users of those products will not see this setting, and their conversations will not be used for training the generative AI models we offer in Copilot or other products.
+We recognize that commercial customers have varying compliance requirements across industries and around the world. Microsoft will continue helping these organizations use tenant boundaries and other controls we provide to identify and manage data they own, separately. To learn more about how Microsoft handles model training for commercial customers, read about Enterprise Data Protection.
+Are Copilot conversations human reviewed?
+Some Copilot conversations are subject to both automated and human review for product improvement and digital safety purposes. We may also review conversations flagged as a violation of the Code of Conduct in the Terms of Use. Our Code of Conduct prohibits use of the Copilot service to create or share inappropriate content or material. Some conversations are reviewed when a violation of the Code of Conduct is suspected.
+Can I opt-out of having my Copilot conversations human reviewed?
+Limited human review is required as part of the investigation process when a violation of the Code of Conduct is suspected. To ensure that our services are safe and secure for everyone, an opt-out of human review is not available.
+Responsible AI
+How is Microsoft approaching responsible AI for Copilot?
+At Microsoft, we take our commitment to responsible AI seriously. Copilot is developed in accordance with our AI principles, which demonstrate commitment to making sure AI systems are developed responsibly and in ways that warrant people's trust. We've designed the Copilot user experience to keep humans at the center and developed safeguards to minimize errors and avoid misuse, and we are continually improving the experience. To learn more about how to use Copilot responsibly, please review our Terms of Use and Transparency Note.
+How does Copilot use the internet to find its sources of information?
+Copilot searches for relevant content across the web and then summarizes the information it finds to generate a helpful response. It also cites its sources, so you're able to see and explore links to the content it references.
+Are Copilot's responses always accurate?
+Copilot aims to respond with reliable sources, but AI can make mistakes, and third-party content on the internet may not always be accurate or reliable. Copilot may misrepresent the information it finds, and you may see responses that sound convincing but are incomplete, inaccurate, or inappropriate. Use your judgment and double check facts before making decisions or taking action based on Copilot's responses. Reviewing Copilot's citations is a good place to start checking for accuracy.
+To share site feedback or report a concern, select 'Give feedback' in Settings or use the flag icon below each response in the mobile app and Copilot web page. In the Copilot app, you can also long press the response and select 'Report'. We will continue to review your feedback to provide a safe search experience for all.
+What sort of safeguards does Copilot have to make sure content is safe?
+Responsible AI is a journey, and we are continually evaluating and improving Copilot to make the experience even safer. We apply rigorous content filtering to the information we use to train Copilot, and we employ measures to evaluate Copilot's responses for potential safety risks before the response is presented to you. We also have systems in place to detect and prevent abusive behavior.
+Additionally, to improve Copilot's safety and ability to detect risks, we partner with external research organizations to review and evaluate Copilot conversations. For example, external research organizations can help review Copilot conversation logs to understand the variety of queries used to seek extremist content, compare trends across the industry, and advise techniques for better finding and mitigating harm.
+You can learn more about our approach to safety in our Transparency Note.
+What should I do if I see unexpected or offensive content?
+While we have designed the Copilot experience to avoid sharing unexpected offensive content or engaging with potentially harmful topics, you may still see unexpected results. We're constantly working to improve our technology to prevent harmful content.
+If you encounter harmful or inappropriate content, please provide feedback or report a concern by clicking 'Give feedback' in Settings or use the flag icon below each response in the mobile app and Copilot web page. In the Copilot mobile app, you can also long press the response and select 'Report'. We will continue to review your feedback to provide a safe experience.
+How does human review of Copilot conversations improve your experience?
+Trained AI experts may review Copilot conversations to build, evaluate, and improve the accuracy and safety of our AI models. We use human feedback to ensure quality output to a user's prompt, improving your experience. Your data remains private when using our services. We will protect your personal data as explained in the Microsoft Privacy Statement and in compliance with privacy laws around the world.
+Sometimes it feels like Copilot is another person. Why is that?
+Copilot is designed to be a helpful AI companion by being responsive, conversational, and context-aware. It can chat with you in everyday language, reply quickly, and reference information that you have already shared. You can use Copilot to answer questions, find information, help with writing, and guide you through tasks. Copilot has been developed to feel intuitive and supportive. These characteristics can make interactions with the AI companion feel like a natural conversation with a colleague or friend.
+However, it's important to remember that Copilot is a tool and not a person and does not have its own opinions or emotions. It's a software system that generates responses by spotting patterns in data and may not have full context of the real world. Copilot may not always have the right answer, particularly for complex and emotional situations, or other areas where it may have insufficient data. It's here to support you in making your own decisions and not replace them.
+Sometimes my conversations with Copilot feel confusing or emotionally heavy. What should I do?
+If a chat ever feels confusing or emotionally heavy, it's a good idea to take some time to pause and reflect. You can also check in with someone you trust if ever you're unsure about anything Copilot has said or how you're feeling about the interaction; this may include friends, family, people you know from your community, counsellors or other professionals.
+Copilot on Windows
+How does Copilot know what files I have?
+Copilot shows files you've recently opened on your device by referencing Recent Items in Windows. Like many other Windows applications, Copilot has the ability to display recent files used by programs like Microsoft Word or Windows Photos to help you quickly get back to recent work. These files are stored on your PC. Copilot does not scan your PC or upload any files automatically.
+Can I hide recent files that Copilot shows me in Windows?
+Yes. To hide a recent file displayed in Copilot right click on the file and select Hide.
+What is browsing in Copilot on Windows?
+Copilot for Windows helps you view web content and chat with Copilot without leaving the app. When you open a link, it appears in a side pane next to your conversation. Each link opens in its own tab, making it easy to compare products or have Copilot summarize complex topics across multiple pages, search, shop online, and more. Copilot remembers the links you open within a conversation, so you can return to them whenever you continue the corresponding conversation.
+Whenever we collect data, we want to make sure it's the right choice for you. Some people worry about their web browsing history being collected. That's why we tell you what data is stored on your device or collected by us. We give you choices to control what data gets collected. For more information about privacy in Copilot for Windows, we recommend reviewing our Privacy Statement.
+What data is collected or stored by Copilot for Windows, and why?
+Microsoft uses diagnostic data to improve our products and services. We use this data to better understand how our products are performing and where improvements need to be made.
+Copilot for Windows collects a set of required diagnostic data to keep Copilot for Windows secure, up to date and performing as expected. Microsoft believes in and practices information collection minimization. We strive to gather only the info we need, and to store it only for as long as it's needed to provide a service or for analysis. In addition, you can control whether optional diagnostic data associated with your device is shared with Microsoft to solve product issues and help improve Microsoft products and services.
+As you use features and services in Copilot for Windows, diagnostic data about how you use those features is sent to Microsoft. Copilot for Windows saves your browsing history-information about websites you visit-on your device. Depending on your settings, this browsing history is sent to Microsoft, which helps us find and fix problems and improve our products and services for all users.
+You can manage the collection of optional diagnostic data in the browser by selecting Profile > Settings > Browsing settings > Web data and security > Privacy and turning on or off Send optional diagnostic data to improve Microsoft products. This includes data from testing new experiences. To finish making changes to this setting, restart Copilot for Windows.
+Copilot for Windows also has features to help you and your content stay safe online. Microsoft Defender SmartScreen automatically blocks websites and content downloads that are reported to be malicious. Microsoft Defender SmartScreen checks the address of the webpage you're visiting against a list of webpage addresses stored on your device that Microsoft believes to be legitimate. Addresses that aren't on your device's list and the addresses of files you're downloading will be sent to Microsoft and checked against a frequently updated list of webpages and downloads that have been reported to Microsoft as unsafe or suspicious.
+To speed up tedious tasks like filling out forms and entering passwords, Copilot for Windows can save info to help. If you choose to use those features, Copilot for Windows stores the info on your device. If you've turned on sync for form fill like addresses or passwords, this info will be sent to the Microsoft cloud and stored with your Microsoft account to be synced across all your signed-in versions of Copilot for Windows and Microsoft Edge. You can manage this data from Profile > Settings > Browsing settings > Sync and import.
+To protect some video and music content from being copied, some streaming websites store Digital Rights Management (DRM) data on your device, including a unique identifier (ID) and media licenses. When you go to one of these websites, it retrieves the DRM info to make sure you have permission to use the content.
+Copilot for Windows also stores cookies, small files that are put on your device as you browse the web. Many websites use cookies to store info about your preferences and settings, like saving the items in your shopping cart so you don't have to add them each time you visit. Some websites also use cookies to collect info about your online activity to show you interest-based advertising. Copilot for Windows gives you options to clear cookies and block websites from saving cookies in the future.
+Copilot for Windows can also import cookies from Microsoft Edge each time you launch the app. You can manage this setting by going to Profile > Settings > Browsing settings > Sync and import > Bring over your site data from Microsoft Edge.
+Copilot for Windows will send Do Not Track requests to websites when the Send Do Not Track requests setting is turned on. This setting is available at Profile > Settings > Browsing settings > Web data and security > Privacy > Send "Do Not Track" Requests.
+Websites may still track your activities even when a Do Not Track request is sent, however.
+How do I clear data collected or stored by Copilot for Windows?
+To clear browsing info stored on your device, like saved passwords or cookies:
+In Copilot for Windows, select Profile > Settings > Browsing settings > Web data and security > Clear Browsing data.
+Select Choose what to clear next to Clear browsing data now.
+Under Time range, choose a time range.
+Select the check box next to each data type you'd like to clear, and then select Clear now.
+If you'd like, you can select Choose what to clear every time you close the browser and choose which data types should be cleared.
+Types of info
+What will be deleted
+Where it's stored
+Download history
+The list of files you've downloaded from the web. This only deletes the list, not the actual files that you've downloaded.
+On your device
+Cookies and other site data
+Information and data that websites store on your device to remember your preferences, such as sign-in info, your location, or media licenses.
+On your device
+Cached images and files
+Copies of pages, images, and other media content stored on your device. The browser uses these copies to load content faster the next time you visit those sites.
+On your device
+Passwords
+Site passwords that you've saved.
+On your device (or, if sync is turned on, across your synced devices)
+Autofill form data (includes forms and cards)
+Info that you've entered into forms, such as your email, credit card, or a shipping address.
+On your device (or, if sync is turned on, across your synced devices)
+Site permissions
+Go to Profile > Settings > Browsing settings > Web data and security > Site permissions to see a list for each website, including location, cookies, pop-ups, and media auto play.
+On your device
+Media Foundation data
+Includes licenses, certificates, keys, and more. Data is cleared after you restart the Microsoft Edge browser.
+On your device (or, if sync is turned on, across your synced devices)
+To clear browsing history collected by Microsoft:
+To see your browsing history associated with your account, sign in to your account at account.microsoft.com. In addition, you also have the option of clearing your browsing data that Microsoft has collected using the Microsoft privacy dashboard.
+To delete your browsing history and other diagnostic data associated with your Windows device, select Start > Settings > Privacy > Diagnostics & feedback, and then select Delete under Delete diagnostic data.
+How do I manage my browser privacy settings in Copilot for Windows?
+To review and customize your privacy settings, select Profile > Settings > Browsing settings > Web data and security > Privacy.
+How do I sync browsing data?
+When you are signed in, Copilot provides an option to sync all your history, favorites, passwords and other browser data between Copilot apps and with Microsoft Edge. This means that browsing data in Edge will be available in Copilot apps through the sync service, and vice versa. This will help you access your saved information across any device where you sign in with the same account.
+You can manage this anytime in Settings > Browsing settings > Sync and Import > Sync.
+You also can delete browsing data in Settings > Browsing setting > Web data and security > Clear browsing data.
+Learn more about how to Sync Microsoft Edge across devices.
+How do I import site data into Copilot?
+Every time you launch the Copilot app on Windows, it can import cookies stored in Microsoft Edge to make your experience more personalized and helpful. This works only when you choose to allow it and is available only in the Windows app for Copilot. The data comes from the Edge profile signed in with the same Microsoft account.
+You can manage this anytime in Settings > Browsing settings > Sync and Import > Bring over your site data from Microsoft Edge.
+Can I save and autofill my credit or debit card info in Copilot on Windows?
+Yes. When you check out on a shopping site, you can choose 'Save' to store your card for faster checkout next time. You can save cards in two ways:
+Locally on your device, where they're only available on that device, Or
+To your Microsoft account (in select markets), so you can use them across devices when you're signed in with the same account
+You can manage your saved cards at any time by going to: Settings > Browsing settings > Sync and Import > Sync > Payments using Microsoft account.
+To autofill saved card information, make sure Save and fill payment methods is turned on under Settings > Browsing settings > Password and autofill > Payment methods.

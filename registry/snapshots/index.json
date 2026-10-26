@@ -1,0 +1,236 @@
+{
+  "https://automattic.com/privacy/": {
+    "serviceId": "wordpress-com",
+    "file": "wordpress-com/automattic-com-privacy-4c33837d.txt",
+    "hash": "0122a403b37f00ab3c9bd79117b34de28f3465cfb8dbfe61437636a162038607",
+    "lastChanged": "2026-10-26"
+  },
+  "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html": {
+    "serviceId": "deepseek",
+    "file": "deepseek/cdn-deepseek-com-policies-en-us-deepseek-privacy-policy-html-f3425726.txt",
+    "hash": "f9b4839ce7a3f5204c14a646c63b70ae83e291c0026de896a08f004898e78a0a",
+    "lastChanged": "2026-10-26"
+  },
+  "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html": {
+    "serviceId": "deepseek",
+    "file": "deepseek/cdn-deepseek-com-policies-en-us-deepseek-terms-of-use-html-4fc6b485.txt",
+    "hash": "5a8361da713a4764998652adabad8e363b51c005bd03582670a0d35a5809b022",
+    "lastChanged": "2026-10-26"
+  },
+  "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies": {
+    "serviceId": "github",
+    "file": "github/docs-github-com-en-copilot-how-tos-manage-your-account-manage-policies-da48ab59.txt",
+    "hash": "25bfd0e6c29aa1f0d1b2a6861109c405fb45bd1cfb380687b307511a69dfa857",
+    "lastChanged": "2026-10-26"
+  },
+  "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement": {
+    "serviceId": "github",
+    "file": "github/docs-github-com-en-site-policy-privacy-policies-github-general-privacy-statement-8d3eecad.txt",
+    "hash": "2bac2907b07fe09ff1cef8ab33ff53aa9982c647ed616c60d37ba342f27f36b1",
+    "lastChanged": "2026-10-26"
+  },
+  "https://help.figma.com/hc/en-us/articles/17725942479127-Manage-AI-settings-and-content-training-for-your-team-or-organization": {
+    "serviceId": "figma",
+    "file": "figma/help-figma-com-hc-en-us-articles-17725942479127-manage-ai-settings-and-content-t-2e2a372e.txt",
+    "hash": "cdead92452c2840c9e7a785fc395c413cc29290388d3bf4a60f379dcc8fb6082",
+    "lastChanged": "2026-10-26"
+  },
+  "https://help.mistral.ai/en/articles/455207-can-i-opt-out-of-my-input-or-output-data-being-used-for-training": {
+    "serviceId": "mistral-le-chat",
+    "file": "mistral-le-chat/help-mistral-ai-en-articles-455207-can-i-opt-out-of-my-input-or-output-data-bein-6da48b38.txt",
+    "hash": "beefc865937de0f66f2438019e365e73de5f9ef28ae6f2f841d15da1474b6584",
+    "lastChanged": "2026-10-26"
+  },
+  "https://help.pinterest.com/en/article/manage-genai-settings": {
+    "serviceId": "pinterest",
+    "file": "pinterest/help-pinterest-com-en-article-manage-genai-settings-86e22666.txt",
+    "hash": "75b1a1a0a636148f2c8aef3530379c2f0ab239449d59d3794c5d617c4a70e2f9",
+    "lastChanged": "2026-10-26"
+  },
+  "https://help.snapchat.com/hc/en-us/articles/25494876770580-Generative-AI-on-Snapchat": {
+    "serviceId": "snapchat",
+    "file": "snapchat/help-snapchat-com-hc-en-us-articles-25494876770580-generative-ai-on-snapchat-3968b5f1.txt",
+    "hash": "eb43e9ddef196ef1a367cc7e33e85d78ac13ecd2f0cd2675e29e4bd26bdd462e",
+    "lastChanged": "2026-10-26"
+  },
+  "https://helpx.adobe.com/account/individual/terms-policies-and-regulations/content-analysis-faq.html": {
+    "serviceId": "adobe",
+    "file": "adobe/helpx-adobe-com-account-individual-terms-policies-and-regulations-content-analys-b7eab331.txt",
+    "hash": "f9e78b0c209f40e0cb78abe6e6f0479c070f60fee1a0bae8441feacd7fd627e4",
+    "lastChanged": "2026-10-26"
+  },
+  "https://legal.mistral.ai/terms/privacy-policy": {
+    "serviceId": "mistral-le-chat",
+    "file": "mistral-le-chat/legal-mistral-ai-terms-privacy-policy-410c7a9e.txt",
+    "hash": "9408c87348dacca4ea3971b98ec4af34ff3bec78eccc03d1bcd6f6a8a85a2e05",
+    "lastChanged": "2026-10-26"
+  },
+  "https://policies.google.com/privacy": {
+    "serviceId": "youtube",
+    "file": "youtube/policies-google-com-privacy-47330706.txt",
+    "hash": "0b0196a4b30f25065f9549184943238315d0e4696386847791496e797c7daa14",
+    "lastChanged": "2026-10-26"
+  },
+  "https://policy.pinterest.com/en/privacy-policy": {
+    "serviceId": "pinterest",
+    "file": "pinterest/policy-pinterest-com-en-privacy-policy-077ce9b1.txt",
+    "hash": "92eee88480e61e9de16921ad496d65f6a439f7f685429a949b84b28e62a206fa",
+    "lastChanged": "2026-10-26"
+  },
+  "https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training": {
+    "serviceId": "claude",
+    "file": "claude/privacy-claude-com-en-articles-10023580-is-my-data-used-for-model-training-e7ad2915.txt",
+    "hash": "2e78e517bd9eb6a9fe6edb2038fadf29682c791ecd79adb2b24edb093bc11d58",
+    "lastChanged": "2026-10-26"
+  },
+  "https://privacy.microsoft.com/en-us/privacystatement": {
+    "serviceId": "microsoft-copilot",
+    "file": "microsoft-copilot/privacy-microsoft-com-en-us-privacystatement-e498e310.txt",
+    "hash": "f955455995066e3123761336e1b0ed46abb54d32a75110d8415cbe88b08bafea",
+    "lastChanged": "2026-10-26"
+  },
+  "https://slack.com/trust/data-management/privacy-principles": {
+    "serviceId": "slack",
+    "file": "slack/slack-com-trust-data-management-privacy-principles-b803d8eb.txt",
+    "hash": "63d8d1381d4b93d4713d45c9a36322646947cb73d59c133e30cfea719ab865db",
+    "lastChanged": "2026-10-26"
+  },
+  "https://slack.com/trust/privacy/privacy-policy": {
+    "serviceId": "slack",
+    "file": "slack/slack-com-trust-privacy-privacy-policy-12b5155e.txt",
+    "hash": "626ba5a480bf6d8f5671e59e767b42ae90e5ab345c14971d15393acc4e58298a",
+    "lastChanged": "2026-10-26"
+  },
+  "https://superhuman.com/legal/privacy-policy": {
+    "serviceId": "grammarly",
+    "file": "grammarly/superhuman-com-legal-privacy-policy-19f650f6.txt",
+    "hash": "7bf4d5d86f2d82d7455579c747837c5f6d59003eff2df44345300027e6e63715",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.google.com/gemini/answer/13278892": {
+    "serviceId": "gemini",
+    "file": "gemini/support-google-com-gemini-answer-13278892-6bfebecd.txt",
+    "hash": "6cd0405b90bb85e74e680b4d0b9f24c9bd03d78a9f272a6697729dd348c04e72",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.google.com/gemini/answer/13594961": {
+    "serviceId": "gemini",
+    "file": "gemini/support-google-com-gemini-answer-13594961-5b417f65.txt",
+    "hash": "cdcfc31dcb86d3fd3950b02ff6be2736a974b80dfae86db5dbe1ba5a6076c1fe",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.google.com/youtube/answer/15509945": {
+    "serviceId": "youtube",
+    "file": "youtube/support-google-com-youtube-answer-15509945-96f052bd.txt",
+    "hash": "c9dbd80576c9860c3145eb5156446a8bf0b65b6742f8cdfa63fbba5c5ef27e21",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.grammarly.com/hc/en-us/articles/25555503115277-Product-Improvement-and-Training-Control": {
+    "serviceId": "grammarly",
+    "file": "grammarly/support-grammarly-com-hc-en-us-articles-25555503115277-product-improvement-and-t-caee8816.txt",
+    "hash": "d59186e61463e1a92a7e7adc4fd0666d542a12a60e4f17d85fc911af5ad439a4",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot": {
+    "serviceId": "microsoft-copilot",
+    "file": "microsoft-copilot/support-microsoft-com-en-us-microsoft-copilot-privacy-faq-for-microsoft-copilot-6a1b9827.txt",
+    "hash": "ec2db403e8eb4ac8a8391b3f6c8f5b931c24649e6eccb5ae93fd7f34e5b303ec",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.microsoft.com/en-us/privacy/microsoft-copilot/activity-history": {
+    "serviceId": "microsoft-copilot",
+    "file": "microsoft-copilot/support-microsoft-com-en-us-privacy-microsoft-copilot-activity-history-5fb6c078.txt",
+    "hash": "af8761fbc63b164d5a03cd54a6102f083ac9b5d17a4b93b876857cf6e4948a2c",
+    "lastChanged": "2026-10-26"
+  },
+  "https://support.microsoft.com/en-us/privacy/microsoft-copilot/privacy-controls": {
+    "serviceId": "microsoft-copilot",
+    "file": "microsoft-copilot/support-microsoft-com-en-us-privacy-microsoft-copilot-privacy-controls-0bea2085.txt",
+    "hash": "0bad242461abfc0fc4e585b525c96e57f4f8e65c9c2c65bc22085a860e2f006c",
+    "lastChanged": "2026-10-26"
+  },
+  "https://values.snap.com/privacy/privacy-policy": {
+    "serviceId": "snapchat",
+    "file": "snapchat/values-snap-com-privacy-privacy-policy-f64cda98.txt",
+    "hash": "d899785ff52d576b5e39ec2dc4d663d11ca28d4acaf26e7a61a322d85f14f456",
+    "lastChanged": "2026-10-26"
+  },
+  "https://wordpress.com/support/privacy-settings/make-your-website-public/": {
+    "serviceId": "wordpress-com",
+    "file": "wordpress-com/wordpress-com-support-privacy-settings-make-your-website-public-3a8b1b6c.txt",
+    "hash": "f4dbed3c10fa19923cf076bf51a1d30c38877145242cebeb5f2de99b8e6d644d",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.adobe.com/privacy/policy.html": {
+    "serviceId": "adobe",
+    "file": "adobe/www-adobe-com-privacy-policy-html-05f653d1.txt",
+    "hash": "f11e03b3608edd4872ceae9e0abf0bb0297b0664718319a375cd84ad0c0cf423",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.anthropic.com/legal/consumer-terms": {
+    "serviceId": "claude",
+    "file": "claude/www-anthropic-com-legal-consumer-terms-8ac8edab.txt",
+    "hash": "ff2901ed341d561fef9416132b24fd86aea4db703ad75e45ed2a82c7efe0a38e",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.anthropic.com/legal/privacy": {
+    "serviceId": "claude",
+    "file": "claude/www-anthropic-com-legal-privacy-47b90923.txt",
+    "hash": "9a3f6738ad0f62559008e6f28b1bf2dfe488eeb66f8c02f6249ad309a3d344fd",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.dropbox.com/privacy": {
+    "serviceId": "dropbox",
+    "file": "dropbox/www-dropbox-com-privacy-1cf2e805.txt",
+    "hash": "333611e9d6c7acbe0274a7f9a851c873b4116cb059a54330385b8c63f4c3d91b",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.figma.com/privacy/": {
+    "serviceId": "figma",
+    "file": "figma/www-figma-com-privacy-28bb02f5.txt",
+    "hash": "19cb634464514883834b7a9cdc4ddff6418b5271adaaa36f1cc016977fed20dd",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.linkedin.com/legal/privacy-policy": {
+    "serviceId": "linkedin",
+    "file": "linkedin/www-linkedin-com-legal-privacy-policy-3964bcb3.txt",
+    "hash": "86cafd92bd413b7714bc779092d11ba31dd5a2c2d85cbef7e68e1d0cc21da504",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.notion.com/help/notion-ai-security-practices": {
+    "serviceId": "notion",
+    "file": "notion/www-notion-com-help-notion-ai-security-practices-66c1f78b.txt",
+    "hash": "943d6b2c68c594f3020145af9f7f9cb691a57c5886bc3bc34d957907e3195c41",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.tiktok.com/legal/page/eea/privacy-policy/en": {
+    "serviceId": "tiktok",
+    "file": "tiktok/www-tiktok-com-legal-page-eea-privacy-policy-en-71158e82.txt",
+    "hash": "cc4aa5d73b3a3f72a1fb310efd8c246ff0429f91a3914638f32f83c66295ed7e",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.tiktok.com/legal/page/us/privacy-policy/en": {
+    "serviceId": "tiktok",
+    "file": "tiktok/www-tiktok-com-legal-page-us-privacy-policy-en-81b4f401.txt",
+    "hash": "df188ed592e339be0ae681d99a31e329ca483166a314c194e05c83fc90420cdc",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.tumblr.com/privacy/en": {
+    "serviceId": "tumblr",
+    "file": "tumblr/www-tumblr-com-privacy-en-cc30d4e1.txt",
+    "hash": "42d6bef79e11dece7bfed7751dc99e31c54c0ecbf4b1884c90e3eff80e6efdcd",
+    "lastChanged": "2026-10-26"
+  },
+  "https://www.youtube.com/t/terms": {
+    "serviceId": "youtube",
+    "file": "youtube/www-youtube-com-t-terms-b3457e88.txt",
+    "hash": "672f1a5cdf98e4bc0f1b48042f3c167e9e4426053079ad94480cbb4b76a47f87",
+    "lastChanged": "2026-10-26"
+  },
+  "https://x.com/en/privacy": {
+    "serviceId": "x",
+    "file": "x/x-com-en-privacy-8ff07eae.txt",
+    "hash": "9d1208303e86c722fe2555058947d1911fd5c61429c86467f7a6aa5e0cb5e599",
+    "lastChanged": "2026-10-26"
+  }
+}
