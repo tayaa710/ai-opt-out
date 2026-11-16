@@ -1,0 +1,24 @@
+We're thoughtfully exploring generative AI (or GenAI) technology that drives innovation and creativity. For example, we use Pinterest Canvas, our image generation foundation model, to make ads more engaging for advertisers by enabling the creation of backgrounds on product images. We train Pinterest Canvas on certain publicly available data that users save or upload to the platform.
+How your data may be used
+AI models get better over time through research and real-world learning. When you save or upload content to Pinterest, we may use it to improve the accuracy, safety and overall performance of Pinterest Canvas. You can opt out of this use of your data at any time.
+Manage GenAI settings
+Note: If you're under 18, you'll automatically be opted out of this setting and unable to opt in.
+Log in to your Pinterest account
+Click the More options icon at the bottom left of the screen
+Click Settings
+Select Privacy and data
+Check or uncheck the boxes next to Use your data to train Pinterest Canvas
+Click Save
+Open the Pinterest app on your device and log in to your Pinterest account
+Tap your profile picture at the bottom-right corner
+Then, tap your profile photo at the top-left of your screen
+Tap Privacy and data
+Tap the toggle next to Use your data to train Pinterest Canvas
+Open the Pinterest app on your device and log in to your Pinterest account
+Tap your profile picture at the bottom-right corner
+Then, tap your profile photo at the top-left of your screen
+Tap Privacy and data
+Tap the toggle next to Use your data to train Pinterest Canvas
+See fewer AI Pins
+To see fewer AI Pins in various categories in your feeds check out our help center article.
+Still need help? Contact us

@@ -1,0 +1,44 @@
+Your content & third-party training
+YouTube's commitment to responsible AI development includes making sure creators and rights holders continue to control how their content is used. Some creators and rights holders may want to partner with AI companies to help develop the latest Generative AI technology.
+If they choose to, creators and rights holders can allow third-party companies that are building AI models to use their YouTube videos for AI model training. To do this, they can turn on a third-party training setting and select which companies to allow.
+By default, the third-party training setting is turned off. If you don't want your YouTube content used for third-party training, you don't need to take any action. YouTube's Terms of Service prohibits content from unauthorized use, such as unauthorized downloads and scraping.
+Content eligibility
+Content is eligible for third-party training if:
+The applicable rights holders on the video allow third-party training.
+Video privacy setting is public.
+Video complies with YouTube's Terms of Service and Community Guidelines.
+What it means to allow third-party training
+If you choose to turn on the third-party training setting, it means:
+You select from a list of third-party companies to allow or choose to allow all third-party companies.
+You're allowing the selected third-party companies to use your content for purposes of training AI models they're building.
+For creators using YouTube Studio: Your content includes all eligible videos uploaded to your channel.
+For rights holders using YouTube Studio Content Manager: Your content includes all eligible claimed videos and videos in your linked channels. Learn more.
+Videos' training permission status will be available by video ID on a publicly accessible interface, the YouTube Data API.
+YouTube may share your videos with a third-party company as long as you and all other applicable rights holders have chosen to allow that company.
+View and change third-party training settings
+Use YouTube Studio
+Channel owners can view and change third-party training settings in channel settings in YouTube Studio.
+Use YouTube Studio Content Manager
+Administrators can view and change third-party training settings on the Settings page in YouTube Studio Content Manager.
+Note: Third-party training settings can be changed anytime. There can be a delay of up to 7 days for changes to be reflected in the publicly accessible interface (YouTube Data API).
+Frequently Asked Questions (FAQs)
+What if I change my mind?
+You can turn on or turn off the setting at any time. You can also go back at any time to change which third-party companies you allow.
+Keep in mind that there can be a delay of up to 7 days for changes to be reflected in the publicly accessible interface (YouTube Data API).
+How will a third-party company use my content?
+When you allow third-party training, it means YouTube may share your eligible videos with a third-party company for purposes of training the AI models they're building.
+Keep in mind that third-party companies may not end up using your content, even if you allow them to.
+Also, because third-party companies are separate from YouTube/Google, ultimately we can't control what a third-party company does.
+If I select "All third-party companies," what companies does that include?
+Selecting "All third-party companies" means you're allowing any third-party company, even if they're not listed.
+If you want to allow all the companies currently listed, and not allow any other company, choose the "Selected companies only" option and select each company in the list.
+How do third-party companies get added to the list?
+Third-party companies that are building AI models and want to work with YouTube creators and rights holders to train AI models can apply to join the list.
+Will I get paid if I allow third-party companies to train their AI models on my content?
+YouTube isn't facilitating payments between third-party companies and creators or other rights holders at this time.
+Was this helpful?
+How can we improve it?
+Need more help?
+Try these next steps:
+Post to the help community Get answers from community members
+true
